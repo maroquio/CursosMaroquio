@@ -75,6 +75,19 @@ pipeline {
             }
         }
 
+        stage('Seed Courses') {
+            steps {
+                sh '''
+                    docker compose run --rm --no-deps \
+                      -v "$(pwd)/backend/src:/app/src:ro" \
+                      -v "$(pwd)/backend/scripts:/app/scripts:ro" \
+                      -v "$(pwd)/backend/tsconfig.json:/app/tsconfig.json:ro" \
+                      -v "$(pwd)/content:/content:ro" \
+                      backend bun scripts/import-course-content.ts
+                '''
+            }
+        }
+
         stage('Deploy') {
             steps {
                 sh 'docker compose up -d'
