@@ -25,7 +25,6 @@ function getAdminPassword(): string {
 const DEFAULT_ADMIN = {
   fullName: 'Administrador do Sistema',
   email: 'ricardo@maroquio.com',
-  password: getAdminPassword(),
   phone: '(28) 99999-9999',
 };
 
@@ -90,7 +89,7 @@ export async function seedAdminUser(): Promise<void> {
   } else {
     // 4. Create the admin user
     adminUserId = UserId.create().toValue();
-    const hashedPassword = await Bun.password.hash(DEFAULT_ADMIN.password);
+    const hashedPassword = await Bun.password.hash(getAdminPassword());
 
     await db.insert(usersTable).values({
       id: adminUserId,
