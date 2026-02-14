@@ -67,6 +67,9 @@ pipeline {
         stage('Reset Database') {
             steps {
                 sh '''
+                    echo "Stopping app containers to release DB connections..."
+                    docker compose stop backend frontend || true
+
                     echo "Dropping and recreating database (fresh deploy, no user data)..."
                     docker compose exec -T postgres dropdb -U cursos_maroquio --if-exists cursos_maroquio
                     docker compose exec -T postgres createdb -U cursos_maroquio -O cursos_maroquio cursos_maroquio
