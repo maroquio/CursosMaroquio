@@ -2049,13 +2049,14 @@ export async function seedPythonCourse(): Promise<void> {
     shortDescription: 'Aprenda Python do zero com lições práticas e objetivas',
     level: 'beginner',
     tags: ['python', 'programação', 'backend', 'data science', 'automação'],
-    status: 'draft',
+    status: 'published',
     price: 0,
     currency: 'BRL',
     categoryId,
     instructorId,
     createdAt: now,
     updatedAt: now,
+    publishedAt: now,
   });
 
   // 5. Create modules → lessons → sections

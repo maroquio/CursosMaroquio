@@ -21,6 +21,7 @@ import { AddLessonCommand } from '@courses/application/commands/add-lesson/AddLe
 import { UpdateLessonCommand } from '@courses/application/commands/update-lesson/UpdateLessonCommand.ts';
 import { CreateSectionCommand } from '@courses/application/commands/create-section/CreateSectionCommand.ts';
 import { UpdateSectionCommand } from '@courses/application/commands/update-section/UpdateSectionCommand.ts';
+import { PublishCourseCommand } from '@courses/application/commands/publish-course/PublishCourseCommand.ts';
 import { SectionContentType } from '@courses/domain/value-objects/SectionContentType.ts';
 import { LessonType } from '@courses/domain/value-objects/LessonType.ts';
 import { Slug } from '@courses/domain/value-objects/Slug.ts';
@@ -95,6 +96,9 @@ async function main() {
     for (const file of jsonFiles) {
       await importModule(courseId, file);
     }
+
+    // 5. Publicar o curso
+    await publishCourse(courseId);
 
     console.log('\n' + '='.repeat(60));
     console.log('✅ Importação concluída com sucesso!');
@@ -211,6 +215,18 @@ async function createCourse(instructorId: string, categoryId: string): Promise<s
   }
 
   return result.getValue().id;
+}
+
+async function publishCourse(courseId: string): Promise<void> {
+  const handler = Container.createPublishCourseHandler();
+  const result = await handler.execute(new PublishCourseCommand(courseId));
+
+  if (result.isFailure) {
+    console.warn(`  ⚠ Falha ao publicar curso: ${result.getError()}`);
+    return;
+  }
+
+  console.log(`\n✓ Curso publicado com sucesso!`);
 }
 
 async function getContentFiles(): Promise<string[]> {

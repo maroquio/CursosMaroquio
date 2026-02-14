@@ -8297,13 +8297,14 @@ export async function seedHtmlCourse(): Promise<void> {
     shortDescription: 'Aprenda HTML do zero com lições práticas e objetivas',
     level: 'beginner',
     tags: ['html', 'web', 'frontend', 'semântica', 'acessibilidade', 'formulários'],
-    status: 'draft',
+    status: 'published',
     price: 0,
     currency: 'BRL',
     categoryId,
     instructorId,
     createdAt: now,
     updatedAt: now,
+    publishedAt: now,
   });
 
   // 5. Create modules → lessons → sections
