@@ -1,0 +1,8 @@
+.root h1 code,
+.root h2 code,
+.root h3 code,
+.root h4 code,
+.root h5 code,
+.root h6 code {
+  font-size: inherit;
+}

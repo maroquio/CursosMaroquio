@@ -1,0 +1,51 @@
+/* User menu button - same pattern as nav items */
+/* Using !important to override Mantine's UnstyledButton padding reset */
+/* Fixed height ensures consistent vertical spacing in both modes */
+.userButton {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 52px;
+  gap: var(--mantine-spacing-sm);
+  /* padding-left: 6px positions avatar at 22px (16px Stack + 6px) to match centered collapsed position */
+  padding: 8px 12px 8px 6px !important;
+  border-radius: var(--mantine-radius-md);
+  color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
+  transition: background-color 150ms ease;
+}
+
+/* Center avatar when sidebar is collapsed */
+.userButton[data-collapsed] {
+  justify-content: center;
+  padding: 8px !important;
+}
+
+.userButton:hover {
+  background-color: light-dark(
+    var(--mantine-color-gray-1),
+    var(--mantine-color-dark-5)
+  );
+}
+
+/* Avatar container - larger than nav icons for better visibility */
+.avatarContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+}
+
+/* User info - only visible when expanded */
+.userInfo {
+  flex: 1;
+  overflow: hidden;
+  min-width: 0;
+}
+
+/* Chevron icon */
+.chevron {
+  flex-shrink: 0;
+  color: light-dark(var(--mantine-color-gray-5), var(--mantine-color-dark-3));
+}

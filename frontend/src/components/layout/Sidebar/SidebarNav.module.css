@@ -1,0 +1,48 @@
+/* Unified nav item - same structure for both collapsed and expanded */
+/* Using !important to override Mantine's UnstyledButton padding reset */
+/* Fixed height ensures consistent vertical spacing in both modes */
+.navItem {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 40px;
+  gap: var(--mantine-spacing-sm);
+  padding: 8px 12px !important;
+  border-radius: var(--mantine-radius-md);
+  font-weight: 500;
+  color: light-dark(var(--mantine-color-gray-7), var(--mantine-color-dark-1));
+  transition: background-color 150ms ease, color 150ms ease;
+}
+
+.navItem:hover {
+  background-color: light-dark(
+    var(--mantine-color-gray-1),
+    var(--mantine-color-dark-5)
+  );
+}
+
+.navItem[data-active] {
+  background-color: var(--mantine-color-primary-light);
+  color: var(--mantine-color-primary-light-color);
+}
+
+.navItem[data-active]:hover {
+  background-color: var(--mantine-color-primary-light-hover);
+}
+
+/* Icon container - fixed size with centered content for symmetry */
+.navItemIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+}
+
+/* Label - visible only when expanded */
+.navItemLabel {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

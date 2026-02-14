@@ -1,0 +1,36 @@
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: light-dark(
+    var(--mantine-color-white),
+    var(--mantine-color-dark-7)
+  );
+}
+
+.header {
+  padding: var(--mantine-spacing-md);
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  text-decoration: none;
+  color: inherit;
+}
+
+.logoText {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.navArea {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.footer {
+  padding: var(--mantine-spacing-md);
+}
