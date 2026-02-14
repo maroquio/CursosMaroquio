@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { AxiosError } from 'axios';
 import { authApi } from '../api/auth.api';
 import type {
   ChangePasswordRequest,
@@ -66,7 +67,12 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
         throw new Error(response.error || 'Login failed');
       }
     } catch (error) {
-      const message = error instanceof Error ? error.message : 'Login failed';
+      const message =
+        error instanceof AxiosError && error.response?.data?.error
+          ? error.response.data.error
+          : error instanceof Error
+            ? error.message
+            : 'Login failed';
       set({ error: message, isLoading: false });
       throw error;
     }

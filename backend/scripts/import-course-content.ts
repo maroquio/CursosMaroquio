@@ -128,12 +128,13 @@ async function getOrCreateInstructor(): Promise<string> {
   }
 
   // Se não existe, criar via RegisterUserHandler
+  const password = process.env.ADMIN_PASSWORD || 'Admin@123';
   const registerHandler = Container.createRegisterUserHandler();
   const { RegisterUserCommand } = await import('@auth/application/commands/register-user/RegisterUserCommand.ts');
   const result = await registerHandler.execute(
     new RegisterUserCommand(
       INSTRUCTOR_EMAIL,
-      'Admin@123',
+      password,
       'Professor Admin',
       '' // phone (optional)
     )

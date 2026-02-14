@@ -41,9 +41,8 @@ export function LoginForm() {
     try {
       await login(values);
       navigate('/dashboard');
-    } catch (err) {
-      const message = err instanceof Error ? err.message : t('auth.invalidCredentials');
-      setSubmitError(message);
+    } catch {
+      setSubmitError(t('auth.invalidCredentials'));
     }
   };
 
