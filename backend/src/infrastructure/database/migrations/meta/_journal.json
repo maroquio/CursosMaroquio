@@ -5,15 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1768655410127,
-      "tag": "0000_panoramic_blazing_skull",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1768668988573,
-      "tag": "0001_grey_guardian",
+      "when": 1771110223077,
+      "tag": "0000_sturdy_ink",
       "breakpoints": true
     }
   ]

@@ -64,6 +64,16 @@ pipeline {
             }
         }
 
+        stage('Reset Database') {
+            steps {
+                sh '''
+                    echo "Dropping and recreating database (fresh deploy, no user data)..."
+                    docker compose exec -T postgres psql -U cursos_maroquio -d postgres -c \
+                      "DROP DATABASE IF EXISTS cursos_maroquio; CREATE DATABASE cursos_maroquio OWNER cursos_maroquio;"
+                '''
+            }
+        }
+
         stage('Run Migrations') {
             steps {
                 sh '''
