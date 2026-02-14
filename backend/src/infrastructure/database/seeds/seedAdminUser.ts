@@ -9,6 +9,15 @@ import { UserId } from '@auth/domain/value-objects/UserId.ts';
 import { SystemRoles } from '@auth/domain/value-objects/Role.ts';
 import { env } from '@shared/config/env.ts';
 
+function getAdminPassword(): string {
+  const password = process.env.ADMIN_PASSWORD;
+  if (password) return password;
+  if (env.NODE_ENV === 'production') {
+    throw new Error('ADMIN_PASSWORD must be set in production environment');
+  }
+  return '1234aA@#';
+}
+
 /**
  * Default admin user credentials
  * This user is created only if no admin exists in the system
@@ -16,7 +25,7 @@ import { env } from '@shared/config/env.ts';
 const DEFAULT_ADMIN = {
   fullName: 'Administrador do Sistema',
   email: 'ricardo@maroquio.com',
-  password: '1234aA@#',
+  password: getAdminPassword(),
   phone: '(28) 99999-9999',
 };
 
