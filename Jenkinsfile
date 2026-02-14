@@ -68,8 +68,8 @@ pipeline {
             steps {
                 sh '''
                     echo "Dropping and recreating database (fresh deploy, no user data)..."
-                    docker compose exec -T postgres psql -U cursos_maroquio -d postgres -c \
-                      "DROP DATABASE IF EXISTS cursos_maroquio; CREATE DATABASE cursos_maroquio OWNER cursos_maroquio;"
+                    docker compose exec -T postgres dropdb -U cursos_maroquio --if-exists cursos_maroquio
+                    docker compose exec -T postgres createdb -U cursos_maroquio -O cursos_maroquio cursos_maroquio
                 '''
             }
         }
