@@ -54,7 +54,6 @@ COPY --from=builder /app/dist ./dist
 
 # Copy necessary files
 COPY --from=builder /app/package.json ./
-COPY --from=builder /app/drizzle ./drizzle
 
 # Create uploads directory for user content (avatars, thumbnails, bundles)
 RUN mkdir -p /app/uploads && chown -R appuser:appgroup /app
