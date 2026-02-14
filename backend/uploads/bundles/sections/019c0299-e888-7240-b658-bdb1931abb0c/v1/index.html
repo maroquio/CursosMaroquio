@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hierarquia de Headings</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Hierarquia de Headings</h1>
+  <p class="instructions">Clique nos nós da árvore para expandir/recolher e ver cada nível.</p>
+
+  <div class="tree" id="tree">
+    <div class="node level-1" data-level="1">
+      <span class="node-toggle">▶</span>
+      <span class="node-label">&lt;h1&gt; Título Principal</span>
+      <div class="children">
+        <div class="node level-2" data-level="2">
+          <span class="node-toggle">▶</span>
+          <span class="node-label">&lt;h2&gt; Seção</span>
+          <div class="children">
+            <div class="node level-3" data-level="3">
+              <span class="node-toggle">▶</span>
+              <span class="node-label">&lt;h3&gt; Subseção</span>
+              <div class="children">
+                <div class="node level-4 leaf" data-level="4">
+                  <span class="node-label">&lt;h4&gt; Detalhe</span>
+                </div>
+              </div>
+            </div>
+            <div class="node level-3 leaf" data-level="3">
+              <span class="node-label">&lt;h3&gt; Outra Subseção</span>
+            </div>
+          </div>
+        </div>
+        <div class="node level-2" data-level="2">
+          <span class="node-toggle">▶</span>
+          <span class="node-label">&lt;h2&gt; Outra Seção</span>
+          <div class="children">
+            <div class="node level-3 leaf" data-level="3">
+              <span class="node-label">&lt;h3&gt; Subseção</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-panel" id="info">
+    <div class="info-title">Hierarquia HTML</div>
+    <div class="info-text">Os headings h1-h6 criam uma estrutura hierárquica no documento. Clique em um nó para ver detalhes do nível.</div>
+  </div>
+
+  <div class="size-demo" id="sizeDemo">
+    <div class="demo-h1">h1 — Título Principal</div>
+    <div class="demo-h2">h2 — Seção</div>
+    <div class="demo-h3">h3 — Subseção</div>
+    <div class="demo-h4">h4 — Detalhe</div>
+    <div class="demo-h5">h5 — Subdetalhe</div>
+    <div class="demo-h6">h6 — Menor nível</div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

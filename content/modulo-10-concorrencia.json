@@ -1,0 +1,877 @@
+{
+  "id": "modulo-10-concorrencia",
+  "title": "Programação Concorrente em Python",
+  "slug": "programacao-concorrente-python",
+  "description": "Aprenda técnicas de programação concorrente em Python, incluindo multiprocessing, multithreading e programação assíncrona para criar aplicações eficientes e responsivas.",
+  "visibility": "private",
+  "status": "draft",
+  "lessons": [
+    {
+      "id": "lesson-01-introducao-concorrencia",
+      "title": "Introdução à Programação Concorrente e o GIL",
+      "summary": "Entenda os fundamentos da programação concorrente, a diferença entre CPU-bound e I/O-bound, e o papel do Global Interpreter Lock (GIL) no Python.",
+      "order_index": 1,
+      "estimated_minutes": 25,
+      "status": "draft",
+      "sections": [
+        {
+          "id": "section-01-01",
+          "type": "text",
+          "title": "O que é Programação Concorrente",
+          "order_index": 1,
+          "estimated_minutes": 4,
+          "content": "# O que é Programação Concorrente\n\nA programação concorrente é uma técnica poderosa que permite que um programa execute várias tarefas simultaneamente. Essas tarefas podem ser executadas em **paralelo** (ao mesmo tempo em diferentes núcleos de CPU) ou de maneira **intercalada** (alternando entre as tarefas em um único núcleo de CPU).\n\nA programação concorrente pode tornar os programas mais eficientes, mais responsivos e capazes de lidar com problemas mais complexos do que seria possível com a programação sequencial tradicional.\n\n## Operações CPU-Bound vs I/O-Bound\n\nOs programas concorrentes são particularmente úteis quando têm que lidar com operações que são:\n\n- **CPU-Bound**: Operações que gastam a maior parte do tempo realizando cálculos na CPU. O paralelismo é muitas vezes útil para essas operações, pois permite que diferentes cálculos sejam realizados em diferentes núcleos da CPU ao mesmo tempo.\n\n- **I/O-Bound**: Operações que passam a maior parte do tempo esperando por operações de entrada/saída (como ler ou escrever em um arquivo, enviar e receber dados pela internet). Para essas operações, é frequentemente mais útil intercalar as tarefas para que o programa possa continuar fazendo outras coisas enquanto espera a operação de I/O ser concluída.\n\n## As Três Principais Técnicas em Python\n\nO Python oferece várias formas de programação concorrente:\n\n1. **Multiprocessing**: Cria vários processos, cada um com seu próprio espaço de memória. Ótimo para tarefas CPU-bound.\n\n2. **Multithreading**: Cria várias threads dentro de um único processo. Útil para tarefas I/O-bound.\n\n3. **Programação Assíncrona**: Usa co-rotinas que podem ser pausadas e retomadas, permitindo eficiência em tarefas I/O-bound."
+        },
+        {
+          "id": "section-01-02",
+          "type": "text",
+          "title": "Entendendo o GIL (Global Interpreter Lock)",
+          "order_index": 2,
+          "estimated_minutes": 5,
+          "content": "# Entendendo o GIL (Global Interpreter Lock)\n\nAntes de mergulharmos nas técnicas de programação concorrente em Python, é fundamental entender uma característica única e controversa do interpretador CPython: o **Global Interpreter Lock**, ou simplesmente **GIL**.\n\n## O que é o GIL\n\nO GIL é um mecanismo de sincronização utilizado pelo interpretador CPython que permite que apenas uma thread execute bytecode Python por vez, mesmo em sistemas com múltiplos núcleos de CPU.\n\nEm outras palavras, o GIL funciona como um grande bloqueio global que protege o acesso às estruturas internas do interpretador Python, garantindo que apenas uma thread possa interagir com o interpretador em um dado momento.\n\n## Por que o GIL existe\n\nO GIL foi introduzido no CPython para simplificar a implementação do gerenciamento de memória. Especificamente, o Python usa um mecanismo de **contagem de referências** (reference counting) para gerenciar a memória dos objetos.\n\nSem o GIL, seria necessário proteger individualmente a contagem de referências de cada objeto com mecanismos de sincronização, o que introduziria uma sobrecarga significativa de desempenho e complexidade no código.\n\n**Importante**: O GIL é uma característica específica do CPython. Outras implementações de Python, como Jython ou IronPython, não possuem GIL."
+        },
+        {
+          "id": "section-01-03",
+          "type": "text",
+          "title": "Impacto do GIL em Diferentes Tipos de Tarefas",
+          "order_index": 3,
+          "estimated_minutes": 5,
+          "content": "# Impacto do GIL em Diferentes Tipos de Tarefas\n\nO impacto do GIL depende fundamentalmente do tipo de operação que seu programa está realizando.\n\n## Tarefas I/O-Bound: GIL Não é Problema\n\nPara operações que passam a maior parte do tempo esperando por entrada/saída (como leitura de arquivos, requisições de rede, acesso a banco de dados), o GIL **não é um problema significativo**.\n\nIsso ocorre porque, quando uma thread está bloqueada esperando I/O, ela **libera o GIL**, permitindo que outras threads executem.\n\n```python\nimport threading\nimport time\n\ndef operacao_io():\n    time.sleep(2)  # Simula espera por I/O\n\n# Execução com threads - ~2 segundos (não 4!)\ninicio = time.time()\nt1 = threading.Thread(target=operacao_io)\nt2 = threading.Thread(target=operacao_io)\nt1.start()\nt2.start()\nt1.join()\nt2.join()\nprint(f\"Tempo: {time.time() - inicio:.2f}s\")  # ~2 segundos\n```\n\n## Tarefas CPU-Bound: GIL é Limitante\n\nPara operações que realizam cálculos intensivos na CPU, o GIL é uma limitação séria. Threads **não proporcionam paralelismo real** para essas tarefas no CPython.\n\n```python\nimport threading\nimport time\n\ndef tarefa_cpu_intensiva(n):\n    total = 0\n    for i in range(n):\n        total += i ** 2\n    return total\n\n# Com threads: tempo semelhante ou até maior que sequencial!\n```\n\n**Solução para CPU-bound**: Use `multiprocessing` ao invés de `multithreading`."
+        },
+        {
+          "id": "section-01-04",
+          "type": "text",
+          "title": "Tabela de Decisão: Threads vs Processos",
+          "order_index": 4,
+          "estimated_minutes": 3,
+          "content": "# Tabela de Decisão: Threads vs Processos\n\nPara facilitar a escolha entre threads e processos, considere as seguintes características:\n\n## Quando Usar Threads\n\n- **Uso ideal**: Tarefas I/O-bound (rede, arquivos, banco de dados)\n- **Paralelismo real**: Não (devido ao GIL)\n- **Compartilhamento de memória**: Fácil (memória compartilhada)\n- **Overhead de criação**: Baixo\n- **Consumo de memória**: Baixo (compartilham memória)\n\n## Quando Usar Processos\n\n- **Uso ideal**: Tarefas CPU-bound (cálculos, processamento)\n- **Paralelismo real**: Sim (cada processo tem seu próprio interpretador)\n- **Compartilhamento de memória**: Difícil (requer mecanismos especiais)\n- **Overhead de criação**: Alto (criar processo é mais custoso)\n- **Consumo de memória**: Alto (cada processo tem sua própria memória)\n\n## Resumo Prático\n\n| Característica | Threads | Processos |\n|----------------|---------|----------|\n| I/O-bound | Ótimo | Desnecessário |\n| CPU-bound | Limitado pelo GIL | Recomendado |\n| Comunicação | Rápida (variáveis compartilhadas) | Mais lenta (IPC: pipes, filas) |\n| Isolamento | Baixo | Alto |\n\nEssa tabela deixa claro que a escolha entre threads e processos deve ser baseada nas características específicas do problema que você está resolvendo."
+        },
+        {
+          "id": "section-01-05",
+          "type": "exercise",
+          "title": "Exercício: Identificando CPU-bound vs I/O-bound",
+          "order_index": 5,
+          "estimated_minutes": 8,
+          "content": {
+            "problem": "Escreva um programa Python que demonstre a diferença de comportamento entre tarefas CPU-bound e I/O-bound ao usar threads.\n\nO programa deve:\n1. Criar uma função `tarefa_cpu(n)` que realize cálculos intensivos (por exemplo, somar quadrados de 0 até n)\n2. Criar uma função `tarefa_io()` que simule operação de I/O com `time.sleep(2)`\n3. Executar duas tarefas CPU-bound de forma sequencial e com threads, medindo o tempo\n4. Executar duas tarefas I/O-bound de forma sequencial e com threads, medindo o tempo\n5. Imprimir uma comparação mostrando que threads ajudam apenas nas tarefas I/O-bound",
+            "starter_code": "import threading\nimport time\n\ndef tarefa_cpu(n):\n    \"\"\"Tarefa CPU-bound: calcula soma dos quadrados.\"\"\"\n    # TODO: Implemente o cálculo\n    pass\n\ndef tarefa_io():\n    \"\"\"Tarefa I/O-bound: simula espera por I/O.\"\"\"\n    # TODO: Implemente a simulação de I/O\n    pass\n\nif __name__ == \"__main__\":\n    N = 10000000\n    \n    # TODO: Medir execução sequencial de CPU-bound\n    \n    # TODO: Medir execução com threads de CPU-bound\n    \n    # TODO: Medir execução sequencial de I/O-bound\n    \n    # TODO: Medir execução com threads de I/O-bound\n    \n    # TODO: Imprimir comparação\n    pass",
+            "test_cases": [
+              {
+                "description": "A função tarefa_cpu deve retornar a soma correta dos quadrados",
+                "input": "tarefa_cpu(5)",
+                "expected_output": "30"
+              },
+              {
+                "description": "Tarefas I/O-bound com threads devem ser mais rápidas que sequencial",
+                "input": "tempo_io_threads < tempo_io_sequencial * 0.75",
+                "expected_output": "True"
+              },
+              {
+                "description": "Tarefas CPU-bound com threads devem ter tempo similar ao sequencial",
+                "input": "abs(tempo_cpu_threads - tempo_cpu_sequencial) < tempo_cpu_sequencial * 0.5",
+                "expected_output": "True"
+              }
+            ],
+            "hints": [
+              "Use `time.time()` ou `time.perf_counter()` para medir o tempo de execução",
+              "Para criar e iniciar threads, use `threading.Thread(target=funcao).start()`",
+              "Use `thread.join()` para esperar que a thread termine antes de medir o tempo final",
+              "A função `tarefa_cpu` deve fazer um loop de 0 até n somando `i ** 2`"
+            ],
+            "solution": "import threading\nimport time\n\ndef tarefa_cpu(n):\n    \"\"\"Tarefa CPU-bound: calcula soma dos quadrados.\"\"\"\n    total = 0\n    for i in range(n):\n        total += i ** 2\n    return total\n\ndef tarefa_io():\n    \"\"\"Tarefa I/O-bound: simula espera por I/O.\"\"\"\n    time.sleep(2)\n\nif __name__ == \"__main__\":\n    N = 10000000\n    \n    # CPU-bound sequencial\n    inicio = time.time()\n    tarefa_cpu(N)\n    tarefa_cpu(N)\n    tempo_cpu_seq = time.time() - inicio\n    print(f\"CPU-bound sequencial: {tempo_cpu_seq:.2f}s\")\n    \n    # CPU-bound com threads\n    inicio = time.time()\n    t1 = threading.Thread(target=tarefa_cpu, args=(N,))\n    t2 = threading.Thread(target=tarefa_cpu, args=(N,))\n    t1.start()\n    t2.start()\n    t1.join()\n    t2.join()\n    tempo_cpu_threads = time.time() - inicio\n    print(f\"CPU-bound com threads: {tempo_cpu_threads:.2f}s\")\n    \n    # I/O-bound sequencial\n    inicio = time.time()\n    tarefa_io()\n    tarefa_io()\n    tempo_io_seq = time.time() - inicio\n    print(f\"I/O-bound sequencial: {tempo_io_seq:.2f}s\")\n    \n    # I/O-bound com threads\n    inicio = time.time()\n    t1 = threading.Thread(target=tarefa_io)\n    t2 = threading.Thread(target=tarefa_io)\n    t1.start()\n    t2.start()\n    t1.join()\n    t2.join()\n    tempo_io_threads = time.time() - inicio\n    print(f\"I/O-bound com threads: {tempo_io_threads:.2f}s\")\n    \n    # Comparação\n    print(\"\\n=== Comparação ===\")\n    print(f\"CPU-bound: threads foram {tempo_cpu_threads/tempo_cpu_seq:.2f}x o tempo sequencial\")\n    print(f\"I/O-bound: threads foram {tempo_io_threads/tempo_io_seq:.2f}x o tempo sequencial\")"
+          }
+        },
+        {
+          "id": "section-01-06",
+          "type": "quiz",
+          "title": "Quiz: Fundamentos de Concorrência e GIL",
+          "order_index": 6,
+          "estimated_minutes": 5,
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "question": "O que significa uma tarefa ser 'CPU-bound'?",
+                "type": "multiple_choice",
+                "options": [
+                  "A tarefa passa a maior parte do tempo esperando por operações de rede",
+                  "A tarefa passa a maior parte do tempo realizando cálculos na CPU",
+                  "A tarefa usa pouca memória RAM",
+                  "A tarefa pode ser executada apenas em um núcleo da CPU"
+                ],
+                "correct_answer": 1,
+                "explanation": "Tarefas CPU-bound são aquelas que gastam a maior parte do tempo realizando cálculos na CPU, como processamento de imagens ou cálculos matemáticos complexos."
+              },
+              {
+                "id": "q2",
+                "question": "Qual é a principal limitação imposta pelo GIL (Global Interpreter Lock) no CPython?",
+                "type": "multiple_choice",
+                "options": [
+                  "Impede o uso de processos múltiplos",
+                  "Limita a quantidade de memória disponível",
+                  "Permite que apenas uma thread execute bytecode Python por vez",
+                  "Impede a comunicação entre threads"
+                ],
+                "correct_answer": 2,
+                "explanation": "O GIL é um mecanismo que permite que apenas uma thread execute bytecode Python por vez, mesmo em sistemas com múltiplos núcleos de CPU."
+              },
+              {
+                "id": "q3",
+                "question": "Para tarefas I/O-bound em Python, qual afirmação é VERDADEIRA?",
+                "type": "multiple_choice",
+                "options": [
+                  "O GIL impede qualquer ganho de performance com threads",
+                  "Threads podem melhorar a performance pois liberam o GIL durante esperas de I/O",
+                  "Apenas multiprocessing pode ser usado",
+                  "A programação assíncrona não é aplicável"
+                ],
+                "correct_answer": 1,
+                "explanation": "Para tarefas I/O-bound, threads funcionam bem em Python porque quando uma thread está esperando por I/O, ela libera o GIL, permitindo que outras threads executem."
+              },
+              {
+                "id": "q4",
+                "question": "Qual técnica de concorrência em Python é mais recomendada para tarefas CPU-bound que precisam de verdadeiro paralelismo?",
+                "type": "multiple_choice",
+                "options": [
+                  "Multithreading com o módulo threading",
+                  "Programação assíncrona com asyncio",
+                  "Multiprocessing com o módulo multiprocessing",
+                  "Uso de decoradores async"
+                ],
+                "correct_answer": 2,
+                "explanation": "Para tarefas CPU-bound, multiprocessing é a melhor opção pois cada processo tem seu próprio interpretador Python (e seu próprio GIL), permitindo verdadeiro paralelismo em múltiplos núcleos."
+              },
+              {
+                "id": "q5",
+                "question": "Por que o GIL foi introduzido no CPython?",
+                "type": "multiple_choice",
+                "options": [
+                  "Para aumentar a velocidade de execução",
+                  "Para simplificar o gerenciamento de memória baseado em contagem de referências",
+                  "Para suportar mais threads simultâneas",
+                  "Para melhorar a compatibilidade com outras linguagens"
+                ],
+                "correct_answer": 1,
+                "explanation": "O GIL foi introduzido para simplificar o gerenciamento de memória do CPython, que usa contagem de referências. Sem o GIL, cada objeto precisaria de sua própria sincronização, aumentando muito a complexidade e overhead."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "lesson-02-multiprocessing",
+      "title": "Multiprocessing: Paralelismo com Processos",
+      "summary": "Aprenda a usar o módulo multiprocessing para criar programas que aproveitam múltiplos núcleos da CPU com processos independentes.",
+      "order_index": 2,
+      "estimated_minutes": 30,
+      "status": "draft",
+      "sections": [
+        {
+          "id": "section-02-01",
+          "type": "text",
+          "title": "Introdução ao Multiprocessing",
+          "order_index": 1,
+          "estimated_minutes": 4,
+          "content": "# Introdução ao Multiprocessing\n\nO módulo `multiprocessing` em Python é uma poderosa ferramenta que permite criar vários processos, cada um com seu próprio espaço de memória e seu próprio interpretador Python. Isto é particularmente útil para tarefas que são **CPU-bound**.\n\n## Vantagens do Multiprocessing\n\n1. **Verdadeiro paralelismo**: Cada processo é executado em seu próprio núcleo da CPU, permitindo cálculos realmente simultâneos.\n\n2. **Sem limitações do GIL**: Como cada processo tem seu próprio interpretador Python, o GIL de um processo não afeta os outros.\n\n3. **Isolamento de memória**: Cada processo tem seu próprio espaço de memória, evitando condições de corrida com variáveis compartilhadas.\n\n## Exemplo Básico\n\n```python\nimport multiprocessing\n\ndef worker():\n    print(\"Olá, mundo!\")\n\nif __name__ == \"__main__\":\n    p = multiprocessing.Process(target=worker)\n    p.start()\n    p.join()\n```\n\nNeste exemplo:\n- Importamos o módulo `multiprocessing`\n- Definimos uma função `worker` que será executada em um novo processo\n- Criamos um novo processo `p` passando a função como target\n- `p.start()` inicia o processo\n- `p.join()` espera que o processo termine\n\n**Importante**: O bloco `if __name__ == \"__main__\":` é essencial no Windows para evitar loops infinitos ao criar processos."
+        },
+        {
+          "id": "section-02-02",
+          "type": "text",
+          "title": "Comunicação Entre Processos",
+          "order_index": 2,
+          "estimated_minutes": 5,
+          "content": "# Comunicação Entre Processos\n\nEmbora cada processo tenha seu próprio espaço de memória, é frequentemente necessário que os processos se comuniquem entre si ou compartilhem dados. O módulo `multiprocessing` fornece várias maneiras de fazer isso.\n\n## Usando Filas (Queue)\n\nFilas são a forma mais simples de passar dados entre processos:\n\n```python\nfrom multiprocessing import Process, Queue\n\ndef worker(q):\n    q.put(\"Olá, mundo!\")\n\nif __name__ == \"__main__\":\n    q = Queue()\n    p = Process(target=worker, args=(q,))\n    p.start()\n    p.join()\n    message = q.get()\n    print(message)  # Imprime: Olá, mundo!\n```\n\n## Sincronização com Lock\n\nQuando se deseja garantir que apenas um processo acesse um recurso por vez:\n\n```python\nfrom multiprocessing import Process, Lock\n\ndef worker(lock, num):\n    with lock:\n        print(f\"Worker {num} está processando.\")\n\nif __name__ == \"__main__\":\n    lock = Lock()\n    for num in range(10):\n        Process(target=worker, args=(lock, num)).start()\n```\n\nO `Lock` garante que apenas um processo possa imprimir a mensagem por vez, evitando que as saídas se misturem."
+        },
+        {
+          "id": "section-02-03",
+          "type": "text",
+          "title": "Compartilhamento de Estado",
+          "order_index": 3,
+          "estimated_minutes": 5,
+          "content": "# Compartilhamento de Estado Entre Processos\n\nPara compartilhar estado entre processos, `multiprocessing` fornece `Value` e `Array`, que permitem compartilhar um único valor ou um vetor entre processos.\n\n## Usando Value e Array\n\n```python\nfrom multiprocessing import Process, Value, Array\n\ndef worker(num, arr):\n    num.value = 100\n    for i in range(len(arr)):\n        arr[i] = -arr[i]\n\nif __name__ == \"__main__\":\n    num = Value(\"d\", 0.0)  # 'd' = double (float)\n    arr = Array(\"i\", range(10))  # 'i' = integer\n    \n    p = Process(target=worker, args=(num, arr))\n    p.start()\n    p.join()\n    \n    print(num.value)  # 100.0\n    print(arr[:])  # [0, -1, -2, -3, -4, -5, -6, -7, -8, -9]\n```\n\n## Tipos de Dados Disponíveis\n\n| Código | Tipo C | Tipo Python |\n|--------|--------|-------------|\n| 'b' | signed char | int |\n| 'B' | unsigned char | int |\n| 'i' | signed int | int |\n| 'I' | unsigned int | int |\n| 'f' | float | float |\n| 'd' | double | float |\n\n**Atenção**: Mesmo com `Value` e `Array`, operações compostas (como `num.value += 1`) não são atômicas. Use `Lock` para garantir atomicidade quando necessário."
+        },
+        {
+          "id": "section-02-04",
+          "type": "text",
+          "title": "Pool de Processos",
+          "order_index": 4,
+          "estimated_minutes": 4,
+          "content": "# Pool de Processos\n\nGerenciar processos manualmente pode ser desafiador, especialmente quando você tem muitos processos. A classe `Pool` cria um pool de processos e cuida da distribuição de tarefas entre eles.\n\n## Exemplo Básico com Pool\n\n```python\nfrom multiprocessing import Pool\n\ndef square(n):\n    return n * n\n\nif __name__ == \"__main__\":\n    with Pool(4) as p:\n        results = p.map(square, range(10))\n    print(results)  # [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]\n```\n\n## Métodos Principais do Pool\n\n- **`map(func, iterable)`**: Aplica a função a cada elemento do iterável, retornando uma lista de resultados na mesma ordem.\n\n- **`apply(func, args)`**: Executa uma única chamada de função com os argumentos especificados.\n\n- **`apply_async(func, args)`**: Versão assíncrona de `apply`, retorna um objeto `AsyncResult`.\n\n- **`map_async(func, iterable)`**: Versão assíncrona de `map`.\n\n## Vantagens do Pool\n\n1. **Gerenciamento automático**: O pool cria e gerencia os processos automaticamente\n2. **Reutilização de processos**: Processos são reutilizados para várias tarefas\n3. **Distribuição de carga**: Tarefas são distribuídas entre os processos disponíveis\n4. **Simplicidade**: Interface simples similar ao `map` nativo do Python"
+        },
+        {
+          "id": "section-02-05",
+          "type": "exercise",
+          "title": "Exercício: Calculando Soma com Multiprocessing",
+          "order_index": 5,
+          "estimated_minutes": 10,
+          "content": {
+            "problem": "Escreva um programa Python que utilize `multiprocessing` para calcular a soma de uma lista contendo 99.999.999 números inteiros.\n\nO programa deve:\n1. Criar uma lista de números de 1 até 99.999.999\n2. Dividir a lista entre 4 processos\n3. Cada processo deve calcular a soma parcial de sua parte\n4. O resultado final deve ser a soma total dos números\n5. Medir e exibir o tempo de execução\n6. Comparar com a execução sequencial",
+            "starter_code": "from multiprocessing import Process, Queue\nimport time\n\ndef soma_parcial(numeros, queue):\n    \"\"\"Calcula a soma de uma lista de números e coloca na fila.\"\"\"\n    # TODO: Implementar\n    pass\n\ndef soma_sequencial(numeros):\n    \"\"\"Calcula a soma de forma sequencial.\"\"\"\n    # TODO: Implementar\n    pass\n\nif __name__ == \"__main__\":\n    # Criar lista de números\n    numeros = list(range(1, 100000000))\n    \n    # TODO: Calcular soma sequencial e medir tempo\n    \n    # TODO: Dividir lista em 4 partes\n    \n    # TODO: Criar 4 processos para calcular somas parciais\n    \n    # TODO: Coletar resultados e somar\n    \n    # TODO: Comparar tempos\n    pass",
+            "test_cases": [
+              {
+                "description": "A soma total deve estar correta",
+                "input": "sum(range(1, 100000000))",
+                "expected_output": "4999999950000000"
+              },
+              {
+                "description": "A versão paralela deve ser mais rápida que a sequencial",
+                "input": "tempo_paralelo < tempo_sequencial",
+                "expected_output": "True"
+              }
+            ],
+            "hints": [
+              "Use `len(numeros) // 4` para dividir a lista em 4 partes iguais",
+              "Crie uma Queue para cada processo armazenar seu resultado parcial",
+              "Não esqueça de chamar `start()` e `join()` em cada processo",
+              "A soma de 1 até n é n*(n+1)/2, use isso para verificar o resultado"
+            ],
+            "solution": "from multiprocessing import Process, Queue\nimport time\n\ndef soma_parcial(numeros, queue):\n    \"\"\"Calcula a soma de uma lista de números e coloca na fila.\"\"\"\n    resultado = sum(numeros)\n    queue.put(resultado)\n\ndef soma_sequencial(numeros):\n    \"\"\"Calcula a soma de forma sequencial.\"\"\"\n    return sum(numeros)\n\nif __name__ == \"__main__\":\n    # Criar lista de números\n    numeros = list(range(1, 100000000))\n    \n    # Soma sequencial\n    inicio = time.time()\n    soma_seq = soma_sequencial(numeros)\n    tempo_seq = time.time() - inicio\n    print(f\"Soma sequencial: {soma_seq}\")\n    print(f\"Tempo sequencial: {tempo_seq:.2f}s\")\n    \n    # Dividir lista em 4 partes\n    tamanho = len(numeros) // 4\n    partes = [\n        numeros[0:tamanho],\n        numeros[tamanho:tamanho*2],\n        numeros[tamanho*2:tamanho*3],\n        numeros[tamanho*3:]\n    ]\n    \n    # Soma paralela\n    inicio = time.time()\n    queues = [Queue() for _ in range(4)]\n    processos = []\n    \n    for i, parte in enumerate(partes):\n        p = Process(target=soma_parcial, args=(parte, queues[i]))\n        processos.append(p)\n        p.start()\n    \n    for p in processos:\n        p.join()\n    \n    soma_par = sum(q.get() for q in queues)\n    tempo_par = time.time() - inicio\n    \n    print(f\"\\nSoma paralela: {soma_par}\")\n    print(f\"Tempo paralelo: {tempo_par:.2f}s\")\n    print(f\"\\nSpeedup: {tempo_seq/tempo_par:.2f}x\")"
+          }
+        },
+        {
+          "id": "section-02-06",
+          "type": "quiz",
+          "title": "Quiz: Multiprocessing",
+          "order_index": 6,
+          "estimated_minutes": 4,
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "question": "Qual a principal vantagem do multiprocessing sobre multithreading para tarefas CPU-bound?",
+                "type": "multiple_choice",
+                "options": [
+                  "Usa menos memória",
+                  "É mais fácil de programar",
+                  "Cada processo tem seu próprio GIL, permitindo paralelismo real",
+                  "Os processos compartilham memória automaticamente"
+                ],
+                "correct_answer": 2,
+                "explanation": "Como cada processo tem seu próprio interpretador Python e seu próprio GIL, processos podem executar código Python verdadeiramente em paralelo em diferentes núcleos da CPU."
+              },
+              {
+                "id": "q2",
+                "question": "Qual classe do módulo multiprocessing é usada para passar dados entre processos de forma segura?",
+                "type": "multiple_choice",
+                "options": [
+                  "Pipe",
+                  "Queue",
+                  "Value",
+                  "Todas as anteriores"
+                ],
+                "correct_answer": 3,
+                "explanation": "O módulo multiprocessing oferece várias formas de comunicação: Queue (filas), Pipe (pipes) e Value/Array (memória compartilhada). Todas podem ser usadas para passar dados entre processos."
+              },
+              {
+                "id": "q3",
+                "question": "Por que o bloco 'if __name__ == \"__main__\":' é importante ao usar multiprocessing?",
+                "type": "multiple_choice",
+                "options": [
+                  "É apenas uma convenção de estilo",
+                  "Melhora a performance do programa",
+                  "Evita loops infinitos de criação de processos no Windows",
+                  "Permite o uso de mais processos"
+                ],
+                "correct_answer": 2,
+                "explanation": "No Windows, ao criar um novo processo, o módulo é importado novamente. Sem essa proteção, o código de criação de processos seria executado novamente, criando um loop infinito."
+              },
+              {
+                "id": "q4",
+                "question": "O que o método Pool.map() faz?",
+                "type": "multiple_choice",
+                "options": [
+                  "Cria um mapa de processos para núcleos da CPU",
+                  "Aplica uma função a cada elemento de um iterável usando múltiplos processos",
+                  "Mapeia a memória entre processos",
+                  "Sincroniza os processos do pool"
+                ],
+                "correct_answer": 1,
+                "explanation": "Pool.map() distribui os elementos do iterável entre os processos do pool, aplica a função a cada elemento em paralelo, e retorna os resultados na mesma ordem das entradas."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "lesson-03-multithreading",
+      "title": "Multithreading: Concorrência com Threads",
+      "summary": "Aprenda a usar o módulo threading para criar programas concorrentes com threads, ideais para tarefas I/O-bound.",
+      "order_index": 3,
+      "estimated_minutes": 35,
+      "status": "draft",
+      "sections": [
+        {
+          "id": "section-03-01",
+          "type": "text",
+          "title": "Introdução ao Multithreading",
+          "order_index": 1,
+          "estimated_minutes": 4,
+          "content": "# Introdução ao Multithreading\n\nEmbora o multiprocessing seja poderoso, nem sempre é a melhor opção. Algumas tarefas são **I/O-bound**, passando a maior parte do tempo esperando por entrada e saída. Para essas tarefas, o multithreading pode ser mais eficiente.\n\n## Threads vs Processos\n\nEm Python, threads são mais leves que processos:\n- Compartilham o mesmo espaço de memória\n- São mais rápidas para criar e destruir\n- Têm menor overhead de comunicação\n\n## Exemplo Básico\n\n```python\nimport threading\n\ndef worker():\n    print(\"Olá, mundo!\")\n\nif __name__ == \"__main__\":\n    t = threading.Thread(target=worker)\n    t.start()\n    t.join()\n```\n\nA sintaxe é muito similar ao `multiprocessing`:\n- `Thread(target=worker)` cria a thread\n- `t.start()` inicia a execução\n- `t.join()` espera a thread terminar\n\n## Quando Usar Threads\n\nThreads são ideais para:\n- Requisições HTTP/API\n- Leitura/escrita de arquivos\n- Consultas a banco de dados\n- Qualquer operação que envolva espera por I/O"
+        },
+        {
+          "id": "section-03-02",
+          "type": "text",
+          "title": "Sincronização com Lock",
+          "order_index": 2,
+          "estimated_minutes": 5,
+          "content": "# Sincronização com Lock\n\nComo as threads compartilham o mesmo espaço de memória, elas podem acessar e modificar as mesmas variáveis. Isso pode levar a **condições de corrida**, onde o resultado depende da ordem de execução das threads.\n\n## O Problema\n\n```python\nimport threading\n\ncontador = 0\n\ndef incrementar():\n    global contador\n    for _ in range(100000):\n        contador += 1  # Não é atômico!\n\n# Criar 10 threads\nthreads = [threading.Thread(target=incrementar) for _ in range(10)]\nfor t in threads:\n    t.start()\nfor t in threads:\n    t.join()\n\nprint(contador)  # Provavelmente NÃO será 1000000!\n```\n\n## A Solução: Lock\n\n```python\nimport threading\n\ncontador = 0\nlock = threading.Lock()\n\ndef incrementar():\n    global contador\n    for _ in range(100000):\n        with lock:\n            contador += 1\n\nthreads = [threading.Thread(target=incrementar) for _ in range(10)]\nfor t in threads:\n    t.start()\nfor t in threads:\n    t.join()\n\nprint(contador)  # Agora será 1000000!\n```\n\nO `with lock` garante que apenas uma thread execute o bloco por vez, e que o lock seja liberado automaticamente ao sair."
+        },
+        {
+          "id": "section-03-03",
+          "type": "text",
+          "title": "Condition e Event",
+          "order_index": 3,
+          "estimated_minutes": 6,
+          "content": "# Sincronização Avançada: Condition e Event\n\n## Condition: Produtor-Consumidor\n\nA classe `Condition` permite que threads esperem até serem notificadas:\n\n```python\nimport threading\nimport time\n\ndef consumidor(cond):\n    with cond:\n        print(\"Consumidor esperando...\")\n        cond.wait()  # Espera notificação\n        print(\"Consumidor consumiu o recurso\")\n\ndef produtor(cond):\n    with cond:\n        print(\"Produtor produzindo...\")\n        time.sleep(2)\n        print(\"Produtor produziu\")\n        cond.notify()  # Notifica o consumidor\n\ncond = threading.Condition()\ncons = threading.Thread(target=consumidor, args=(cond,))\nprod = threading.Thread(target=produtor, args=(cond,))\n\ncons.start()\nprod.start()\ncons.join()\nprod.join()\n```\n\n## Event: Sinalização Simples\n\nO `Event` é mais simples - apenas sinaliza que algo aconteceu:\n\n```python\nimport threading\nimport time\n\ndef esperar_evento(e):\n    print(\"Esperando pelo evento...\")\n    e.wait()  # Bloqueia até o evento ser setado\n    print(\"Evento detectado!\")\n\ne = threading.Event()\nt = threading.Thread(target=esperar_evento, args=(e,))\nt.start()\n\ntime.sleep(2)\ne.set()  # Sinaliza o evento\n```\n\n## Condition vs Event\n\n- **Condition**: Para coordenação complexa entre threads (produtor-consumidor)\n- **Event**: Para sinalização simples (\"algo aconteceu\")"
+        },
+        {
+          "id": "section-03-04",
+          "type": "text",
+          "title": "Semaphore e Timer",
+          "order_index": 4,
+          "estimated_minutes": 5,
+          "content": "# Semaphore e Timer\n\n## Semaphore: Limitando Acesso Concorrente\n\nSemáforos controlam quantas threads podem acessar um recurso simultaneamente:\n\n```python\nimport threading\nimport time\n\nsem = threading.Semaphore(2)  # Máximo 2 threads por vez\n\ndef task(n):\n    sem.acquire()\n    print(f\"Tarefa {n} iniciando...\")\n    time.sleep(1)\n    print(f\"Tarefa {n} finalizando...\")\n    sem.release()\n\nthreads = []\nfor i in range(10):\n    t = threading.Thread(target=task, args=(i,))\n    threads.append(t)\n    t.start()\n\nfor t in threads:\n    t.join()\n```\n\nNeste exemplo, apenas 2 tarefas executam simultaneamente.\n\n## Timer: Execução Atrasada\n\nO `Timer` executa uma função após um atraso:\n\n```python\nimport threading\n\ndef tarefa_atrasada():\n    print(\"Tarefa executada com atraso!\")\n\n# Executa após 3 segundos\ntimer = threading.Timer(3.0, tarefa_atrasada)\ntimer.start()\n\nprint(\"Timer iniciado, esperando...\")\n```\n\n## Cancelando um Timer\n\n```python\ntimer = threading.Timer(5.0, tarefa_atrasada)\ntimer.start()\n\n# Se precisar cancelar antes de executar:\ntimer.cancel()\n```\n\nTimers são úteis para timeouts, agendamentos e retry com backoff."
+        },
+        {
+          "id": "section-03-05",
+          "type": "exercise",
+          "title": "Exercício: Download Concorrente com Threads",
+          "order_index": 5,
+          "estimated_minutes": 12,
+          "content": {
+            "problem": "Escreva um programa Python que utilize multithreading para baixar 5 imagens da internet simultaneamente.\n\nO programa deve:\n1. Usar a URL `https://picsum.photos/800` que retorna imagens aleatórias\n2. Criar uma função `baixar_imagem(url, nome_arquivo)` que baixa e salva a imagem\n3. Usar um Lock para sincronizar as mensagens de progresso\n4. Baixar 5 imagens em paralelo, nomeando-as como `imagem_1.jpg`, `imagem_2.jpg`, etc.\n5. Medir e exibir o tempo total de download\n6. Comparar com download sequencial",
+            "starter_code": "import threading\nimport time\nimport requests  # pip install requests\n\nlock = threading.Lock()\n\ndef baixar_imagem(url, nome_arquivo):\n    \"\"\"Baixa uma imagem da URL e salva com o nome especificado.\"\"\"\n    # TODO: Implementar download\n    # Dica: Use requests.get(url).content para obter os bytes da imagem\n    pass\n\ndef baixar_sequencial(urls, nomes):\n    \"\"\"Baixa imagens sequencialmente.\"\"\"\n    # TODO: Implementar\n    pass\n\ndef baixar_paralelo(urls, nomes):\n    \"\"\"Baixa imagens em paralelo usando threads.\"\"\"\n    # TODO: Implementar\n    pass\n\nif __name__ == \"__main__\":\n    base_url = \"https://picsum.photos/800\"\n    urls = [f\"{base_url}?random={i}\" for i in range(5)]\n    nomes = [f\"imagem_{i}.jpg\" for i in range(1, 6)]\n    \n    # TODO: Medir e comparar tempos\n    pass",
+            "test_cases": [
+              {
+                "description": "A função baixar_imagem deve salvar um arquivo",
+                "input": "os.path.exists('imagem_1.jpg')",
+                "expected_output": "True"
+              },
+              {
+                "description": "O download paralelo deve ser mais rápido que o sequencial",
+                "input": "tempo_paralelo < tempo_sequencial * 0.6",
+                "expected_output": "True"
+              }
+            ],
+            "hints": [
+              "Use `requests.get(url, timeout=30)` para evitar travamentos",
+              "Para salvar: `with open(nome, 'wb') as f: f.write(response.content)`",
+              "Use `with lock:` antes de imprimir para evitar mensagens misturadas",
+              "Lembre-se de chamar `join()` em todas as threads antes de medir o tempo final"
+            ],
+            "solution": "import threading\nimport time\nimport requests\nimport os\n\nlock = threading.Lock()\n\ndef baixar_imagem(url, nome_arquivo):\n    \"\"\"Baixa uma imagem da URL e salva com o nome especificado.\"\"\"\n    with lock:\n        print(f\"Iniciando download: {nome_arquivo}\")\n    \n    response = requests.get(url, timeout=30)\n    \n    with open(nome_arquivo, 'wb') as f:\n        f.write(response.content)\n    \n    with lock:\n        print(f\"Concluído: {nome_arquivo}\")\n\ndef baixar_sequencial(urls, nomes):\n    \"\"\"Baixa imagens sequencialmente.\"\"\"\n    for url, nome in zip(urls, nomes):\n        baixar_imagem(url, nome)\n\ndef baixar_paralelo(urls, nomes):\n    \"\"\"Baixa imagens em paralelo usando threads.\"\"\"\n    threads = []\n    for url, nome in zip(urls, nomes):\n        t = threading.Thread(target=baixar_imagem, args=(url, nome))\n        threads.append(t)\n        t.start()\n    \n    for t in threads:\n        t.join()\n\nif __name__ == \"__main__\":\n    base_url = \"https://picsum.photos/800\"\n    urls = [f\"{base_url}?random={i}\" for i in range(5)]\n    nomes_seq = [f\"imagem_seq_{i}.jpg\" for i in range(1, 6)]\n    nomes_par = [f\"imagem_par_{i}.jpg\" for i in range(1, 6)]\n    \n    # Download sequencial\n    print(\"=== Download Sequencial ===\")\n    inicio = time.time()\n    baixar_sequencial(urls, nomes_seq)\n    tempo_seq = time.time() - inicio\n    print(f\"Tempo sequencial: {tempo_seq:.2f}s\\n\")\n    \n    # Download paralelo\n    print(\"=== Download Paralelo ===\")\n    inicio = time.time()\n    baixar_paralelo(urls, nomes_par)\n    tempo_par = time.time() - inicio\n    print(f\"Tempo paralelo: {tempo_par:.2f}s\\n\")\n    \n    # Comparação\n    print(\"=== Comparação ===\")\n    print(f\"Speedup: {tempo_seq/tempo_par:.2f}x\")\n    \n    # Limpeza (opcional)\n    for nome in nomes_seq + nomes_par:\n        if os.path.exists(nome):\n            os.remove(nome)"
+          }
+        },
+        {
+          "id": "section-03-06",
+          "type": "quiz",
+          "title": "Quiz: Multithreading",
+          "order_index": 6,
+          "estimated_minutes": 4,
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "question": "Qual primitiva de sincronização você usaria para garantir que apenas uma thread por vez modifique uma variável compartilhada?",
+                "type": "multiple_choice",
+                "options": [
+                  "Event",
+                  "Lock",
+                  "Timer",
+                  "Condition"
+                ],
+                "correct_answer": 1,
+                "explanation": "Lock é a primitiva básica para exclusão mútua. Garante que apenas uma thread por vez execute o código protegido."
+              },
+              {
+                "id": "q2",
+                "question": "Qual é a diferença principal entre Condition e Event?",
+                "type": "multiple_choice",
+                "options": [
+                  "Event é mais rápido que Condition",
+                  "Condition permite coordenação complexa, Event apenas sinaliza que algo aconteceu",
+                  "Event pode ser usado por múltiplas threads, Condition não",
+                  "Não há diferença, são intercambiáveis"
+                ],
+                "correct_answer": 1,
+                "explanation": "Condition é usado para coordenação complexa entre threads (como produtor-consumidor) com wait/notify. Event é mais simples, apenas sinalizando que um evento ocorreu."
+              },
+              {
+                "id": "q3",
+                "question": "Para que serve um Semaphore com valor 3?",
+                "type": "multiple_choice",
+                "options": [
+                  "Permite que apenas 3 threads existam no programa",
+                  "Limita a 3 o número de threads que podem acessar um recurso simultaneamente",
+                  "Cria 3 cópias do recurso protegido",
+                  "Atrasa cada thread em 3 segundos"
+                ],
+                "correct_answer": 1,
+                "explanation": "Um Semaphore com valor inicial 3 permite que até 3 threads adquiram o semáforo simultaneamente. É útil para limitar acesso concorrente a recursos limitados."
+              },
+              {
+                "id": "q4",
+                "question": "Qual afirmação sobre threads em Python é VERDADEIRA?",
+                "type": "multiple_choice",
+                "options": [
+                  "Threads têm seu próprio espaço de memória isolado",
+                  "Threads são ideais para tarefas CPU-bound",
+                  "Threads compartilham memória e são leves comparadas a processos",
+                  "Threads não podem ser sincronizadas"
+                ],
+                "correct_answer": 2,
+                "explanation": "Threads compartilham o mesmo espaço de memória do processo pai, são mais leves para criar/destruir, e têm menor overhead de comunicação que processos."
+              },
+              {
+                "id": "q5",
+                "question": "O que acontece se você chamar thread.start() duas vezes na mesma thread?",
+                "type": "multiple_choice",
+                "options": [
+                  "A thread executa duas vezes",
+                  "Nada acontece, a segunda chamada é ignorada",
+                  "Uma exceção RuntimeError é lançada",
+                  "O programa trava"
+                ],
+                "correct_answer": 2,
+                "explanation": "Chamar start() em uma thread que já foi iniciada lança RuntimeError. Uma thread só pode ser iniciada uma vez. Para executar novamente, crie uma nova instância de Thread."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "lesson-04-asyncio",
+      "title": "Programação Assíncrona com asyncio",
+      "summary": "Aprenda a usar co-rotinas e o módulo asyncio para criar programas assíncronos eficientes para operações I/O-bound.",
+      "order_index": 4,
+      "estimated_minutes": 30,
+      "status": "draft",
+      "sections": [
+        {
+          "id": "section-04-01",
+          "type": "text",
+          "title": "Introdução à Programação Assíncrona",
+          "order_index": 1,
+          "estimated_minutes": 5,
+          "content": "# Introdução à Programação Assíncrona\n\nA programação assíncrona em Python permite a execução de tarefas de forma concorrente **sem a necessidade de criar novos processos ou threads**. Essa abordagem é especialmente útil para tarefas I/O-bound.\n\n## O que são Co-rotinas\n\nA programação assíncrona se baseia na noção de **co-rotinas** (coroutines), que são funções especiais que podem ser pausadas e retomadas, permitindo que outras co-rotinas sejam executadas durante as pausas.\n\n## Sintaxe Básica\n\n```python\nimport asyncio\n\nasync def hello():\n    print(\"Olá,\")\n    await asyncio.sleep(1)  # Pausa sem bloquear\n    print(\"mundo!\")\n\nasyncio.run(hello())\n```\n\n## Palavras-chave\n\n- **`async def`**: Define uma co-rotina (função assíncrona)\n- **`await`**: Pausa a co-rotina até a operação completar\n- **`asyncio.run()`**: Executa a co-rotina principal\n\n## Event Loop\n\nO **event loop** (laço de eventos) é o coração do asyncio:\n- Gerencia a fila de tarefas a serem executadas\n- Quando uma tarefa pausa (await), passa para a próxima\n- Retorna à tarefa quando ela está pronta para continuar\n\nVocê pode pensar no event loop como um gerenciador inteligente que alterna entre tarefas, mantendo o programa sempre ocupado."
+        },
+        {
+          "id": "section-04-02",
+          "type": "text",
+          "title": "Criando e Executando Co-rotinas",
+          "order_index": 2,
+          "estimated_minutes": 5,
+          "content": "# Criando e Executando Co-rotinas\n\n## Definindo Co-rotinas\n\nUma co-rotina é definida com `async def`:\n\n```python\nasync def minha_corotina():\n    print(\"Início\")\n    await asyncio.sleep(1)\n    print(\"Fim\")\n    return \"Resultado\"\n```\n\n## Executando Co-rotinas\n\n### Método 1: asyncio.run() (recomendado)\n\n```python\nimport asyncio\n\nasync def main():\n    resultado = await minha_corotina()\n    print(resultado)\n\nasyncio.run(main())\n```\n\n### Método 2: Dentro de outra co-rotina\n\n```python\nasync def main():\n    # Executar e esperar\n    resultado = await minha_corotina()\n    \n    # OU criar como task\n    task = asyncio.create_task(minha_corotina())\n    resultado = await task\n```\n\n## Co-rotinas vs Funções Normais\n\n```python\n# Função normal - executa imediatamente\ndef normal():\n    return 42\n\nresultado = normal()  # 42\n\n# Co-rotina - retorna objeto coroutine\nasync def corotina():\n    return 42\n\nobjeto = corotina()  # <coroutine object>\nresultado = asyncio.run(corotina())  # 42\n```\n\n**Importante**: Chamar uma co-rotina sem `await` ou `asyncio.run()` apenas cria o objeto, não executa o código!"
+        },
+        {
+          "id": "section-04-03",
+          "type": "text",
+          "title": "Executando Tarefas em Paralelo",
+          "order_index": 3,
+          "estimated_minutes": 5,
+          "content": "# Executando Tarefas em Paralelo\n\nO verdadeiro poder do asyncio aparece quando executamos múltiplas tarefas concorrentemente.\n\n## asyncio.gather()\n\nExecuta múltiplas co-rotinas concorrentemente e espera todas terminarem:\n\n```python\nimport asyncio\n\nasync def tarefa(n):\n    print(f\"Tarefa {n} iniciada\")\n    await asyncio.sleep(n)\n    print(f\"Tarefa {n} finalizada\")\n    return n * 10\n\nasync def main():\n    resultados = await asyncio.gather(\n        tarefa(1),\n        tarefa(2),\n        tarefa(3)\n    )\n    print(resultados)  # [10, 20, 30]\n\nasyncio.run(main())\n```\n\n**Tempo total**: ~3 segundos (não 6!)\n\n## asyncio.create_task()\n\nCria uma task que começa a executar imediatamente:\n\n```python\nasync def main():\n    # Criar tasks (começam imediatamente)\n    task1 = asyncio.create_task(tarefa(1))\n    task2 = asyncio.create_task(tarefa(2))\n    \n    # Fazer outras coisas enquanto executam...\n    print(\"Tasks em execução...\")\n    \n    # Esperar resultados\n    resultado1 = await task1\n    resultado2 = await task2\n```\n\n## Quando Usar Cada Um\n\n- **`gather()`**: Quando você tem todas as tarefas prontas e quer esperar todas\n- **`create_task()`**: Quando quer iniciar uma tarefa e continuar fazendo outras coisas"
+        },
+        {
+          "id": "section-04-04",
+          "type": "text",
+          "title": "Tratamento de Erros e Timeouts",
+          "order_index": 4,
+          "estimated_minutes": 4,
+          "content": "# Tratamento de Erros e Timeouts\n\n## Tratando Exceções em Co-rotinas\n\n```python\nimport asyncio\n\nasync def tarefa_com_erro():\n    await asyncio.sleep(1)\n    raise ValueError(\"Algo deu errado!\")\n\nasync def main():\n    try:\n        await tarefa_com_erro()\n    except ValueError as e:\n        print(f\"Erro capturado: {e}\")\n\nasyncio.run(main())\n```\n\n## Timeouts com asyncio.wait_for()\n\n```python\nasync def tarefa_lenta():\n    await asyncio.sleep(10)\n    return \"Concluído\"\n\nasync def main():\n    try:\n        resultado = await asyncio.wait_for(\n            tarefa_lenta(),\n            timeout=2.0  # Espera no máximo 2 segundos\n        )\n    except asyncio.TimeoutError:\n        print(\"Timeout! Tarefa demorou demais.\")\n\nasyncio.run(main())\n```\n\n## gather() com return_exceptions\n\nPara continuar mesmo se algumas tarefas falharem:\n\n```python\nasync def main():\n    resultados = await asyncio.gather(\n        tarefa_ok(),\n        tarefa_com_erro(),\n        tarefa_ok(),\n        return_exceptions=True  # Não propaga exceções\n    )\n    \n    for r in resultados:\n        if isinstance(r, Exception):\n            print(f\"Tarefa falhou: {r}\")\n        else:\n            print(f\"Resultado: {r}\")\n```"
+        },
+        {
+          "id": "section-04-05",
+          "type": "exercise",
+          "title": "Exercício: Requisições HTTP Assíncronas",
+          "order_index": 5,
+          "estimated_minutes": 10,
+          "content": {
+            "problem": "Escreva um programa Python que utilize asyncio e a biblioteca aiohttp para fazer requisições HTTP de forma assíncrona.\n\nO programa deve:\n1. Instalar aiohttp: `pip install aiohttp`\n2. Criar uma função assíncrona `buscar_url(session, url)` que faz GET e retorna o status\n3. Usar `asyncio.gather()` para fazer 5 requisições simultaneamente\n4. Medir o tempo total de execução\n5. Comparar com uma versão síncrona usando requests",
+            "starter_code": "import asyncio\nimport aiohttp\nimport time\n\nURLS = [\n    \"https://httpbin.org/delay/1\",\n    \"https://httpbin.org/delay/1\",\n    \"https://httpbin.org/delay/1\",\n    \"https://httpbin.org/delay/1\",\n    \"https://httpbin.org/delay/1\",\n]\n\nasync def buscar_url(session, url):\n    \"\"\"Faz requisição GET assíncrona e retorna status.\"\"\"\n    # TODO: Implementar\n    pass\n\nasync def buscar_todas_async():\n    \"\"\"Busca todas as URLs de forma assíncrona.\"\"\"\n    # TODO: Implementar usando aiohttp.ClientSession e gather\n    pass\n\ndef buscar_todas_sync():\n    \"\"\"Busca todas as URLs de forma síncrona.\"\"\"\n    # TODO: Implementar usando requests\n    pass\n\nif __name__ == \"__main__\":\n    # TODO: Comparar tempos\n    pass",
+            "test_cases": [
+              {
+                "description": "A versão assíncrona deve completar em aproximadamente 1 segundo",
+                "input": "tempo_async < 2.0",
+                "expected_output": "True"
+              },
+              {
+                "description": "A versão síncrona deve demorar aproximadamente 5 segundos",
+                "input": "tempo_sync > 4.0",
+                "expected_output": "True"
+              }
+            ],
+            "hints": [
+              "Use `async with aiohttp.ClientSession() as session:` para criar a sessão",
+              "Dentro da sessão, use `async with session.get(url) as response:`",
+              "Para a versão síncrona, instale requests: `pip install requests`",
+              "A URL httpbin.org/delay/1 adiciona 1 segundo de delay na resposta"
+            ],
+            "solution": "import asyncio\nimport aiohttp\nimport requests\nimport time\n\nURLS = [\n    \"https://httpbin.org/delay/1\",\n    \"https://httpbin.org/delay/1\",\n    \"https://httpbin.org/delay/1\",\n    \"https://httpbin.org/delay/1\",\n    \"https://httpbin.org/delay/1\",\n]\n\nasync def buscar_url(session, url):\n    \"\"\"Faz requisição GET assíncrona e retorna status.\"\"\"\n    async with session.get(url) as response:\n        print(f\"URL: {url} - Status: {response.status}\")\n        return response.status\n\nasync def buscar_todas_async():\n    \"\"\"Busca todas as URLs de forma assíncrona.\"\"\"\n    async with aiohttp.ClientSession() as session:\n        tasks = [buscar_url(session, url) for url in URLS]\n        resultados = await asyncio.gather(*tasks)\n        return resultados\n\ndef buscar_todas_sync():\n    \"\"\"Busca todas as URLs de forma síncrona.\"\"\"\n    resultados = []\n    for url in URLS:\n        response = requests.get(url)\n        print(f\"URL: {url} - Status: {response.status_code}\")\n        resultados.append(response.status_code)\n    return resultados\n\nif __name__ == \"__main__\":\n    # Versão assíncrona\n    print(\"=== Versão Assíncrona ===\")\n    inicio = time.time()\n    resultados_async = asyncio.run(buscar_todas_async())\n    tempo_async = time.time() - inicio\n    print(f\"Tempo: {tempo_async:.2f}s\\n\")\n    \n    # Versão síncrona\n    print(\"=== Versão Síncrona ===\")\n    inicio = time.time()\n    resultados_sync = buscar_todas_sync()\n    tempo_sync = time.time() - inicio\n    print(f\"Tempo: {tempo_sync:.2f}s\\n\")\n    \n    # Comparação\n    print(\"=== Comparação ===\")\n    print(f\"Async: {tempo_async:.2f}s\")\n    print(f\"Sync: {tempo_sync:.2f}s\")\n    print(f\"Speedup: {tempo_sync/tempo_async:.2f}x\")"
+          }
+        },
+        {
+          "id": "section-04-06",
+          "type": "quiz",
+          "title": "Quiz: Programação Assíncrona",
+          "order_index": 6,
+          "estimated_minutes": 4,
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "question": "O que acontece quando você chama uma função definida com 'async def' sem usar 'await'?",
+                "type": "multiple_choice",
+                "options": [
+                  "A função executa normalmente",
+                  "Um erro de sintaxe é lançado",
+                  "A função retorna um objeto coroutine sem executar o código",
+                  "A função executa em background"
+                ],
+                "correct_answer": 2,
+                "explanation": "Chamar uma função async sem await apenas cria e retorna um objeto coroutine. O código dentro da função só é executado quando você usa await ou asyncio.run()."
+              },
+              {
+                "id": "q2",
+                "question": "Qual função do asyncio você usaria para executar múltiplas co-rotinas concorrentemente e esperar todas terminarem?",
+                "type": "multiple_choice",
+                "options": [
+                  "asyncio.run()",
+                  "asyncio.gather()",
+                  "asyncio.create_task()",
+                  "asyncio.wait_for()"
+                ],
+                "correct_answer": 1,
+                "explanation": "asyncio.gather() executa múltiplas co-rotinas concorrentemente e retorna quando todas terminam, devolvendo uma lista com os resultados."
+              },
+              {
+                "id": "q3",
+                "question": "Qual é o papel do 'event loop' na programação assíncrona?",
+                "type": "multiple_choice",
+                "options": [
+                  "Criar threads automaticamente",
+                  "Gerenciar e alternar entre tarefas assíncronas",
+                  "Converter código síncrono em assíncrono",
+                  "Sincronizar acesso a variáveis"
+                ],
+                "correct_answer": 1,
+                "explanation": "O event loop é o coração do asyncio. Ele gerencia a fila de tarefas, alternando entre elas quando uma pausa (await) e retornando quando estão prontas para continuar."
+              },
+              {
+                "id": "q4",
+                "question": "Como você definiria um timeout de 5 segundos para uma co-rotina?",
+                "type": "multiple_choice",
+                "options": [
+                  "await minha_corotina(timeout=5)",
+                  "asyncio.timeout(5, minha_corotina())",
+                  "await asyncio.wait_for(minha_corotina(), timeout=5)",
+                  "async with timeout(5): await minha_corotina()"
+                ],
+                "correct_answer": 2,
+                "explanation": "asyncio.wait_for() permite definir um timeout para qualquer co-rotina. Se o tempo expirar, uma asyncio.TimeoutError é lançada."
+              },
+              {
+                "id": "q5",
+                "question": "Qual a principal vantagem do asyncio sobre multithreading para I/O-bound?",
+                "type": "multiple_choice",
+                "options": [
+                  "É mais rápido em todos os casos",
+                  "Usa menos memória e tem menor overhead pois não cria threads/processos",
+                  "Permite paralelismo real em múltiplos núcleos",
+                  "Não requer sincronização com Lock"
+                ],
+                "correct_answer": 1,
+                "explanation": "asyncio usa uma única thread com co-rotinas, resultando em menor uso de memória e overhead comparado a criar múltiplas threads. O programador também tem controle explícito dos pontos de alternância (await)."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "lesson-05-concurrent-futures",
+      "title": "concurrent.futures: API Unificada de Concorrência",
+      "summary": "Aprenda a usar o módulo concurrent.futures para uma abordagem simplificada e unificada de programação concorrente com threads e processos.",
+      "order_index": 5,
+      "estimated_minutes": 25,
+      "status": "draft",
+      "sections": [
+        {
+          "id": "section-05-01",
+          "type": "text",
+          "title": "Introdução ao concurrent.futures",
+          "order_index": 1,
+          "estimated_minutes": 4,
+          "content": "# Introdução ao concurrent.futures\n\nDepois de explorar multiprocessing, multithreading e asyncio, você pode se perguntar: existe uma forma mais simples de trabalhar com concorrência em Python? A resposta é **sim**: o módulo `concurrent.futures`.\n\n## O que é concurrent.futures\n\nIntroduzido no Python 3.2, o módulo fornece uma interface de alto nível para executar chamadas de forma assíncrona usando threads ou processos.\n\n## Vantagens Principais\n\n1. **API consistente**: A mesma interface para threads e processos\n2. **Simplicidade**: Abstrai complexidades de gerenciamento de threads/processos\n3. **Flexibilidade**: Troque facilmente entre threads e processos\n4. **Futures**: Controle fino sobre resultados e exceções\n\n## Dois Executores\n\n```python\nfrom concurrent.futures import ThreadPoolExecutor, ProcessPoolExecutor\n\n# Para tarefas I/O-bound\nwith ThreadPoolExecutor(max_workers=4) as executor:\n    ...\n\n# Para tarefas CPU-bound\nwith ProcessPoolExecutor(max_workers=4) as executor:\n    ...\n```\n\n## Conceito de Future\n\nUm **Future** representa o resultado eventual de uma operação assíncrona:\n- Você pode verificar se completou\n- Obter o resultado quando pronto\n- Tratar exceções que ocorreram"
+        },
+        {
+          "id": "section-05-02",
+          "type": "text",
+          "title": "ThreadPoolExecutor na Prática",
+          "order_index": 2,
+          "estimated_minutes": 5,
+          "content": "# ThreadPoolExecutor na Prática\n\nO `ThreadPoolExecutor` é perfeito para tarefas I/O-bound como requisições de rede, leitura de arquivos ou consultas a banco de dados.\n\n## Usando submit()\n\n```python\nfrom concurrent.futures import ThreadPoolExecutor\nimport time\n\ndef tarefa_io(n):\n    print(f\"Tarefa {n} iniciada\")\n    time.sleep(2)\n    return n * n\n\nwith ThreadPoolExecutor(max_workers=3) as executor:\n    future1 = executor.submit(tarefa_io, 1)\n    future2 = executor.submit(tarefa_io, 2)\n    future3 = executor.submit(tarefa_io, 3)\n    \n    # Obter resultados (bloqueia até estar pronto)\n    print(future1.result())  # 1\n    print(future2.result())  # 4\n    print(future3.result())  # 9\n```\n\n## Usando map()\n\nSimilar ao `map()` nativo, mas executa em paralelo:\n\n```python\ndef processar(url):\n    time.sleep(1)  # Simula requisição\n    return f\"Processado: {url}\"\n\nurls = [\"url1\", \"url2\", \"url3\", \"url4\", \"url5\"]\n\nwith ThreadPoolExecutor(max_workers=3) as executor:\n    resultados = executor.map(processar, urls)\n    \n    for r in resultados:  # Resultados na ordem original\n        print(r)\n```\n\n## Diferença entre submit() e map()\n\n- **submit()**: Retorna Future, mais controle, ordem não garantida\n- **map()**: Retorna iterador, resultados na ordem original, mais simples"
+        },
+        {
+          "id": "section-05-03",
+          "type": "text",
+          "title": "ProcessPoolExecutor para CPU-bound",
+          "order_index": 3,
+          "estimated_minutes": 5,
+          "content": "# ProcessPoolExecutor para CPU-bound\n\nPara tarefas CPU-bound, use `ProcessPoolExecutor`. A API é idêntica ao `ThreadPoolExecutor`!\n\n## Exemplo Comparativo\n\n```python\nfrom concurrent.futures import ProcessPoolExecutor\nimport time\n\ndef calculo_pesado(n):\n    total = 0\n    for i in range(n):\n        total += i ** 2\n    return total\n\nnumeros = [5000000, 6000000, 7000000, 8000000]\n\n# Sequencial\ninicio = time.time()\nresultados_seq = [calculo_pesado(n) for n in numeros]\ntempo_seq = time.time() - inicio\nprint(f\"Sequencial: {tempo_seq:.2f}s\")\n\n# Paralelo com processos\ninicio = time.time()\nwith ProcessPoolExecutor(max_workers=4) as executor:\n    resultados_par = list(executor.map(calculo_pesado, numeros))\ntempo_par = time.time() - inicio\nprint(f\"Paralelo: {tempo_par:.2f}s\")\nprint(f\"Speedup: {tempo_seq/tempo_par:.2f}x\")\n```\n\n## Trocando entre Executores\n\nA beleza do `concurrent.futures` é que trocar de threads para processos é trivial:\n\n```python\n# Mude apenas esta linha:\n# with ThreadPoolExecutor(max_workers=4) as executor:\nwith ProcessPoolExecutor(max_workers=4) as executor:\n    # Mesmo código funciona!\n    resultados = executor.map(funcao, dados)\n```"
+        },
+        {
+          "id": "section-05-04",
+          "type": "text",
+          "title": "as_completed e Tratamento de Erros",
+          "order_index": 4,
+          "estimated_minutes": 4,
+          "content": "# as_completed e Tratamento de Erros\n\n## Processando Resultados Conforme Ficam Prontos\n\nEm vez de esperar todos terminarem, processe conforme concluem:\n\n```python\nfrom concurrent.futures import ThreadPoolExecutor, as_completed\nimport random\nimport time\n\ndef tarefa(n):\n    tempo = random.uniform(1, 3)\n    time.sleep(tempo)\n    return f\"Tarefa {n} completou em {tempo:.2f}s\"\n\nwith ThreadPoolExecutor(max_workers=4) as executor:\n    futures = {executor.submit(tarefa, i): i for i in range(5)}\n    \n    for future in as_completed(futures):\n        tarefa_id = futures[future]\n        resultado = future.result()\n        print(f\"[Completa] {resultado}\")\n```\n\n## Tratando Exceções e Timeouts\n\n```python\nfrom concurrent.futures import ThreadPoolExecutor, TimeoutError\n\ndef tarefa_arriscada(n):\n    if n == 2:\n        raise ValueError(f\"Erro na tarefa {n}\")\n    return n * 10\n\nwith ThreadPoolExecutor(max_workers=3) as executor:\n    futures = [executor.submit(tarefa_arriscada, i) for i in range(4)]\n    \n    for i, future in enumerate(futures):\n        try:\n            resultado = future.result(timeout=5)  # Timeout de 5s\n            print(f\"Tarefa {i}: {resultado}\")\n        except ValueError as e:\n            print(f\"Tarefa {i} falhou: {e}\")\n        except TimeoutError:\n            print(f\"Tarefa {i} excedeu timeout\")\n```"
+        },
+        {
+          "id": "section-05-05",
+          "type": "exercise",
+          "title": "Exercício: Web Scraper com concurrent.futures",
+          "order_index": 5,
+          "estimated_minutes": 10,
+          "content": {
+            "problem": "Crie um programa que busque o título de 5 páginas web usando ThreadPoolExecutor.\n\nO programa deve:\n1. Definir uma lista de 5 URLs (use sites como wikipedia, github, python.org)\n2. Criar uma função `buscar_titulo(url)` que faz GET e extrai o título da página\n3. Usar ThreadPoolExecutor com `as_completed()` para processar resultados conforme chegam\n4. Tratar erros de conexão e timeout (5 segundos)\n5. Medir e exibir o tempo total de execução",
+            "starter_code": "from concurrent.futures import ThreadPoolExecutor, as_completed\nimport requests\nimport time\nimport re\n\nURLS = [\n    \"https://www.python.org\",\n    \"https://github.com\",\n    \"https://en.wikipedia.org\",\n    \"https://stackoverflow.com\",\n    \"https://www.google.com\",\n]\n\ndef buscar_titulo(url):\n    \"\"\"Faz GET na URL e retorna o título da página.\"\"\"\n    # TODO: Implementar\n    # Dica: Use regex para extrair <title>...</title>\n    pass\n\ndef main():\n    \"\"\"Busca títulos de todas as URLs usando ThreadPoolExecutor.\"\"\"\n    # TODO: Implementar\n    pass\n\nif __name__ == \"__main__\":\n    main()",
+            "test_cases": [
+              {
+                "description": "Deve retornar títulos para URLs válidas",
+                "input": "len(titulos_obtidos) >= 4",
+                "expected_output": "True"
+              },
+              {
+                "description": "Deve completar em menos de 10 segundos",
+                "input": "tempo_total < 10",
+                "expected_output": "True"
+              }
+            ],
+            "hints": [
+              "Use `requests.get(url, timeout=5)` para evitar travamentos",
+              "Para extrair o título: `re.search(r'<title>(.*?)</title>', html, re.IGNORECASE)`",
+              "Em as_completed, use um dict para mapear future -> url",
+              "Envolva future.result() em try/except para tratar erros"
+            ],
+            "solution": "from concurrent.futures import ThreadPoolExecutor, as_completed\nimport requests\nimport time\nimport re\n\nURLS = [\n    \"https://www.python.org\",\n    \"https://github.com\",\n    \"https://en.wikipedia.org\",\n    \"https://stackoverflow.com\",\n    \"https://www.google.com\",\n]\n\ndef buscar_titulo(url):\n    \"\"\"Faz GET na URL e retorna o título da página.\"\"\"\n    response = requests.get(url, timeout=5)\n    response.raise_for_status()\n    \n    match = re.search(r'<title>(.*?)</title>', response.text, re.IGNORECASE | re.DOTALL)\n    if match:\n        return match.group(1).strip()\n    return \"Título não encontrado\"\n\ndef main():\n    \"\"\"Busca títulos de todas as URLs usando ThreadPoolExecutor.\"\"\"\n    inicio = time.time()\n    \n    with ThreadPoolExecutor(max_workers=5) as executor:\n        # Mapeia future -> url\n        future_to_url = {executor.submit(buscar_titulo, url): url for url in URLS}\n        \n        for future in as_completed(future_to_url):\n            url = future_to_url[future]\n            try:\n                titulo = future.result()\n                print(f\"[OK] {url}\")\n                print(f\"     Título: {titulo[:60]}...\" if len(titulo) > 60 else f\"     Título: {titulo}\")\n            except requests.exceptions.Timeout:\n                print(f\"[TIMEOUT] {url}\")\n            except requests.exceptions.RequestException as e:\n                print(f\"[ERRO] {url}: {e}\")\n            except Exception as e:\n                print(f\"[ERRO] {url}: {e}\")\n            print()\n    \n    tempo_total = time.time() - inicio\n    print(f\"Tempo total: {tempo_total:.2f}s\")\n\nif __name__ == \"__main__\":\n    main()"
+          }
+        },
+        {
+          "id": "section-05-06",
+          "type": "quiz",
+          "title": "Quiz: concurrent.futures",
+          "order_index": 6,
+          "estimated_minutes": 4,
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "question": "Qual a principal vantagem do concurrent.futures sobre usar threading/multiprocessing diretamente?",
+                "type": "multiple_choice",
+                "options": [
+                  "É mais rápido",
+                  "Usa menos memória",
+                  "Oferece uma API unificada e simplificada para ambos",
+                  "Permite mais workers simultâneos"
+                ],
+                "correct_answer": 2,
+                "explanation": "concurrent.futures oferece a mesma API para ThreadPoolExecutor e ProcessPoolExecutor, permitindo trocar facilmente entre threads e processos mudando apenas uma linha de código."
+              },
+              {
+                "id": "q2",
+                "question": "Qual método você usaria para processar resultados conforme as tarefas terminam, não na ordem de submissão?",
+                "type": "multiple_choice",
+                "options": [
+                  "executor.map()",
+                  "as_completed(futures)",
+                  "future.result()",
+                  "executor.submit()"
+                ],
+                "correct_answer": 1,
+                "explanation": "as_completed() retorna um iterador que fornece os Futures conforme eles completam, independente da ordem em que foram submetidos."
+              },
+              {
+                "id": "q3",
+                "question": "O que acontece se uma tarefa submetida ao executor lançar uma exceção?",
+                "type": "multiple_choice",
+                "options": [
+                  "O programa trava imediatamente",
+                  "A exceção é ignorada silenciosamente",
+                  "A exceção é armazenada no Future e relançada ao chamar result()",
+                  "Todas as outras tarefas são canceladas"
+                ],
+                "correct_answer": 2,
+                "explanation": "Exceções lançadas em tarefas são capturadas e armazenadas no objeto Future. Quando você chama future.result(), a exceção é relançada, permitindo tratamento adequado."
+              },
+              {
+                "id": "q4",
+                "question": "Qual a diferença entre executor.map() e executor.submit()?",
+                "type": "multiple_choice",
+                "options": [
+                  "map() é mais rápido que submit()",
+                  "map() retorna resultados na ordem, submit() retorna Futures individuais",
+                  "submit() só funciona com ProcessPoolExecutor",
+                  "Não há diferença, são intercambiáveis"
+                ],
+                "correct_answer": 1,
+                "explanation": "map() aplica uma função a um iterável e retorna resultados na mesma ordem. submit() submete tarefas individuais e retorna objetos Future, dando mais controle sobre cada tarefa."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "lesson-06-estudo-caso",
+      "title": "Estudo de Caso: API de Países",
+      "summary": "Aplique os conceitos aprendidos em um estudo de caso prático comparando abordagens síncrona e assíncrona para consultas a uma API.",
+      "order_index": 6,
+      "estimated_minutes": 25,
+      "status": "draft",
+      "sections": [
+        {
+          "id": "section-06-01",
+          "type": "text",
+          "title": "Apresentação do Problema",
+          "order_index": 1,
+          "estimated_minutes": 3,
+          "content": "# Estudo de Caso: Consulta à API de Países\n\nNeste estudo de caso, vamos aplicar os conceitos de programação concorrente para resolver um problema real: consultar informações de países através de uma API web.\n\n## O Cenário\n\nPrecisamos consultar os nomes de 10 países aleatórios usando a API REST Countries (https://restcountries.com). Cada país é identificado por um código de duas letras (BR, US, DE, etc.).\n\n## O Desafio\n\nCompararemos duas abordagens:\n1. **Síncrona**: Uma requisição por vez, esperando cada resposta\n2. **Assíncrona**: Todas as requisições simultaneamente\n\n## Dados Base\n\nUsaremos um módulo utilitário com a URL da API e os códigos dos países:\n\n```python\n# country_util.py\napi_url = \"https://restcountries.com/v3.1/alpha/\"\ncodes2a = [\"BR\", \"US\", \"DE\", \"FR\", \"JP\", \"CN\", \"IN\", \"AU\", \"CA\", \"GB\", \n           \"IT\", \"ES\", \"MX\", \"AR\", \"ZA\", \"EG\", \"NG\", \"KE\", \"TH\", \"VN\"]\n```\n\n## O que Vamos Medir\n\n- Tempo de execução de cada abordagem\n- Speedup obtido com a versão assíncrona\n- Diferença prática de experiência do usuário"
+        },
+        {
+          "id": "section-06-02",
+          "type": "text",
+          "title": "Implementação Síncrona",
+          "order_index": 2,
+          "estimated_minutes": 5,
+          "content": "# Implementação Síncrona\n\nA versão síncrona faz uma requisição por vez, esperando cada resposta antes de fazer a próxima.\n\n## Código Completo\n\n```python\nimport json\nimport random\nimport requests\nfrom time import perf_counter\n\napi_url = \"https://restcountries.com/v3.1/alpha/\"\ncodes2a = [\"BR\", \"US\", \"DE\", \"FR\", \"JP\", \"CN\", \"IN\", \"AU\", \"CA\", \"GB\"]\n\ndef http_get_country_name(code: str) -> str:\n    \"\"\"Busca o nome de um país pelo código.\"\"\"\n    resp = requests.get(f\"{api_url}{code}\")\n    json_data = resp.json()\n    name = json_data[0][\"name\"][\"common\"]\n    return name\n\ndef get_names_sync() -> list:\n    \"\"\"Busca nomes de 10 países de forma síncrona.\"\"\"\n    nomes = []\n    for code in random.choices(codes2a, k=10):\n        nome = http_get_country_name(code)\n        nomes.append(nome)\n    return nomes\n\ninicio = perf_counter()\nprint(\"Execução iniciada. Aguarde...\")\nnomes = get_names_sync()\nprint(nomes)\nfim = perf_counter()\ntempo = fim - inicio\nprint(f\"Tempo de execução: {tempo:.2f} segundos.\")\n```\n\n## Resultado Típico\n\n```\nExecução iniciada. Aguarde...\n['Brazil', 'Germany', 'Japan', 'France', 'China', ...]\nTempo de execução: 4.87 segundos.\n```\n\nCada requisição demora cerca de 0.5 segundos. Com 10 requisições sequenciais, o tempo total é a soma de todas elas."
+        },
+        {
+          "id": "section-06-03",
+          "type": "text",
+          "title": "Implementação Assíncrona",
+          "order_index": 3,
+          "estimated_minutes": 6,
+          "content": "# Implementação Assíncrona\n\nA versão assíncrona faz todas as requisições simultaneamente usando `asyncio` e `aiohttp`.\n\n## Instalação\n\n```bash\npip install aiohttp\n```\n\n## Código Completo\n\n```python\nimport asyncio\nimport json\nimport random\nimport aiohttp\nfrom time import perf_counter\n\napi_url = \"https://restcountries.com/v3.1/alpha/\"\ncodes2a = [\"BR\", \"US\", \"DE\", \"FR\", \"JP\", \"CN\", \"IN\", \"AU\", \"CA\", \"GB\"]\n\nasync def get_country_name_async(session, code):\n    \"\"\"Busca o nome de um país de forma assíncrona.\"\"\"\n    async with session.get(f\"{api_url}{code}\") as response:\n        json_data = await response.json()\n        name = json_data[0][\"name\"][\"common\"]\n        return name\n\nasync def get_names_async() -> list:\n    \"\"\"Busca nomes de 10 países de forma assíncrona.\"\"\"\n    async with aiohttp.ClientSession() as session:\n        codes = random.choices(codes2a, k=10)\n        tasks = [get_country_name_async(session, code) for code in codes]\n        countries = await asyncio.gather(*tasks)\n        return countries\n\ninicio = perf_counter()\nprint(\"Execução iniciada. Aguarde...\")\nnomes = asyncio.run(get_names_async())\nprint(nomes)\nfim = perf_counter()\ntempo = fim - inicio\nprint(f\"Tempo de execução: {tempo:.2f} segundos.\")\n```\n\n## Resultado Típico\n\n```\nExecução iniciada. Aguarde...\n['Brazil', 'Germany', 'Japan', 'France', 'China', ...]\nTempo de execução: 0.52 segundos.\n```\n\n**Speedup de ~10x!** Como todas as requisições são feitas simultaneamente, o tempo total é aproximadamente o tempo de uma única requisição."
+        },
+        {
+          "id": "section-06-04",
+          "type": "text",
+          "title": "Análise Comparativa",
+          "order_index": 4,
+          "estimated_minutes": 4,
+          "content": "# Análise Comparativa\n\n## Resultados\n\n| Métrica | Síncrono | Assíncrono |\n|---------|----------|------------|\n| Tempo Total | ~5 segundos | ~0.5 segundos |\n| Requisições Simultâneas | 1 | 10 |\n| Uso de CPU | Mínimo (espera) | Mínimo (espera) |\n| Complexidade de Código | Baixa | Média |\n\n## Por que a Diferença é Tão Grande?\n\nO tempo total de tarefas I/O-bound é dominado pela **latência de rede**, não pelo processamento.\n\n- **Síncrono**: `tempo_total = soma(tempo_cada_requisicao)`\n- **Assíncrono**: `tempo_total = max(tempo_cada_requisicao)`\n\n## Quando Usar Cada Abordagem\n\n### Use Síncrono quando:\n- O código precisa ser simples e fácil de manter\n- Há poucas requisições (1-3)\n- O tempo de resposta não é crítico\n\n### Use Assíncrono quando:\n- Há muitas requisições independentes\n- O tempo de resposta é importante para UX\n- O sistema precisa ser escalável\n\n## Lições Aprendidas\n\n1. Para tarefas I/O-bound, programação assíncrona pode oferecer ganhos dramáticos\n2. O investimento em complexidade de código compensa para operações frequentes\n3. A escolha da biblioteca (aiohttp vs requests) impacta o design do código"
+        },
+        {
+          "id": "section-06-05",
+          "type": "exercise",
+          "title": "Exercício: Implementar Versão com ThreadPoolExecutor",
+          "order_index": 5,
+          "estimated_minutes": 10,
+          "content": {
+            "problem": "Implemente uma terceira versão do estudo de caso usando `concurrent.futures.ThreadPoolExecutor`.\n\nO programa deve:\n1. Reutilizar a mesma API (restcountries.com) e lista de códigos\n2. Usar ThreadPoolExecutor com 10 workers\n3. Buscar 10 países aleatórios\n4. Medir e comparar o tempo com as versões síncrona e assíncrona\n5. Usar `as_completed()` para mostrar resultados conforme chegam",
+            "starter_code": "from concurrent.futures import ThreadPoolExecutor, as_completed\nimport requests\nimport random\nfrom time import perf_counter\n\napi_url = \"https://restcountries.com/v3.1/alpha/\"\ncodes2a = [\"BR\", \"US\", \"DE\", \"FR\", \"JP\", \"CN\", \"IN\", \"AU\", \"CA\", \"GB\",\n           \"IT\", \"ES\", \"MX\", \"AR\", \"ZA\", \"EG\", \"NG\", \"KE\", \"TH\", \"VN\"]\n\ndef buscar_pais(code: str) -> dict:\n    \"\"\"Busca informações de um país.\"\"\"\n    # TODO: Implementar\n    pass\n\ndef buscar_paises_concurrent(codes: list) -> list:\n    \"\"\"Busca países usando ThreadPoolExecutor.\"\"\"\n    # TODO: Implementar com as_completed\n    pass\n\nif __name__ == \"__main__\":\n    # TODO: Selecionar 10 códigos aleatórios e medir tempo\n    pass",
+            "test_cases": [
+              {
+                "description": "Deve retornar 10 nomes de países",
+                "input": "len(resultado)",
+                "expected_output": "10"
+              },
+              {
+                "description": "Deve completar em menos de 2 segundos",
+                "input": "tempo < 2.0",
+                "expected_output": "True"
+              }
+            ],
+            "hints": [
+              "Use `requests.get(url, timeout=10)` para evitar travamentos",
+              "O JSON retornado é uma lista, acesse `[0]['name']['common']` para o nome",
+              "Crie um dict `{future: code}` para rastrear qual future corresponde a qual código",
+              "Use `as_completed()` para iterar sobre os futures conforme completam"
+            ],
+            "solution": "from concurrent.futures import ThreadPoolExecutor, as_completed\nimport requests\nimport random\nfrom time import perf_counter\n\napi_url = \"https://restcountries.com/v3.1/alpha/\"\ncodes2a = [\"BR\", \"US\", \"DE\", \"FR\", \"JP\", \"CN\", \"IN\", \"AU\", \"CA\", \"GB\",\n           \"IT\", \"ES\", \"MX\", \"AR\", \"ZA\", \"EG\", \"NG\", \"KE\", \"TH\", \"VN\"]\n\ndef buscar_pais(code: str) -> dict:\n    \"\"\"Busca informações de um país.\"\"\"\n    response = requests.get(f\"{api_url}{code}\", timeout=10)\n    data = response.json()[0]\n    return {\n        \"code\": code,\n        \"name\": data[\"name\"][\"common\"],\n        \"capital\": data.get(\"capital\", [\"N/A\"])[0],\n        \"population\": data.get(\"population\", 0)\n    }\n\ndef buscar_paises_concurrent(codes: list) -> list:\n    \"\"\"Busca países usando ThreadPoolExecutor.\"\"\"\n    resultados = []\n    \n    with ThreadPoolExecutor(max_workers=10) as executor:\n        future_to_code = {executor.submit(buscar_pais, code): code for code in codes}\n        \n        for future in as_completed(future_to_code):\n            code = future_to_code[future]\n            try:\n                pais = future.result()\n                print(f\"[OK] {pais['name']} ({code})\")\n                resultados.append(pais)\n            except Exception as e:\n                print(f\"[ERRO] {code}: {e}\")\n    \n    return resultados\n\nif __name__ == \"__main__\":\n    # Selecionar 10 códigos aleatórios\n    codigos = random.choices(codes2a, k=10)\n    print(f\"Buscando países: {codigos}\\n\")\n    \n    # Medir tempo\n    inicio = perf_counter()\n    paises = buscar_paises_concurrent(codigos)\n    tempo = perf_counter() - inicio\n    \n    print(f\"\\n=== Resultados ===\")\n    print(f\"Países encontrados: {len(paises)}\")\n    print(f\"Tempo total: {tempo:.2f} segundos\")\n    \n    print(f\"\\n=== Detalhes ===\")\n    for p in paises:\n        print(f\"{p['name']}: capital={p['capital']}, pop={p['population']:,}\")"
+          }
+        },
+        {
+          "id": "section-06-06",
+          "type": "quiz",
+          "title": "Quiz Final: Concorrência na Prática",
+          "order_index": 6,
+          "estimated_minutes": 5,
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "question": "No estudo de caso, por que a versão assíncrona foi aproximadamente 10x mais rápida que a síncrona ao buscar 10 países?",
+                "type": "multiple_choice",
+                "options": [
+                  "Porque asyncio usa múltiplos núcleos da CPU",
+                  "Porque todas as requisições são feitas simultaneamente, e o tempo é o máximo (não a soma)",
+                  "Porque aiohttp é mais otimizado que requests",
+                  "Porque a versão assíncrona usa cache"
+                ],
+                "correct_answer": 1,
+                "explanation": "Em tarefas I/O-bound, o tempo é dominado pela latência de rede. Quando as requisições são feitas simultaneamente, o tempo total é aproximadamente o tempo da requisição mais lenta, não a soma de todas."
+              },
+              {
+                "id": "q2",
+                "question": "Qual seria a melhor abordagem para processar 1000 imagens (tarefa CPU-bound) em um servidor com 8 núcleos?",
+                "type": "multiple_choice",
+                "options": [
+                  "asyncio com 1000 co-rotinas",
+                  "ThreadPoolExecutor com 1000 threads",
+                  "ProcessPoolExecutor com 8 processos",
+                  "Um loop for sequencial"
+                ],
+                "correct_answer": 2,
+                "explanation": "Para tarefas CPU-bound, ProcessPoolExecutor é a melhor escolha pois cada processo tem seu próprio GIL, permitindo verdadeiro paralelismo. Usar 8 processos (igual ao número de núcleos) é o ideal."
+              },
+              {
+                "id": "q3",
+                "question": "Ao fazer 100 requisições HTTP a APIs diferentes, qual é o principal gargalo?",
+                "type": "multiple_choice",
+                "options": [
+                  "Processamento da CPU",
+                  "Memória RAM",
+                  "Latência de rede",
+                  "Velocidade do disco"
+                ],
+                "correct_answer": 2,
+                "explanation": "Requisições HTTP são tipicamente I/O-bound, onde o principal gargalo é a latência de rede (tempo de ida e volta da requisição). Por isso, concorrência (threads ou asyncio) ajuda significativamente."
+              },
+              {
+                "id": "q4",
+                "question": "Qual afirmação sobre concurrent.futures é VERDADEIRA?",
+                "type": "multiple_choice",
+                "options": [
+                  "Só funciona com threads, não com processos",
+                  "Permite trocar facilmente entre threads e processos mantendo o mesmo código",
+                  "É mais lento que usar threading/multiprocessing diretamente",
+                  "Não suporta tratamento de exceções"
+                ],
+                "correct_answer": 1,
+                "explanation": "A principal vantagem do concurrent.futures é sua API unificada. Você pode trocar entre ThreadPoolExecutor e ProcessPoolExecutor mudando apenas uma linha, mantendo todo o resto do código igual."
+              },
+              {
+                "id": "q5",
+                "question": "Em um cenário real, quando você escolheria asyncio sobre ThreadPoolExecutor para requisições HTTP?",
+                "type": "multiple_choice",
+                "options": [
+                  "Quando precisa de máximo desempenho com milhares de requisições simultâneas",
+                  "Quando o código precisa ser o mais simples possível",
+                  "Quando precisa compartilhar memória entre tarefas",
+                  "Quando está fazendo cálculos matemáticos"
+                ],
+                "correct_answer": 0,
+                "explanation": "asyncio usa uma única thread com co-rotinas, tendo overhead muito menor que threads. Para cenários com milhares de conexões simultâneas (como servidores web), asyncio escala melhor e usa menos recursos."
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

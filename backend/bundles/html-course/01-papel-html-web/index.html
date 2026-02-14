@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>As 3 Camadas da Web</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>As 3 Camadas da Web</h1>
+  <p class="instructions">Clique em cada camada para separá-las e ver sua função.</p>
+
+  <div class="stack-container" id="stack">
+    <div class="layer" id="layer-js" data-layer="js">
+      <div class="layer-label">JavaScript</div>
+      <div class="layer-desc">Comportamento e interatividade</div>
+      <div class="layer-icon">⚡</div>
+    </div>
+    <div class="layer" id="layer-css" data-layer="css">
+      <div class="layer-label">CSS</div>
+      <div class="layer-desc">Estilo e aparência visual</div>
+      <div class="layer-icon">🎨</div>
+    </div>
+    <div class="layer" id="layer-html" data-layer="html">
+      <div class="layer-label">HTML</div>
+      <div class="layer-desc">Estrutura e conteúdo</div>
+      <div class="layer-icon">🏗️</div>
+    </div>
+  </div>
+
+  <div class="info-panel" id="info">
+    <p>Clique em uma camada para saber mais.</p>
+  </div>
+
+  <div class="controls">
+    <button id="btn-separate">Separar Camadas</button>
+    <button id="btn-stack">Empilhar</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

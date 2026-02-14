@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste de Iframe - Bundle</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        iframe {
+            width: 100%;
+            height: 700px;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+        }
+        .info {
+            background: #f0f0f0;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Teste de Bundle em Iframe</h1>
+
+    <div class="info">
+        <p><strong>Teste 1:</strong> Bundle carregado diretamente (sem sandbox)</p>
+        <p><a href="http://localhost:3000/uploads/bundles/sections/019c0299-3b74-738d-b3de-d2df1f308e34/v1/index.html" target="_blank">
+            Abrir bundle em nova aba
+        </a></p>
+    </div>
+
+    <h2>Bundle dentro do iframe:</h2>
+    <iframe
+        src="http://localhost:3000/uploads/bundles/sections/019c0299-3b74-738d-b3de-d2df1f308e34/v1/index.html"
+        title="Teste de Bundle">
+    </iframe>
+
+    <script>
+        // Verificar se há erros no console
+        window.addEventListener('message', function(e) {
+            console.log('Mensagem recebida do iframe:', e.data);
+        });
+
+        // Log para debug
+        console.log('Página de teste carregada');
+        console.log('URL do bundle:', 'http://localhost:3000/uploads/bundles/sections/019c0299-3b74-738d-b3de-d2df1f308e34/v1/index.html');
+    </script>
+</body>
+</html>

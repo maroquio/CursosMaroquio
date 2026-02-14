@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Atributos do iframe</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Atributos do &lt;iframe&gt;</h1>
+  <p class="instructions">Marque/desmarque atributos para ver como afetam o iframe.</p>
+
+  <div class="layout">
+    <div class="controls-panel">
+      <h2>Atributos</h2>
+      <div class="attr-group">
+        <label class="attr-toggle">
+          <input type="checkbox" id="attr-sandbox" checked>
+          <span class="attr-name">sandbox</span>
+        </label>
+        <p class="attr-desc">Restringe o que o iframe pode fazer (segurança)</p>
+      </div>
+      <div class="attr-group">
+        <label class="attr-toggle">
+          <input type="checkbox" id="attr-allow-scripts">
+          <span class="attr-name">allow-scripts</span>
+        </label>
+        <p class="attr-desc">Permite executar JavaScript dentro do iframe</p>
+      </div>
+      <div class="attr-group">
+        <label class="attr-toggle">
+          <input type="checkbox" id="attr-allow-forms">
+          <span class="attr-name">allow-forms</span>
+        </label>
+        <p class="attr-desc">Permite enviar formulários</p>
+      </div>
+      <div class="attr-group">
+        <label class="attr-toggle">
+          <input type="checkbox" id="attr-loading-lazy">
+          <span class="attr-name">loading="lazy"</span>
+        </label>
+        <p class="attr-desc">Carrega o iframe só quando visível</p>
+      </div>
+      <div class="attr-group">
+        <label class="attr-toggle">
+          <input type="checkbox" id="attr-width" checked>
+          <span class="attr-name">width="100%"</span>
+        </label>
+        <p class="attr-desc">Define largura do iframe</p>
+      </div>
+    </div>
+
+    <div class="preview-panel">
+      <h2>Código gerado</h2>
+      <pre><code id="codeOutput">&lt;iframe src="pagina.html"&gt;&lt;/iframe&gt;</code></pre>
+
+      <h2>Resultado visual</h2>
+      <div class="iframe-preview" id="iframePreview">
+        <div class="fake-iframe" id="fakeIframe">
+          <div class="fi-header">📄 pagina.html</div>
+          <div class="fi-content">
+            <p>Conteúdo do iframe</p>
+            <button class="fi-btn" id="fiBtn">Clique-me</button>
+            <form class="fi-form" id="fiForm">
+              <input type="text" placeholder="Digite algo..." class="fi-input">
+              <button type="submit" class="fi-submit">Enviar</button>
+            </form>
+          </div>
+          <div class="fi-overlay" id="fiOverlay">
+            <div class="fi-blocked">🔒 Bloqueado pelo sandbox</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

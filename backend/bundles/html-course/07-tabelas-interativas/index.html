@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tabelas Interativas</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Estrutura de Tabelas HTML</h1>
+  <p class="instructions">Clique em qualquer parte da tabela para destacar a estrutura correspondente.</p>
+
+  <div class="controls">
+    <button class="ctrl-btn active" data-highlight="none">Sem destaque</button>
+    <button class="ctrl-btn" data-highlight="thead">thead</button>
+    <button class="ctrl-btn" data-highlight="tbody">tbody</button>
+    <button class="ctrl-btn" data-highlight="tfoot">tfoot</button>
+    <button class="ctrl-btn" data-highlight="colspan">colspan</button>
+    <button class="ctrl-btn" data-highlight="rowspan">rowspan</button>
+  </div>
+
+  <div class="table-container">
+    <table id="demoTable">
+      <caption>Vendas por Região — 2024</caption>
+      <thead data-part="thead">
+        <tr>
+          <th data-part="thead">Região</th>
+          <th data-part="thead">T1</th>
+          <th data-part="thead">T2</th>
+          <th data-part="thead">T3</th>
+          <th data-part="thead">T4</th>
+        </tr>
+      </thead>
+      <tbody data-part="tbody">
+        <tr>
+          <td data-part="rowspan" rowspan="2">Sul</td>
+          <td data-part="tbody">120</td>
+          <td data-part="tbody">135</td>
+          <td data-part="tbody">150</td>
+          <td data-part="tbody">180</td>
+        </tr>
+        <tr>
+          <td data-part="tbody">90</td>
+          <td data-part="tbody">100</td>
+          <td data-part="tbody">110</td>
+          <td data-part="tbody">130</td>
+        </tr>
+        <tr>
+          <td data-part="tbody">Norte</td>
+          <td data-part="tbody">80</td>
+          <td data-part="tbody">95</td>
+          <td data-part="tbody">110</td>
+          <td data-part="tbody">125</td>
+        </tr>
+      </tbody>
+      <tfoot data-part="tfoot">
+        <tr>
+          <td data-part="tfoot">Total</td>
+          <td data-part="colspan" colspan="4">1.425 unidades vendidas</td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <div class="info-panel" id="info">
+    <div class="info-title">Estrutura da tabela</div>
+    <div class="info-text">Use os botões acima ou clique na tabela para explorar cada parte da estrutura HTML de tabelas.</div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

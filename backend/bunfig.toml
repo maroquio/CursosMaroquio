@@ -1,0 +1,7 @@
+[test]
+preload = ["./tests/bun-preload.ts"]
+
+# Only run .bun.test.ts files with Bun test runner
+# Regular .test.ts files should be run with Vitest
+root = "./"
+include = ["**/*.bun.test.ts"]

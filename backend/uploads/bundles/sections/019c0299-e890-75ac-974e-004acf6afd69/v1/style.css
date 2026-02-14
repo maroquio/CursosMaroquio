@@ -1,0 +1,94 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background: #0f172a;
+  color: #e2e8f0;
+  padding: 20px;
+  min-height: 100vh;
+}
+h1 { font-size: 1.4rem; color: #38bdf8; text-align: center; margin-bottom: 4px; }
+h2 { font-size: 0.95rem; color: #94a3b8; margin-bottom: 10px; }
+.instructions { font-size: 0.85rem; color: #94a3b8; text-align: center; margin-bottom: 16px; }
+
+.layout { display: flex; gap: 16px; max-width: 700px; margin: 0 auto; }
+.demo-form { flex: 1; }
+.attrs-panel { flex: 0 0 220px; }
+
+.field {
+  margin-bottom: 14px;
+  position: relative;
+}
+label {
+  display: block;
+  font-size: 0.85rem;
+  margin-bottom: 4px;
+  color: #94a3b8;
+}
+input, textarea {
+  width: 100%;
+  padding: 8px 12px;
+  border: 2px solid #334155;
+  border-radius: 6px;
+  background: #1e293b;
+  color: #e2e8f0;
+  font-size: 0.85rem;
+  transition: border-color 0.2s;
+  font-family: inherit;
+}
+textarea { resize: vertical; min-height: 60px; }
+input:focus, textarea:focus { outline: none; border-color: #38bdf8; }
+input.valid { border-color: #10b981; }
+input.invalid, textarea.invalid { border-color: #ef4444; }
+
+.validation-msg {
+  font-size: 0.75rem;
+  margin-top: 2px;
+  display: block;
+  min-height: 16px;
+}
+.validation-msg.error { color: #ef4444; }
+.validation-msg.success { color: #10b981; }
+
+.char-count { font-size: 0.7rem; color: #64748b; float: right; }
+
+.submit-btn {
+  width: 100%;
+  padding: 10px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.submit-btn:hover { background: #1d4ed8; }
+
+.form-result {
+  margin-top: 8px;
+  font-size: 0.85rem;
+  text-align: center;
+  min-height: 20px;
+}
+.form-result.success { color: #10b981; }
+.form-result.error { color: #ef4444; }
+
+.attr-card {
+  background: #1e293b;
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: border-color 0.2s;
+}
+.attr-card:hover { border-color: #334155; }
+.attr-card.active { border-color: #38bdf8; }
+.attr-card code { color: #a78bfa; font-size: 0.8rem; }
+.attr-card p { font-size: 0.75rem; color: #64748b; margin-top: 4px; }
+
+.field.highlight { background: rgba(56,189,248,0.08); border-radius: 6px; padding: 6px; margin: -6px; margin-bottom: 8px; }
+
+@media (max-width: 600px) {
+  .layout { flex-direction: column; }
+}

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SVG e Canvas</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>SVG e Canvas</h1>
+  <p class="instructions">Desenhe no Canvas com o mouse e explore o SVG interativo.</p>
+
+  <div class="demos">
+    <!-- Canvas -->
+    <div class="demo-card">
+      <h2>&lt;canvas&gt; — Desenho Livre</h2>
+      <div class="canvas-controls">
+        <label>Cor: <input type="color" id="penColor" value="#38bdf8"></label>
+        <label>Tamanho: <input type="range" id="penSize" min="1" max="20" value="3"></label>
+        <button class="demo-btn" id="clearCanvas">Limpar</button>
+      </div>
+      <canvas id="drawCanvas" width="440" height="200"></canvas>
+      <pre class="demo-code"><code>&lt;canvas id="c" width="440" height="200"&gt;
+&lt;/canvas&gt;
+&lt;script&gt;
+  const ctx = c.getContext('2d');
+  ctx.fillStyle = 'blue';
+  ctx.fillRect(10, 10, 100, 80);
+&lt;/script&gt;</code></pre>
+    </div>
+
+    <!-- SVG -->
+    <div class="demo-card">
+      <h2>&lt;svg&gt; — Gráficos Vetoriais</h2>
+      <p class="demo-desc">Clique nas formas para ver seus atributos. SVG é vetorial: não perde qualidade ao redimensionar.</p>
+      <svg id="demoSvg" viewBox="0 0 440 180" xmlns="http://www.w3.org/2000/svg">
+        <rect class="svg-shape" data-shape="rect" x="20" y="20" width="100" height="70" rx="8" fill="#3b82f6" />
+        <circle class="svg-shape" data-shape="circle" cx="200" cy="55" r="45" fill="#a855f7" />
+        <ellipse class="svg-shape" data-shape="ellipse" cx="340" cy="55" rx="60" ry="35" fill="#10b981" />
+        <polygon class="svg-shape" data-shape="polygon" points="80,120 130,170 30,170" fill="#f59e0b" />
+        <line class="svg-shape" data-shape="line" x1="170" y1="130" x2="280" y2="170" stroke="#ef4444" stroke-width="4" />
+        <text class="svg-shape" data-shape="text" x="320" y="160" fill="#e2e8f0" font-size="18" text-anchor="middle">Texto SVG</text>
+      </svg>
+      <div class="svg-info" id="svgInfo">Clique em uma forma SVG acima.</div>
+      <pre class="demo-code"><code>&lt;svg viewBox="0 0 440 180"&gt;
+  &lt;rect x="20" y="20" width="100"
+    height="70" rx="8" fill="blue"/&gt;
+  &lt;circle cx="200" cy="55"
+    r="45" fill="purple"/&gt;
+&lt;/svg&gt;</code></pre>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

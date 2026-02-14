@@ -1,0 +1,79 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background: #0f172a;
+  color: #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  min-height: 100vh;
+}
+h1 { font-size: 1.4rem; color: #38bdf8; margin-bottom: 4px; }
+h2 { font-size: 1rem; color: #a78bfa; margin-bottom: 12px; font-family: monospace; }
+.instructions { font-size: 0.85rem; color: #94a3b8; margin-bottom: 16px; }
+
+.layout { display: flex; gap: 16px; max-width: 600px; width: 100%; }
+.types-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  flex: 0 0 180px;
+}
+.type-btn {
+  padding: 6px 10px;
+  border: 1px solid #334155;
+  border-radius: 6px;
+  background: #1e293b;
+  color: #94a3b8;
+  cursor: pointer;
+  font-family: monospace;
+  font-size: 0.8rem;
+  transition: all 0.2s;
+}
+.type-btn:hover { border-color: #38bdf8; color: #e2e8f0; }
+.type-btn.active { background: #38bdf8; color: #0f172a; border-color: #38bdf8; }
+
+.preview-area { flex: 1; }
+.preview-card {
+  background: #1e293b;
+  border-radius: 10px;
+  padding: 20px;
+}
+.preview-input {
+  margin-bottom: 16px;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.preview-input input, .preview-input select {
+  padding: 8px 12px;
+  border: 1px solid #475569;
+  border-radius: 6px;
+  background: #0f172a;
+  color: #e2e8f0;
+  font-size: 0.9rem;
+  width: 100%;
+}
+.preview-input input[type="color"] { width: 60px; height: 40px; padding: 4px; }
+.preview-input input[type="range"] { accent-color: #38bdf8; }
+.preview-input input[type="checkbox"],
+.preview-input input[type="radio"] { width: auto; accent-color: #38bdf8; }
+.preview-input label { font-size: 0.85rem; white-space: nowrap; }
+
+.preview-code {
+  background: #0f172a;
+  border-radius: 6px;
+  padding: 10px;
+  margin-bottom: 12px;
+}
+pre { font-size: 0.75rem; line-height: 1.5; }
+code { font-family: 'Fira Code', monospace; color: #a78bfa; }
+
+.preview-desc { font-size: 0.8rem; line-height: 1.5; color: #94a3b8; }
+
+@media (max-width: 500px) {
+  .layout { flex-direction: column; }
+  .types-grid { flex: initial; grid-template-columns: repeat(3, 1fr); }
+}

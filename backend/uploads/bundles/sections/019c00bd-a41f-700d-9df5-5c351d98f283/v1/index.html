@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Elementos Interativos HTML5</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Elementos Interativos HTML5</h1>
+  <p class="instructions">Interaja com cada elemento para vê-lo em ação.</p>
+
+  <div class="demos">
+    <!-- Dialog -->
+    <div class="demo-card">
+      <h2>&lt;dialog&gt;</h2>
+      <p class="demo-desc">Modal nativo do HTML — sem JavaScript extra para abrir/fechar.</p>
+      <button class="demo-btn" id="openDialog">Abrir Dialog</button>
+      <dialog id="myDialog">
+        <h3>Modal Nativa</h3>
+        <p>Este é um &lt;dialog&gt; nativo do HTML5. Tem backdrop, fecha com Esc, e gerencia foco automaticamente.</p>
+        <form method="dialog">
+          <button class="demo-btn">Fechar</button>
+        </form>
+      </dialog>
+      <pre class="demo-code"><code>&lt;dialog id="myDialog"&gt;
+  &lt;h3&gt;Título&lt;/h3&gt;
+  &lt;p&gt;Conteúdo...&lt;/p&gt;
+  &lt;form method="dialog"&gt;
+    &lt;button&gt;Fechar&lt;/button&gt;
+  &lt;/form&gt;
+&lt;/dialog&gt;
+
+&lt;button onclick="myDialog.showModal()"&gt;
+  Abrir
+&lt;/button&gt;</code></pre>
+    </div>
+
+    <!-- Details/Summary -->
+    <div class="demo-card">
+      <h2>&lt;details&gt; / &lt;summary&gt;</h2>
+      <p class="demo-desc">Accordion nativo — abre e fecha sem JavaScript.</p>
+      <div class="details-demo">
+        <details>
+          <summary>O que é HTML5?</summary>
+          <p>HTML5 é a versão mais recente do HTML, com novos elementos semânticos, APIs e multimídia nativa.</p>
+        </details>
+        <details>
+          <summary>Preciso de JavaScript para &lt;details&gt;?</summary>
+          <p>Não! O comportamento de abrir/fechar é nativo do navegador. Zero JavaScript necessário.</p>
+        </details>
+        <details>
+          <summary>Posso estilizar com CSS?</summary>
+          <p>Sim! Você pode estilizar &lt;summary&gt; e o conteúdo com CSS normal. O marcador (▶) pode ser customizado com ::marker.</p>
+        </details>
+      </div>
+      <pre class="demo-code"><code>&lt;details&gt;
+  &lt;summary&gt;Pergunta?&lt;/summary&gt;
+  &lt;p&gt;Resposta aqui.&lt;/p&gt;
+&lt;/details&gt;</code></pre>
+    </div>
+
+    <!-- Progress & Meter -->
+    <div class="demo-card">
+      <h2>&lt;progress&gt; / &lt;meter&gt;</h2>
+      <p class="demo-desc">Barras de progresso e medição nativas.</p>
+      <div class="progress-demo">
+        <label>Download: <span id="progressValue">45</span>%</label>
+        <progress id="demoProgress" value="45" max="100"></progress>
+        <input type="range" id="progressSlider" min="0" max="100" value="45">
+
+        <label>Uso de disco:</label>
+        <meter id="demoMeter" value="6" min="0" max="10" low="3" high="7" optimum="2"></meter>
+        <span class="meter-label" id="meterLabel">6 de 10 GB (alto)</span>
+        <input type="range" id="meterSlider" min="0" max="10" value="6">
+      </div>
+      <pre class="demo-code"><code>&lt;progress value="45" max="100"&gt;
+&lt;/progress&gt;
+
+&lt;meter value="6" min="0" max="10"
+  low="3" high="7" optimum="2"&gt;
+&lt;/meter&gt;</code></pre>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

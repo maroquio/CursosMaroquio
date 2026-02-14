@@ -1,0 +1,104 @@
+# =============================================================================
+# Docker Compose - Development Environment
+# =============================================================================
+# Usage:
+#   docker-compose up -d          # Start all services
+#   docker-compose up -d postgres # Start only PostgreSQL
+#   docker-compose up -d pgadmin  # Start only pgAdmin
+#   docker-compose down           # Stop services
+#   docker-compose logs -f        # View logs
+#
+# pgAdmin:
+#   URL: http://localhost:5051 (or PGADMIN_PORT env var)
+#   Email: admin@admin.com (or PGADMIN_EMAIL env var)
+#   Password: admin (or PGADMIN_PASSWORD env var)
+# =============================================================================
+
+services:
+  maroquio-postgres:
+    image: postgres:18-alpine
+    container_name: maroquio-cursos-postgres
+    ports:
+      - "${POSTGRES_PORT:-5435}:5432"
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-app}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-app}
+      POSTGRES_DB: ${POSTGRES_DB:-app}
+      POSTGRES_MULTIPLE_DATABASES: app,app_test
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./scripts/init-multiple-dbs.sh:/docker-entrypoint-initdb.d/init-multiple-dbs.sh:ro
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U ${POSTGRES_USER:-app} -d ${POSTGRES_DB:-app}",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
+
+  maroquio-cursos-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: deps
+    container_name: maroquio-cursos-app
+    ports:
+      - "${PORT:-3000}:3000"
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-app}:${POSTGRES_PASSWORD:-app}@maroquio-postgres:5432/${POSTGRES_DB:-app}
+      - JWT_SECRET=${JWT_SECRET:-dev-secret-change-in-production}
+      - JWT_ACCESS_EXPIRY=${JWT_ACCESS_EXPIRY:-15m}
+      - JWT_REFRESH_EXPIRY=${JWT_REFRESH_EXPIRY:-7d}
+      - CORS_ORIGIN=${CORS_ORIGIN:-*}
+    volumes:
+      - .:/app
+      - /app/node_modules
+    working_dir: /app
+    command: ["bun", "--watch", "src/main.ts"]
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "wget",
+          "--no-verbose",
+          "--tries=1",
+          "--spider",
+          "http://localhost:3000/health",
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    restart: unless-stopped
+    depends_on:
+      maroquio-postgres:
+        condition: service_healthy
+
+  maroquio-pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: maroquio-cursos-pgadmin
+    ports:
+      - "${PGADMIN_PORT:-5051}:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL:-admin@admin.com}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD:-admin}
+      PGADMIN_CONFIG_SERVER_MODE: "False"
+      PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: "False"
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    restart: unless-stopped
+    depends_on:
+      maroquio-postgres:
+        condition: service_healthy
+
+volumes:
+  postgres-data:
+    driver: local
+  pgadmin-data:
+    driver: local

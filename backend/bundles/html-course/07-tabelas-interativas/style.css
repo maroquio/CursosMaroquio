@@ -1,0 +1,76 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background: #0f172a;
+  color: #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  min-height: 100vh;
+}
+h1 { font-size: 1.4rem; color: #38bdf8; margin-bottom: 4px; }
+.instructions { font-size: 0.85rem; color: #94a3b8; margin-bottom: 12px; }
+
+.controls { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; margin-bottom: 16px; }
+.ctrl-btn {
+  padding: 6px 14px;
+  border: 1px solid #334155;
+  border-radius: 6px;
+  background: #1e293b;
+  color: #94a3b8;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-family: monospace;
+  transition: all 0.2s;
+}
+.ctrl-btn:hover { border-color: #38bdf8; color: #e2e8f0; }
+.ctrl-btn.active { background: #38bdf8; color: #0f172a; border-color: #38bdf8; }
+
+.table-container {
+  background: #1e293b;
+  border-radius: 10px;
+  padding: 16px;
+  overflow-x: auto;
+  max-width: 500px;
+  width: 100%;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+caption {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #94a3b8;
+}
+th, td {
+  padding: 8px 12px;
+  border: 1px solid #334155;
+  text-align: center;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+th { background: #334155; font-weight: 600; }
+td { background: #0f172a; }
+tfoot td { background: #1a1a2e; font-weight: 600; }
+
+/* Highlight states */
+.hl-thead [data-part="thead"] { background: #1e40af; outline: 2px solid #3b82f6; }
+.hl-tbody [data-part="tbody"] { background: #065f46; outline: 2px solid #10b981; }
+.hl-tfoot [data-part="tfoot"] { background: #713f12; outline: 2px solid #f59e0b; }
+.hl-colspan [data-part="colspan"] { background: #7c2d12; outline: 2px solid #f97316; }
+.hl-rowspan [data-part="rowspan"] { background: #581c87; outline: 2px solid #a855f7; }
+
+.info-panel {
+  margin-top: 16px;
+  padding: 16px;
+  background: #1e293b;
+  border-radius: 8px;
+  max-width: 500px;
+  width: 100%;
+}
+.info-title { font-weight: 700; color: #38bdf8; margin-bottom: 4px; }
+.info-text { font-size: 0.85rem; line-height: 1.5; color: #cbd5e1; }

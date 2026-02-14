@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Navegação com Âncoras</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="demo-container">
+    <h1>Navegação com Âncoras</h1>
+    <p class="instructions">Clique nos links do menu para ver o scroll suave em ação.</p>
+
+    <div class="split">
+      <div class="code-panel">
+        <h2>Código HTML</h2>
+        <pre><code>&lt;nav&gt;
+  &lt;a href="<span class="hl">#intro</span>"&gt;Intro&lt;/a&gt;
+  &lt;a href="<span class="hl">#sobre</span>"&gt;Sobre&lt;/a&gt;
+  &lt;a href="<span class="hl">#contato</span>"&gt;Contato&lt;/a&gt;
+&lt;/nav&gt;
+
+&lt;section <span class="hl">id="intro"</span>&gt;
+  &lt;h2&gt;Introdução&lt;/h2&gt;
+&lt;/section&gt;
+
+&lt;section <span class="hl">id="sobre"</span>&gt;
+  &lt;h2&gt;Sobre&lt;/h2&gt;
+&lt;/section&gt;
+
+&lt;section <span class="hl">id="contato"</span>&gt;
+  &lt;h2&gt;Contato&lt;/h2&gt;
+&lt;/section&gt;
+
+&lt;style&gt;
+  html { <span class="hl2">scroll-behavior: smooth;</span> }
+&lt;/style&gt;</code></pre>
+      </div>
+
+      <div class="preview-panel">
+        <h2>Preview</h2>
+        <div class="mini-page" id="miniPage">
+          <nav class="mini-nav">
+            <a href="#" data-target="intro" class="mini-link active">Intro</a>
+            <a href="#" data-target="sobre" class="mini-link">Sobre</a>
+            <a href="#" data-target="contato" class="mini-link">Contato</a>
+          </nav>
+          <div class="mini-content" id="miniContent">
+            <div class="mini-section" id="s-intro">
+              <h3>Introdução</h3>
+              <p>Bem-vindo ao site! Esta é a seção de introdução com informações gerais sobre o projeto.</p>
+              <p>O conteúdo aqui apresenta os objetivos principais.</p>
+            </div>
+            <div class="mini-section" id="s-sobre">
+              <h3>Sobre Nós</h3>
+              <p>Somos uma equipe dedicada ao ensino de programação web.</p>
+              <p>Nossa missão é tornar a tecnologia acessível a todos.</p>
+            </div>
+            <div class="mini-section" id="s-contato">
+              <h3>Contato</h3>
+              <p>Entre em contato pelo formulário abaixo.</p>
+              <p>Email: contato@exemplo.com</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tip">
+      <strong>Dica:</strong> A propriedade CSS <code>scroll-behavior: smooth</code> ativa a rolagem suave. O atributo <code>id</code> no destino deve corresponder ao <code>href="#id"</code> do link.
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

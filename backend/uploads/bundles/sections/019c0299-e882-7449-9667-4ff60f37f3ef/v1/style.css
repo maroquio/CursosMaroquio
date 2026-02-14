@@ -1,0 +1,54 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background: #0f172a;
+  color: #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  min-height: 100vh;
+}
+h1 { font-size: 1.4rem; margin-bottom: 4px; color: #38bdf8; }
+.instructions { font-size: 0.85rem; color: #94a3b8; margin-bottom: 16px; }
+
+.code-container {
+  background: #1e293b;
+  border-radius: 10px;
+  padding: 20px;
+  max-width: 420px;
+  width: 100%;
+  overflow-x: auto;
+}
+pre { font-size: 0.85rem; line-height: 1.7; }
+code { font-family: 'Fira Code', 'Cascadia Code', monospace; }
+
+.tag {
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+.tag:hover { background: rgba(56, 189, 248, 0.2); }
+.tag.active { background: rgba(56, 189, 248, 0.3); outline: 2px solid #38bdf8; }
+
+[data-tag="doctype"] { color: #f472b6; }
+[data-tag="html"]    { color: #fb923c; }
+[data-tag="head"]    { color: #a78bfa; }
+[data-tag="charset"] { color: #34d399; }
+[data-tag="viewport"]{ color: #34d399; }
+[data-tag="title"]   { color: #fbbf24; }
+[data-tag="body"]    { color: #38bdf8; }
+[data-tag="content"] { color: #f87171; }
+
+.info-panel {
+  margin-top: 16px;
+  padding: 16px;
+  background: #1e293b;
+  border-radius: 8px;
+  max-width: 420px;
+  width: 100%;
+  min-height: 90px;
+}
+.info-title { font-weight: 700; font-size: 1rem; margin-bottom: 6px; color: #38bdf8; }
+.info-text  { font-size: 0.85rem; line-height: 1.5; color: #cbd5e1; }

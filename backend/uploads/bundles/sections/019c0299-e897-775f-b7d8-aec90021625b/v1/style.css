@@ -1,0 +1,104 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background: #0f172a;
+  color: #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  min-height: 100vh;
+}
+h1 { font-size: 1.4rem; color: #38bdf8; margin-bottom: 4px; }
+h2 { font-size: 1rem; color: #a78bfa; font-family: monospace; margin-bottom: 6px; }
+h3 { font-size: 1rem; margin-bottom: 8px; }
+.instructions { font-size: 0.85rem; color: #94a3b8; margin-bottom: 16px; }
+
+.demos {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 480px;
+  width: 100%;
+}
+.demo-card {
+  background: #1e293b;
+  border-radius: 10px;
+  padding: 16px;
+}
+.demo-desc { font-size: 0.8rem; color: #94a3b8; margin-bottom: 10px; }
+
+.demo-btn {
+  padding: 6px 16px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.demo-btn:hover { background: #1d4ed8; }
+
+dialog {
+  border: none;
+  border-radius: 10px;
+  padding: 24px;
+  max-width: 360px;
+  background: #1e293b;
+  color: #e2e8f0;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+dialog::backdrop { background: rgba(0,0,0,0.6); }
+dialog p { font-size: 0.85rem; margin: 8px 0 16px; line-height: 1.5; color: #94a3b8; }
+
+details {
+  border: 1px solid #334155;
+  border-radius: 6px;
+  margin-bottom: 6px;
+  overflow: hidden;
+}
+summary {
+  padding: 10px 14px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  background: #0f172a;
+  transition: background 0.2s;
+}
+summary:hover { background: #1a2332; }
+details[open] summary { border-bottom: 1px solid #334155; }
+details p {
+  padding: 10px 14px;
+  font-size: 0.8rem;
+  color: #94a3b8;
+  line-height: 1.5;
+}
+
+.progress-demo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+.progress-demo label { font-size: 0.8rem; color: #94a3b8; }
+progress {
+  width: 100%;
+  height: 20px;
+  border-radius: 4px;
+  overflow: hidden;
+  appearance: none;
+}
+progress::-webkit-progress-bar { background: #0f172a; border-radius: 4px; }
+progress::-webkit-progress-value { background: #2563eb; border-radius: 4px; }
+meter { width: 100%; height: 20px; }
+.meter-label { font-size: 0.75rem; color: #64748b; }
+input[type="range"] { width: 100%; accent-color: #38bdf8; }
+
+.demo-code {
+  background: #0f172a;
+  border-radius: 6px;
+  padding: 10px;
+  margin-top: 10px;
+}
+pre { font-size: 0.7rem; line-height: 1.5; }
+code { font-family: 'Fira Code', monospace; color: #94a3b8; }

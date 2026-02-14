@@ -1,0 +1,769 @@
+{
+  "module": {
+    "id": "mod_python_02",
+    "courseId": "course_python_essencial",
+    "title": "Estruturas Condicionais",
+    "description": "Aprenda a criar programas que tomam decisões usando estruturas condicionais em Python. Domine if, elif, else, operadores lógicos, comparações e a estrutura match-case.",
+    "order": 2
+  },
+  "lessons": [
+    {
+      "id": "lesson_02_01",
+      "moduleId": "mod_python_02",
+      "title": "Introdução e Sintaxe Básica",
+      "slug": "introducao-sintaxe-basica",
+      "description": "Entenda o que são estruturas condicionais e aprenda a sintaxe básica do if em Python.",
+      "type": "text",
+      "isFree": true,
+      "isPublished": true,
+      "order": 1,
+      "duration": 900,
+      "sections": [
+        {
+          "id": "sec_02_01_01",
+          "title": "O que são Estruturas Condicionais",
+          "contentType": "text",
+          "order": 1,
+          "estimatedMinutes": 3,
+          "content": "## O que são Estruturas Condicionais\n\nAs estruturas condicionais são fundamentais para a programação, pois permitem que o programa tome decisões e execute ações de acordo com condições específicas. Isso é importante porque o programa pode se adaptar a diferentes situações de entrada de dados, tornando-se mais flexível e capaz de lidar com problemas mais complexos e genéricos.\n\nPor exemplo, imagine que você esteja escrevendo um programa para calcular o salário de um funcionário. Sem a utilização de estruturas condicionais, o programa sempre calcularia o salário de acordo com as mesmas regras, independentemente do cargo do funcionário em questão. No entanto, se você utilizar estruturas condicionais, poderá incluir regras específicas para gerente, vendedor, caixa etc.\n\n### Por que usar condicionais?\n\n- **Flexibilidade**: O programa pode reagir de forma diferente a diferentes entradas\n- **Tomada de decisão**: Permite implementar lógica de negócios complexa\n- **Validação**: Possibilita verificar se dados estão corretos antes de processá-los\n- **Controle de fluxo**: Direciona a execução do programa por diferentes caminhos\n\nDe maneira geral, as estruturas condicionais tornam os programas mais inteligentes e capazes de lidar com situações variadas, ajudando a garantir que as decisões tomadas pelo programa sejam as mais adequadas para cada caso específico."
+        },
+        {
+          "id": "sec_02_01_02",
+          "title": "Sintaxe do if em Python",
+          "contentType": "text",
+          "order": 2,
+          "estimatedMinutes": 4,
+          "content": "## Sintaxe Básica do if\n\nA estrutura condicional básica em Python usa a palavra-chave `if`, seguida de uma condição e dois pontos. O bloco de código a ser executado deve estar indentado.\n\n```python\nif condicao1:\n    # Ações se a condicao1 for verdadeira\nelif condicao2:\n    # Ações se condicao1 for falsa e condicao2 for verdadeira\nelse:\n    # Ações se condicao1 e condicao2 forem falsas\n```\n\n### Pontos importantes:\n\n1. **Indentação obrigatória**: Python usa indentação (espaços) para definir blocos de código\n2. **Dois pontos**: Sempre coloque `:` após a condição\n3. **Blocos opcionais**: `elif` e `else` não são obrigatórios\n\n### Exemplo prático:\n\n```python\n# Verificação de idade\nidade = int(input(\"Digite sua idade: \"))\nif idade >= 18:\n    print(\"Você é maior de idade.\")\n```\n\nNeste exemplo, a mensagem só será exibida se a idade for maior ou igual a 18. Caso contrário, nada acontece pois não há bloco `else`."
+        },
+        {
+          "id": "sec_02_01_03",
+          "title": "Estrutura Condicional Simples - Exemplos",
+          "contentType": "text",
+          "order": 3,
+          "estimatedMinutes": 5,
+          "content": "## Exemplos de Estruturas Condicionais Simples\n\nVeja alguns exemplos práticos de como usar o `if` sozinho:\n\n### Verificação de número par\n\n```python\nnumero = int(input(\"Digite um número: \"))\nif numero % 2 == 0:\n    print(\"O número é par.\")\n```\n\nO operador `%` (módulo) retorna o resto da divisão. Se o resto da divisão por 2 for zero, o número é par.\n\n### Verificação de nota para aprovação\n\n```python\nnota = float(input(\"Digite sua nota: \"))\nif nota >= 7:\n    print(\"Você foi aprovado.\")\n```\n\n### Verificação de saldo\n\n```python\nsaldo = float(input(\"Qual seu saldo? \"))\nif saldo > 0:\n    print(\"Você tem saldo positivo!\")\n```\n\n### Dicas importantes:\n\n- Use `int()` para converter entrada em número inteiro\n- Use `float()` para números decimais\n- A função `input()` sempre retorna texto (string)\n- Compare valores do mesmo tipo para evitar erros"
+        },
+        {
+          "id": "sec_02_01_04",
+          "title": "Estrutura Condicional Composta",
+          "contentType": "text",
+          "order": 4,
+          "estimatedMinutes": 5,
+          "content": "## Estrutura Condicional Composta\n\nA estrutura condicional composta permite executar diferentes trechos de código em blocos separados. Ela usa `if`, `elif` (abreviação de *else if*) e `else`.\n\n### Exemplo: Classificação por idade\n\n```python\nidade = int(input(\"Digite sua idade: \"))\nif idade < 18:\n    print(\"Você é menor de idade.\")\nelif idade >= 18 and idade < 60:\n    print(\"Você é maior de idade.\")\nelse:\n    print(\"Você é idoso.\")\n```\n\n### Exemplo: Sistema de notas\n\n```python\nnota = float(input(\"Digite sua nota: \"))\nif nota >= 9:\n    print(\"Você foi aprovado com louvor.\")\nelif nota >= 7:\n    print(\"Você foi aprovado.\")\nelse:\n    print(\"Você foi reprovado.\")\n```\n\n### Como funciona:\n\n1. O programa avalia a primeira condição (`if`)\n2. Se falsa, passa para o próximo `elif`\n3. Continua até encontrar uma condição verdadeira\n4. Se nenhuma for verdadeira, executa o `else`\n5. **Apenas um bloco é executado!**\n\nVocê pode usar quantos `elif` forem necessários, mas apenas um `if` no início e opcionalmente um `else` no final."
+        },
+        {
+          "id": "sec_02_01_05",
+          "title": "Exercício: Classificador de Números",
+          "contentType": "exercise",
+          "order": 5,
+          "estimatedMinutes": 7,
+          "content": {
+            "problem": "Crie um programa que receba um número inteiro do usuário e classifique-o como \"positivo\", \"negativo\" ou \"zero\".\n\nO programa deve:\n1. Solicitar um número ao usuário\n2. Verificar se o número é positivo (maior que zero)\n3. Verificar se o número é negativo (menor que zero)\n4. Tratar o caso em que o número é zero\n5. Exibir a classificação correspondente",
+            "starterCode": "# Solicite um número ao usuário\nnumero = int(input(\"Digite um número: \"))\n\n# Implemente a lógica de classificação abaixo\n# Use if, elif e else\n\n",
+            "testCases": [
+              {
+                "input": "5",
+                "expectedOutput": "positivo",
+                "description": "Número positivo"
+              },
+              {
+                "input": "-3",
+                "expectedOutput": "negativo",
+                "description": "Número negativo"
+              },
+              {
+                "input": "0",
+                "expectedOutput": "zero",
+                "description": "Número zero"
+              }
+            ],
+            "hints": [
+              "Use > 0 para verificar se é positivo",
+              "Use < 0 para verificar se é negativo",
+              "O else pode tratar o caso do zero"
+            ],
+            "solution": "numero = int(input(\"Digite um número: \"))\n\nif numero > 0:\n    print(\"positivo\")\nelif numero < 0:\n    print(\"negativo\")\nelse:\n    print(\"zero\")"
+          }
+        },
+        {
+          "id": "sec_02_01_06",
+          "title": "Quiz: Sintaxe Básica",
+          "contentType": "quiz",
+          "order": 6,
+          "estimatedMinutes": 5,
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "question": "Qual é o caractere obrigatório após a condição do if em Python?",
+                "options": [
+                  "Ponto e vírgula (;)",
+                  "Dois pontos (:)",
+                  "Chaves ({})",
+                  "Parênteses ()"
+                ],
+                "correctAnswer": 1,
+                "explanation": "Em Python, usamos dois pontos (:) após a condição do if para indicar o início do bloco de código."
+              },
+              {
+                "id": "q2",
+                "question": "O que acontece se a condição do if for falsa e não houver else?",
+                "options": [
+                  "O programa dá erro",
+                  "O programa executa o bloco do if mesmo assim",
+                  "O programa simplesmente pula o bloco do if",
+                  "O programa termina imediatamente"
+                ],
+                "correctAnswer": 2,
+                "explanation": "Se a condição for falsa e não houver else, o programa simplesmente ignora o bloco do if e continua a execução."
+              },
+              {
+                "id": "q3",
+                "question": "Qual é a forma correta de verificar se uma variável 'x' é igual a 10?",
+                "options": [
+                  "if x = 10:",
+                  "if x == 10:",
+                  "if x := 10:",
+                  "if x is 10:"
+                ],
+                "correctAnswer": 1,
+                "explanation": "Usamos == (dois sinais de igual) para comparação. Um único = é usado para atribuição."
+              },
+              {
+                "id": "q4",
+                "question": "Quantos blocos elif podem existir em uma estrutura condicional?",
+                "options": [
+                  "No máximo 1",
+                  "No máximo 3",
+                  "Quantos forem necessários",
+                  "Nenhum, elif não existe em Python"
+                ],
+                "correctAnswer": 2,
+                "explanation": "Você pode usar quantos elif forem necessários para testar múltiplas condições."
+              },
+              {
+                "id": "q5",
+                "question": "Em uma estrutura if-elif-else, quantos blocos são executados quando uma condição é verdadeira?",
+                "options": [
+                  "Todos os blocos",
+                  "Apenas o primeiro bloco verdadeiro",
+                  "Todos os blocos verdadeiros",
+                  "Depende do valor da variável"
+                ],
+                "correctAnswer": 1,
+                "explanation": "Apenas o primeiro bloco cuja condição seja verdadeira é executado. Os demais são ignorados."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "lesson_02_02",
+      "moduleId": "mod_python_02",
+      "title": "Operadores Lógicos",
+      "slug": "operadores-logicos",
+      "description": "Aprenda a combinar condições usando os operadores lógicos AND, OR e NOT.",
+      "type": "text",
+      "isFree": false,
+      "isPublished": true,
+      "order": 2,
+      "duration": 840,
+      "sections": [
+        {
+          "id": "sec_02_02_01",
+          "title": "Combinando Condições",
+          "contentType": "text",
+          "order": 1,
+          "estimatedMinutes": 3,
+          "content": "## Combinação de Condições com Operadores Lógicos\n\nÉ possível combinar várias condições formando uma única expressão lógica que resulta em verdadeiro ou falso. Os operadores lógicos permitem criar condições mais complexas e precisas.\n\n### Os três operadores lógicos em Python:\n\n| Operador | Palavra-chave | Resultado |\n|----------|---------------|------------|\n| E lógico | `and` | Verdadeiro se **todas** as condições forem verdadeiras |\n| OU lógico | `or` | Verdadeiro se **pelo menos uma** condição for verdadeira |\n| NÃO lógico | `not` | Inverte o valor lógico |\n\n### Tabela-verdade do AND:\n\n| A | B | A and B |\n|---|---|--------|\n| V | V | V |\n| V | F | F |\n| F | V | F |\n| F | F | F |\n\n### Tabela-verdade do OR:\n\n| A | B | A or B |\n|---|---|-------|\n| V | V | V |\n| V | F | V |\n| F | V | V |\n| F | F | F |"
+        },
+        {
+          "id": "sec_02_02_02",
+          "title": "O Operador AND",
+          "contentType": "text",
+          "order": 2,
+          "estimatedMinutes": 4,
+          "content": "## O Operador AND\n\nO operador `and` combina duas ou mais condições e retorna `True` somente se **todas** forem verdadeiras.\n\n### Exemplo: Autenticação de usuário\n\n```python\nusuario = input(\"Digite seu nome de usuário: \")\nsenha = input(\"Digite sua senha: \")\n\nif usuario == \"admin\" and senha == \"123\":\n    print(\"Você tem permissão de acesso.\")\nelse:\n    print(\"Você não tem permissão de acesso.\")\n```\n\nO acesso só é liberado se **ambos** usuário e senha estiverem corretos.\n\n### Exemplo: Horário de trabalho\n\n```python\nhora = int(input(\"Digite a hora atual: \"))\ndia = input(\"Digite o dia da semana: \")\n\nif hora >= 9 and hora <= 18 and dia != \"sábado\" and dia != \"domingo\":\n    print(\"Você está no horário de trabalho.\")\nelse:\n    print(\"Você não está no horário de trabalho.\")\n```\n\nAqui combinamos **quatro** condições com `and`. Todas precisam ser verdadeiras.\n\n### Dica de leitura:\nLeia `and` como \"e também\" - todas as condições devem ser satisfeitas."
+        },
+        {
+          "id": "sec_02_02_03",
+          "title": "O Operador OR",
+          "contentType": "text",
+          "order": 3,
+          "estimatedMinutes": 4,
+          "content": "## O Operador OR\n\nO operador `or` retorna `True` se **pelo menos uma** das condições for verdadeira.\n\n### Exemplo: Loja fechada\n\n```python\ndia_da_semana = input(\"Digite o dia da semana: \")\nhora = int(input(\"Digite a hora atual: \"))\n\nif dia_da_semana == \"sábado\" or dia_da_semana == \"domingo\" or hora < 9 or hora >= 17:\n    print(\"Loja fechada.\")\nelse:\n    print(\"Loja aberta.\")\n```\n\nA loja está fechada se **qualquer uma** das condições for verdadeira.\n\n### Exemplo: Verificação de feriado\n\n```python\ndia = int(input(\"Digite o dia: \"))\nmes = int(input(\"Digite o mês: \"))\n\nif dia == 1 and mes == 1 or dia == 25 and mes == 12:\n    print(\"Hoje é feriado.\")\nelse:\n    print(\"Hoje não é feriado.\")\n```\n\n**Atenção à precedência!** O `and` tem maior precedência que o `or`. O código acima verifica:\n- (dia == 1 AND mês == 1) OR (dia == 25 AND mês == 12)\n\n### Dica de leitura:\nLeia `or` como \"ou então\" - basta uma condição ser verdadeira."
+        },
+        {
+          "id": "sec_02_02_04",
+          "title": "O Operador NOT",
+          "contentType": "text",
+          "order": 4,
+          "estimatedMinutes": 3,
+          "content": "## O Operador NOT\n\nO operador `not` inverte o valor lógico de uma expressão. Se a expressão for verdadeira, `not` a torna falsa, e vice-versa.\n\n### Exemplo: Verificação de maioridade (invertida)\n\n```python\nidade = int(input(\"Digite sua idade: \"))\n\nif not idade >= 18:\n    print(\"Você não tem mais de 18 anos.\")\nelse:\n    print(\"Você tem mais de 18 anos.\")\n```\n\n### Exemplo: Fora do horário de trabalho\n\n```python\nhora = int(input(\"Digite a hora atual: \"))\n\nif not (hora >= 9 and hora <= 18):\n    print(\"Você não está no horário de trabalho.\")\nelse:\n    print(\"Você está no horário de trabalho.\")\n```\n\nNote o uso de parênteses para agrupar a expressão que será invertida.\n\n### Quando usar NOT:\n\n- Para verificar a **ausência** de uma condição\n- Para inverter lógica complexa\n- Para tornar o código mais legível em certos contextos\n\n### Dica:\n`not True` resulta em `False`\n`not False` resulta em `True`"
+        },
+        {
+          "id": "sec_02_02_05",
+          "title": "Exercício: Validador de Acesso",
+          "contentType": "exercise",
+          "order": 5,
+          "estimatedMinutes": 8,
+          "content": {
+            "problem": "Crie um programa que verifique se uma pessoa pode votar. Para votar, a pessoa deve:\n1. Ter 16 anos ou mais\n2. Ser brasileiro(a)\n\nO programa deve solicitar a idade e a nacionalidade, e exibir se a pessoa pode ou não votar.",
+            "starterCode": "# Solicite a idade e nacionalidade\nidade = int(input(\"Digite sua idade: \"))\nnacionalidade = input(\"Digite sua nacionalidade: \")\n\n# Implemente a verificação usando AND\n# A pessoa pode votar se tem 16+ anos E é brasileiro(a)\n\n",
+            "testCases": [
+              {
+                "input": "18\nbrasileiro",
+                "expectedOutput": "Você pode votar.",
+                "description": "Brasileiro maior de idade"
+              },
+              {
+                "input": "16\nbrasileiro",
+                "expectedOutput": "Você pode votar.",
+                "description": "Brasileiro de 16 anos"
+              },
+              {
+                "input": "20\namericano",
+                "expectedOutput": "Você não pode votar.",
+                "description": "Estrangeiro maior de idade"
+              },
+              {
+                "input": "15\nbrasileiro",
+                "expectedOutput": "Você não pode votar.",
+                "description": "Brasileiro menor de 16"
+              }
+            ],
+            "hints": [
+              "Use o operador and para combinar as duas condições",
+              "Lembre-se que >= significa maior ou igual",
+              "A nacionalidade pode ser comparada com == \"brasileiro\""
+            ],
+            "solution": "idade = int(input(\"Digite sua idade: \"))\nnacionalidade = input(\"Digite sua nacionalidade: \")\n\nif idade >= 16 and nacionalidade == \"brasileiro\":\n    print(\"Você pode votar.\")\nelse:\n    print(\"Você não pode votar.\")"
+          }
+        },
+        {
+          "id": "sec_02_02_06",
+          "title": "Quiz: Operadores Lógicos",
+          "contentType": "quiz",
+          "order": 6,
+          "estimatedMinutes": 5,
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "question": "Qual é o resultado de: True and False?",
+                "options": [
+                  "True",
+                  "False",
+                  "None",
+                  "Erro"
+                ],
+                "correctAnswer": 1,
+                "explanation": "O operador AND só retorna True quando TODAS as condições são verdadeiras. Como uma é False, o resultado é False."
+              },
+              {
+                "id": "q2",
+                "question": "Qual é o resultado de: True or False?",
+                "options": [
+                  "True",
+                  "False",
+                  "None",
+                  "Erro"
+                ],
+                "correctAnswer": 0,
+                "explanation": "O operador OR retorna True quando PELO MENOS UMA condição é verdadeira. Como True é verdadeiro, o resultado é True."
+              },
+              {
+                "id": "q3",
+                "question": "Qual é o resultado de: not True?",
+                "options": [
+                  "True",
+                  "False",
+                  "None",
+                  "not True"
+                ],
+                "correctAnswer": 1,
+                "explanation": "O operador NOT inverte o valor lógico. not True resulta em False."
+              },
+              {
+                "id": "q4",
+                "question": "Qual operador tem maior precedência: and ou or?",
+                "options": [
+                  "or",
+                  "and",
+                  "São iguais",
+                  "Depende do contexto"
+                ],
+                "correctAnswer": 1,
+                "explanation": "O operador AND tem maior precedência que OR, assim como a multiplicação tem maior precedência que a adição."
+              },
+              {
+                "id": "q5",
+                "question": "Para que uma expressão com AND seja verdadeira, quantas condições precisam ser verdadeiras?",
+                "options": [
+                  "Pelo menos uma",
+                  "Todas",
+                  "A primeira",
+                  "A última"
+                ],
+                "correctAnswer": 1,
+                "explanation": "O AND exige que TODAS as condições sejam verdadeiras para retornar True."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "lesson_02_03",
+      "moduleId": "mod_python_02",
+      "title": "Operadores de Comparação e Valores Falsos",
+      "slug": "operadores-comparacao-valores-falsos",
+      "description": "Domine os operadores de comparação e entenda quais valores Python considera como falsos.",
+      "type": "text",
+      "isFree": false,
+      "isPublished": true,
+      "order": 3,
+      "duration": 780,
+      "sections": [
+        {
+          "id": "sec_02_03_01",
+          "title": "Operadores de Comparação",
+          "contentType": "text",
+          "order": 1,
+          "estimatedMinutes": 4,
+          "content": "## Operadores de Comparação\n\nOs operadores de comparação são utilizados para comparar dois valores, resultando em `True` ou `False`.\n\n### Lista de operadores:\n\n| Operador | Significado | Exemplo |\n|----------|-------------|----------|\n| `==` | Igual a | `5 == 5` retorna `True` |\n| `!=` | Diferente de | `5 != 3` retorna `True` |\n| `<` | Menor que | `3 < 5` retorna `True` |\n| `>` | Maior que | `5 > 3` retorna `True` |\n| `<=` | Menor ou igual | `5 <= 5` retorna `True` |\n| `>=` | Maior ou igual | `5 >= 3` retorna `True` |\n\n### Cuidado com == vs =\n\n```python\n# ERRADO - atribuição\nif x = 10:  # Erro de sintaxe!\n\n# CORRETO - comparação\nif x == 10:  # Compara se x é igual a 10\n```\n\n### Comparando strings:\n\nStrings também podem ser comparadas:\n\n```python\nnome = \"Ana\"\nif nome == \"Ana\":\n    print(\"Olá, Ana!\")\n```"
+        },
+        {
+          "id": "sec_02_03_02",
+          "title": "Exemplos Práticos de Comparação",
+          "contentType": "text",
+          "order": 2,
+          "estimatedMinutes": 4,
+          "content": "## Exemplos Práticos\n\n### Verificação de igualdade\n\n```python\na = 5\nb = 5\nif a == b:\n    print(\"a é igual a b\")\nelse:\n    print(\"a é diferente de b\")\n# Saída: a é igual a b\n```\n\n### Verificação de diferença\n\n```python\na = 5\nb = 3\nif a != b:\n    print(\"a é diferente de b\")\nelse:\n    print(\"a é igual a b\")\n# Saída: a é diferente de b\n```\n\n### Verificação de número par ou ímpar\n\n```python\nnumero = 4\nif numero % 2 == 0:\n    print(numero, \"é par\")\nelse:\n    print(numero, \"é ímpar\")\n# Saída: 4 é par\n```\n\n### Comparações encadeadas (exclusivo do Python!):\n\nPython permite comparações encadeadas de forma elegante:\n\n```python\nidade = 25\nif 18 <= idade < 60:\n    print(\"Adulto\")\n```\n\nIsso é equivalente a:\n```python\nif idade >= 18 and idade < 60:\n```"
+        },
+        {
+          "id": "sec_02_03_03",
+          "title": "Valores Falsos em Python",
+          "contentType": "text",
+          "order": 3,
+          "estimatedMinutes": 5,
+          "content": "## Valores Falsos Literais (Falsy Values)\n\nPython estende o conceito de verdadeiro e falso para tipos não booleanos. Alguns valores são automaticamente considerados `False` em contextos condicionais:\n\n### Valores considerados FALSOS:\n\n| Valor | Tipo | Exemplo |\n|-------|------|----------|\n| `False` | bool | O literal booleano falso |\n| `None` | NoneType | Ausência de valor |\n| `0` | int | Zero inteiro |\n| `0.0` | float | Zero decimal |\n| `\"\"` | str | String vazia |\n| `[]` | list | Lista vazia |\n| `()` | tuple | Tupla vazia |\n| `{}` | dict | Dicionário vazio |\n| `set()` | set | Conjunto vazio |\n\n### Exemplo prático:\n\n```python\nlista = []\nif not lista:\n    print(\"A lista está vazia!\")\n\nnome = \"\"\nif not nome:\n    print(\"O nome não foi informado!\")\n\ncontador = 0\nif not contador:\n    print(\"Contador zerado!\")\n```\n\nEssa característica torna o código mais limpo e Pythônico!"
+        },
+        {
+          "id": "sec_02_03_04",
+          "title": "Uso Prático de Valores Falsos",
+          "contentType": "text",
+          "order": 4,
+          "estimatedMinutes": 4,
+          "content": "## Aplicações Práticas\n\n### Verificando se uma string foi preenchida:\n\n```python\nnome = input(\"Digite seu nome: \")\n\nif nome:  # Se nome não estiver vazio\n    print(f\"Olá, {nome}!\")\nelse:\n    print(\"Você não digitou seu nome.\")\n```\n\n### Verificando se uma lista tem elementos:\n\n```python\nitens = []\n\nif itens:\n    print(f\"Você tem {len(itens)} itens.\")\nelse:\n    print(\"Sua lista está vazia.\")\n```\n\n### Valor padrão com operador or:\n\n```python\nnome = input(\"Digite seu nome: \") or \"Visitante\"\nprint(f\"Olá, {nome}!\")\n```\n\nSe o usuário não digitar nada (string vazia = falso), o valor \"Visitante\" será usado.\n\n### Boas práticas:\n\n```python\n# Pythônico (idiomático)\nif lista:\n    processar(lista)\n\n# Menos Pythônico (funciona, mas verboso)\nif len(lista) > 0:\n    processar(lista)\n```\n\nEntender valores falsos é fundamental para escrever código Python idiomático e eficiente!"
+        },
+        {
+          "id": "sec_02_03_05",
+          "title": "Exercício: Validador de Entrada",
+          "contentType": "exercise",
+          "order": 5,
+          "estimatedMinutes": 7,
+          "content": {
+            "problem": "Crie um programa que solicite ao usuário seu nome e sua idade. O programa deve:\n\n1. Verificar se o nome foi preenchido (não está vazio)\n2. Verificar se a idade é um número válido (maior que zero)\n3. Se ambos forem válidos, exibir uma saudação personalizada\n4. Caso contrário, informar qual dado está inválido",
+            "starterCode": "# Solicite nome e idade\nnome = input(\"Digite seu nome: \")\nidade_str = input(\"Digite sua idade: \")\n\n# Converta idade para inteiro (pode ser 0 se inválido)\ntry:\n    idade = int(idade_str)\nexcept:\n    idade = 0\n\n# Implemente as verificações usando valores falsos\n# Dica: string vazia e 0 são considerados False\n\n",
+            "testCases": [
+              {
+                "input": "Maria\n25",
+                "expectedOutput": "Olá, Maria! Você tem 25 anos.",
+                "description": "Dados válidos"
+              },
+              {
+                "input": "\n25",
+                "expectedOutput": "Nome inválido!",
+                "description": "Nome vazio"
+              },
+              {
+                "input": "João\n0",
+                "expectedOutput": "Idade inválida!",
+                "description": "Idade zero"
+              }
+            ],
+            "hints": [
+              "Use 'if nome:' para verificar se o nome foi preenchido",
+              "Use 'if idade:' para verificar se a idade é maior que zero",
+              "Lembre-se: string vazia e 0 são valores falsos"
+            ],
+            "solution": "nome = input(\"Digite seu nome: \")\nidade_str = input(\"Digite sua idade: \")\n\ntry:\n    idade = int(idade_str)\nexcept:\n    idade = 0\n\nif not nome:\n    print(\"Nome inválido!\")\nelif not idade:\n    print(\"Idade inválida!\")\nelse:\n    print(f\"Olá, {nome}! Você tem {idade} anos.\")"
+          }
+        },
+        {
+          "id": "sec_02_03_06",
+          "title": "Quiz: Comparações e Valores Falsos",
+          "contentType": "quiz",
+          "order": 6,
+          "estimatedMinutes": 5,
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "question": "Qual operador verifica se dois valores são diferentes?",
+                "options": [
+                  "==",
+                  "!=",
+                  "<>",
+                  "=/="
+                ],
+                "correctAnswer": 1,
+                "explanation": "O operador != (exclamação seguida de igual) verifica se dois valores são diferentes."
+              },
+              {
+                "id": "q2",
+                "question": "Qual destes valores é considerado True em Python?",
+                "options": [
+                  "0",
+                  "\"\"",
+                  "[]",
+                  "\"0\""
+                ],
+                "correctAnswer": 3,
+                "explanation": "A string \"0\" contém um caractere, então não está vazia e é considerada True. Apenas strings vazias são False."
+              },
+              {
+                "id": "q3",
+                "question": "O que o código 'if not lista:' verifica?",
+                "options": [
+                  "Se a lista existe",
+                  "Se a lista está vazia",
+                  "Se a lista tem um elemento",
+                  "Se a lista é None"
+                ],
+                "correctAnswer": 1,
+                "explanation": "Uma lista vazia é considerada False, então 'not lista' será True se a lista estiver vazia."
+              },
+              {
+                "id": "q4",
+                "question": "Qual é o resultado de: None == False?",
+                "options": [
+                  "True",
+                  "False",
+                  "None",
+                  "Erro"
+                ],
+                "correctAnswer": 1,
+                "explanation": "None e False são valores diferentes, embora ambos sejam considerados 'falsy'. A comparação de igualdade retorna False."
+              },
+              {
+                "id": "q5",
+                "question": "Qual expressão é válida para verificar se x está entre 1 e 10 (inclusive)?",
+                "options": [
+                  "1 <= x <= 10",
+                  "x >= 1 and <= 10",
+                  "1 < x > 10",
+                  "between(x, 1, 10)"
+                ],
+                "correctAnswer": 0,
+                "explanation": "Python permite comparações encadeadas como '1 <= x <= 10', que é equivalente a 'x >= 1 and x <= 10'."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "lesson_02_04",
+      "moduleId": "mod_python_02",
+      "title": "Condicionais Aninhadas e Operador Ternário",
+      "slug": "condicionais-aninhadas-ternario",
+      "description": "Aprenda a usar condicionais dentro de outras condicionais e o operador ternário para código mais conciso.",
+      "type": "text",
+      "isFree": false,
+      "isPublished": true,
+      "order": 4,
+      "duration": 720,
+      "sections": [
+        {
+          "id": "sec_02_04_01",
+          "title": "Estruturas Condicionais Aninhadas",
+          "contentType": "text",
+          "order": 1,
+          "estimatedMinutes": 4,
+          "content": "## Estruturas Condicionais Aninhadas\n\nCondicionais aninhadas são estruturas condicionais dentro de outras estruturas condicionais. São úteis quando você precisa verificar várias condições em sequência com ações específicas para cada combinação.\n\n### Exemplo: Encontrar o maior de três números\n\n```python\na, b, c = 10, 20, 30\n\nif a > b:\n    if a > c:\n        print(\"A é o maior número\")\n    else:\n        print(\"C é o maior número\")\nelse:\n    if b > c:\n        print(\"B é o maior número\")\n    else:\n        print(\"C é o maior número\")\n# Saída: C é o maior número\n```\n\n### Como funciona:\n\n1. Primeiro, compara `a` com `b`\n2. Se `a > b`, verifica se `a > c`\n3. Se `a <= b`, verifica se `b > c`\n4. Em cada ramo, duas condições são avaliadas\n\n### Visualização da lógica:\n\n```\na > b?\n├── SIM: a > c?\n│   ├── SIM: A é maior\n│   └── NÃO: C é maior\n└── NÃO: b > c?\n    ├── SIM: B é maior\n    └── NÃO: C é maior\n```"
+        },
+        {
+          "id": "sec_02_04_02",
+          "title": "Cuidados com Aninhamento",
+          "contentType": "text",
+          "order": 2,
+          "estimatedMinutes": 3,
+          "content": "## Cuidados com Condicionais Aninhadas\n\n### Problema: Código muito aninhado\n\n```python\n# Código difícil de ler (muitos níveis)\nif condicao1:\n    if condicao2:\n        if condicao3:\n            if condicao4:\n                fazer_algo()\n```\n\n### Solução 1: Combinar com AND\n\n```python\n# Mais limpo\nif condicao1 and condicao2 and condicao3 and condicao4:\n    fazer_algo()\n```\n\n### Solução 2: Retorno antecipado (em funções)\n\n```python\ndef processar(valor):\n    if not condicao1:\n        return\n    if not condicao2:\n        return\n    if not condicao3:\n        return\n    # Código principal aqui\n```\n\n### Boas práticas:\n\n- **Máximo 2-3 níveis** de aninhamento\n- Use operadores lógicos para simplificar\n- Considere **refatorar** em funções separadas\n- Priorize **legibilidade** sobre concisão\n\nCondicionais aninhadas são úteis, mas devem ser usadas com moderação para manter o código legível."
+        },
+        {
+          "id": "sec_02_04_03",
+          "title": "Operador Ternário",
+          "contentType": "text",
+          "order": 3,
+          "estimatedMinutes": 4,
+          "content": "## Operador de Atribuição Condicional Ternário\n\nO operador ternário é uma forma compacta de atribuir um valor a uma variável com base em uma condição.\n\n### Sintaxe:\n\n```python\nvariavel = valor_se_verdadeiro if condicao else valor_se_falso\n```\n\n### Exemplo básico:\n\n```python\nidade = 25\nstatus = \"Maior de idade\" if idade >= 18 else \"Menor de idade\"\nprint(status)\n# Saída: Maior de idade\n```\n\n### Comparação com if tradicional:\n\n```python\n# Com if tradicional (4 linhas)\nif idade >= 18:\n    status = \"Maior de idade\"\nelse:\n    status = \"Menor de idade\"\n\n# Com ternário (1 linha)\nstatus = \"Maior de idade\" if idade >= 18 else \"Menor de idade\"\n```\n\n### Mais exemplos:\n\n```python\n# Par ou ímpar\ntipo = \"par\" if numero % 2 == 0 else \"ímpar\"\n\n# Valor absoluto (simplificado)\nabsoluto = x if x >= 0 else -x\n\n# Mensagem de saudação\nsaudacao = \"Bom dia\" if hora < 12 else \"Boa tarde\"\n```"
+        },
+        {
+          "id": "sec_02_04_04",
+          "title": "Boas Práticas com Ternário",
+          "contentType": "text",
+          "order": 4,
+          "estimatedMinutes": 3,
+          "content": "## Quando Usar (e Não Usar) o Ternário\n\n### Bons usos:\n\n```python\n# Atribuição simples\nmensagem = \"Sim\" if confirmado else \"Não\"\n\n# Valor padrão\nnome = usuario or \"Anônimo\"\n\n# Formatação condicional\nprint(f\"Você tem {itens} {'item' if itens == 1 else 'itens'}\")\n```\n\n### Evite ternários aninhados:\n\n```python\n# RUIM - difícil de ler\nresultado = \"A\" if x > 10 else \"B\" if x > 5 else \"C\"\n\n# MELHOR - use if/elif/else\nif x > 10:\n    resultado = \"A\"\nelif x > 5:\n    resultado = \"B\"\nelse:\n    resultado = \"C\"\n```\n\n### Regras práticas:\n\n1. Use para **atribuições simples**\n2. **Não aninhe** ternários\n3. Se a linha ficar muito longa, use if tradicional\n4. **Legibilidade** sempre vem primeiro\n\n### Dica de memória:\n\nLeia como uma frase:\n> \"status recebe 'Aprovado' **SE** nota >= 7 **SENÃO** 'Reprovado'\""
+        },
+        {
+          "id": "sec_02_04_05",
+          "title": "Exercício: Calculadora de IMC",
+          "contentType": "exercise",
+          "order": 5,
+          "estimatedMinutes": 8,
+          "content": {
+            "problem": "Crie um programa que calcule o IMC (Índice de Massa Corporal) e classifique o resultado.\n\nFórmula: IMC = peso / (altura * altura)\n\nClassificação:\n- IMC < 18.5: \"Abaixo do peso\"\n- 18.5 <= IMC < 25: \"Peso normal\"\n- 25 <= IMC < 30: \"Sobrepeso\"\n- IMC >= 30: \"Obesidade\"\n\nUse estruturas condicionais (pode usar aninhadas ou elif).",
+            "starterCode": "# Solicite peso e altura\npeso = float(input(\"Digite seu peso (kg): \"))\naltura = float(input(\"Digite sua altura (m): \"))\n\n# Calcule o IMC\nimc = peso / (altura * altura)\n\n# Implemente a classificação\n# Dica: use elif para testar as faixas\n\n",
+            "testCases": [
+              {
+                "input": "50\n1.70",
+                "expectedOutput": "Abaixo do peso",
+                "description": "IMC = 17.3 (abaixo do peso)"
+              },
+              {
+                "input": "70\n1.75",
+                "expectedOutput": "Peso normal",
+                "description": "IMC = 22.9 (peso normal)"
+              },
+              {
+                "input": "85\n1.70",
+                "expectedOutput": "Sobrepeso",
+                "description": "IMC = 29.4 (sobrepeso)"
+              },
+              {
+                "input": "100\n1.70",
+                "expectedOutput": "Obesidade",
+                "description": "IMC = 34.6 (obesidade)"
+              }
+            ],
+            "hints": [
+              "Calcule o IMC primeiro: imc = peso / (altura ** 2)",
+              "Use elif para verificar cada faixa em ordem",
+              "Comece verificando a menor faixa (< 18.5)"
+            ],
+            "solution": "peso = float(input(\"Digite seu peso (kg): \"))\naltura = float(input(\"Digite sua altura (m): \"))\n\nimc = peso / (altura * altura)\n\nif imc < 18.5:\n    print(\"Abaixo do peso\")\nelif imc < 25:\n    print(\"Peso normal\")\nelif imc < 30:\n    print(\"Sobrepeso\")\nelse:\n    print(\"Obesidade\")"
+          }
+        },
+        {
+          "id": "sec_02_04_06",
+          "title": "Quiz: Aninhamento e Ternário",
+          "contentType": "quiz",
+          "order": 6,
+          "estimatedMinutes": 4,
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "question": "Qual é a principal desvantagem de condicionais muito aninhadas?",
+                "options": [
+                  "Executam mais devagar",
+                  "Ocupam mais memória",
+                  "São difíceis de ler e manter",
+                  "Não funcionam em Python 3"
+                ],
+                "correctAnswer": 2,
+                "explanation": "Condicionais muito aninhadas tornam o código difícil de ler, entender e manter, aumentando a chance de bugs."
+              },
+              {
+                "id": "q2",
+                "question": "Qual é o resultado de: x = 'par' if 4 % 2 == 0 else 'ímpar'?",
+                "options": [
+                  "x = 'ímpar'",
+                  "x = 'par'",
+                  "x = True",
+                  "Erro de sintaxe"
+                ],
+                "correctAnswer": 1,
+                "explanation": "4 % 2 == 0 é True (4 é par), então x recebe 'par'."
+              },
+              {
+                "id": "q3",
+                "question": "Quantos níveis de aninhamento são recomendados como máximo?",
+                "options": [
+                  "1",
+                  "2-3",
+                  "5",
+                  "Não há limite"
+                ],
+                "correctAnswer": 1,
+                "explanation": "Recomenda-se no máximo 2-3 níveis de aninhamento para manter o código legível."
+              },
+              {
+                "id": "q4",
+                "question": "Qual alternativa é equivalente a: resultado = a if a > b else b?",
+                "options": [
+                  "resultado = max(a, b)",
+                  "resultado = min(a, b)",
+                  "resultado = a + b",
+                  "resultado = a - b"
+                ],
+                "correctAnswer": 0,
+                "explanation": "O código retorna o maior valor entre a e b, que é exatamente o que max(a, b) faz."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "lesson_02_05",
+      "moduleId": "mod_python_02",
+      "title": "Estrutura Match-Case",
+      "slug": "match-case",
+      "description": "Conheça a estrutura de seleção múltipla match-case, introduzida no Python 3.10.",
+      "type": "text",
+      "isFree": false,
+      "isPublished": true,
+      "order": 5,
+      "duration": 660,
+      "sections": [
+        {
+          "id": "sec_02_05_01",
+          "title": "Introdução ao Match-Case",
+          "contentType": "text",
+          "order": 1,
+          "estimatedMinutes": 4,
+          "content": "## Estrutura de Seleção Múltipla\n\nA estrutura `match-case` foi introduzida no **Python 3.10** e permite testar várias condições de forma elegante. É similar ao `switch` de outras linguagens como C, Java e JavaScript.\n\n### Antes do Python 3.10:\n\n```python\n# Usando if/elif/else\nif opcao == 1:\n    print(\"Novo jogo\")\nelif opcao == 2:\n    print(\"Carregar\")\nelif opcao == 3:\n    print(\"Sair\")\nelse:\n    print(\"Opção inválida\")\n```\n\n### Com match-case (Python 3.10+):\n\n```python\nmatch opcao:\n    case 1:\n        print(\"Novo jogo\")\n    case 2:\n        print(\"Carregar\")\n    case 3:\n        print(\"Sair\")\n    case _:\n        print(\"Opção inválida\")\n```\n\n### Vantagens:\n\n- Código mais limpo e organizado\n- Fácil de adicionar novos casos\n- Caso padrão com `_` (underscore)\n- Suporta padrões avançados (veremos adiante)"
+        },
+        {
+          "id": "sec_02_05_02",
+          "title": "Sintaxe e Exemplos Básicos",
+          "contentType": "text",
+          "order": 2,
+          "estimatedMinutes": 5,
+          "content": "## Sintaxe do Match-Case\n\n```python\nmatch expressao:\n    case padrao1:\n        # código se padrao1 corresponder\n    case padrao2:\n        # código se padrao2 corresponder\n    case _:\n        # caso padrão (wildcard)\n```\n\n### Exemplo: Linguagens de programação\n\n```python\nlinguagem = input(\"Qual linguagem você domina? \")\n\nmatch linguagem:\n    case \"Python\":\n        print(\"Muito usada em IoT e Inteligência Artificial.\")\n    case \"JavaScript\":\n        print(\"Muito usada em desenvolvimento web.\")\n    case \"C#\":\n        print(\"Muito usada em aplicações em geral.\")\n    case _:\n        print(\"A linguagem não importa, o que importa é resolver problemas!\")\n```\n\n### O caso padrão `_`\n\nO underscore (`_`) funciona como um **coringa** que captura qualquer valor não tratado pelos casos anteriores. É equivalente ao `else` ou `default`.\n\n### Importante:\n\n- Requer **Python 3.10 ou superior**\n- O `_` deve ser o **último caso**\n- Cada `case` é executado de forma exclusiva (sem *fall-through*)"
+        },
+        {
+          "id": "sec_02_05_03",
+          "title": "Casos Combinados e Padrões",
+          "contentType": "text",
+          "order": 3,
+          "estimatedMinutes": 4,
+          "content": "## Recursos Avançados do Match-Case\n\n### Combinando múltiplos valores:\n\n```python\ndia = input(\"Digite o dia: \")\n\nmatch dia:\n    case \"sábado\" | \"domingo\":\n        print(\"Fim de semana!\")\n    case \"segunda\" | \"terça\" | \"quarta\" | \"quinta\" | \"sexta\":\n        print(\"Dia de trabalho.\")\n    case _:\n        print(\"Dia inválido.\")\n```\n\nO operador `|` funciona como OR, permitindo agrupar casos.\n\n### Match com guardas (condicionais):\n\n```python\nidade = int(input(\"Digite sua idade: \"))\n\nmatch idade:\n    case n if n < 0:\n        print(\"Idade inválida!\")\n    case n if n < 18:\n        print(\"Menor de idade\")\n    case n if n < 60:\n        print(\"Adulto\")\n    case _:\n        print(\"Idoso\")\n```\n\n### Match com tuplas:\n\n```python\nponto = (0, 0)\n\nmatch ponto:\n    case (0, 0):\n        print(\"Origem\")\n    case (x, 0):\n        print(f\"No eixo X em {x}\")\n    case (0, y):\n        print(f\"No eixo Y em {y}\")\n    case (x, y):\n        print(f\"Ponto em ({x}, {y})\")\n```"
+        },
+        {
+          "id": "sec_02_05_04",
+          "title": "Casos de Uso Práticos",
+          "contentType": "text",
+          "order": 4,
+          "estimatedMinutes": 4,
+          "content": "## Quando Usar Match-Case\n\n### 1. Menus de aplicações:\n\n```python\nopcao = input(\"Escolha: [1]Criar [2]Editar [3]Excluir [4]Sair: \")\n\nmatch opcao:\n    case \"1\":\n        criar_registro()\n    case \"2\":\n        editar_registro()\n    case \"3\":\n        excluir_registro()\n    case \"4\":\n        print(\"Até logo!\")\n    case _:\n        print(\"Opção inválida!\")\n```\n\n### 2. Tratamento de comandos:\n\n```python\ncomando = input(\"Digite um comando: \").lower()\n\nmatch comando:\n    case \"ajuda\" | \"help\" | \"?\":\n        mostrar_ajuda()\n    case \"sair\" | \"exit\" | \"quit\":\n        encerrar()\n    case _:\n        print(f\"Comando '{comando}' não reconhecido.\")\n```\n\n### 3. Calculadora simples:\n\n```python\na = float(input(\"Primeiro número: \"))\nb = float(input(\"Segundo número: \"))\nop = input(\"Operação (+, -, *, /): \")\n\nmatch op:\n    case \"+\":\n        print(f\"Resultado: {a + b}\")\n    case \"-\":\n        print(f\"Resultado: {a - b}\")\n    case \"*\":\n        print(f\"Resultado: {a * b}\")\n    case \"/\":\n        print(f\"Resultado: {a / b}\" if b != 0 else \"Erro: divisão por zero\")\n    case _:\n        print(\"Operação inválida!\")\n```"
+        },
+        {
+          "id": "sec_02_05_05",
+          "title": "Exercício: Semáforo Interativo",
+          "contentType": "exercise",
+          "order": 5,
+          "estimatedMinutes": 6,
+          "content": {
+            "problem": "Crie um programa que simule um semáforo de trânsito usando match-case.\n\nO programa deve:\n1. Solicitar a cor atual do semáforo (verde, amarelo, vermelho)\n2. Usar match-case para determinar a ação correspondente:\n   - verde: \"Prossiga\"\n   - amarelo: \"Atenção! Prepare-se para parar\"\n   - vermelho: \"Pare\"\n   - qualquer outra cor: \"Cor inválida\"\n\nObservação: Requer Python 3.10 ou superior.",
+            "starterCode": "# Solicite a cor do semáforo\ncor = input(\"Digite a cor do semáforo: \").lower()\n\n# Use match-case para determinar a ação\n# Lembre-se: use _ para o caso padrão\n\n",
+            "testCases": [
+              {
+                "input": "verde",
+                "expectedOutput": "Prossiga",
+                "description": "Semáforo verde"
+              },
+              {
+                "input": "amarelo",
+                "expectedOutput": "Atenção! Prepare-se para parar",
+                "description": "Semáforo amarelo"
+              },
+              {
+                "input": "vermelho",
+                "expectedOutput": "Pare",
+                "description": "Semáforo vermelho"
+              },
+              {
+                "input": "azul",
+                "expectedOutput": "Cor inválida",
+                "description": "Cor inválida"
+              }
+            ],
+            "hints": [
+              "Use .lower() para converter a entrada para minúsculas",
+              "A sintaxe é: match variavel: case valor:",
+              "Use case _: para o caso padrão (wildcard)"
+            ],
+            "solution": "cor = input(\"Digite a cor do semáforo: \").lower()\n\nmatch cor:\n    case \"verde\":\n        print(\"Prossiga\")\n    case \"amarelo\":\n        print(\"Atenção! Prepare-se para parar\")\n    case \"vermelho\":\n        print(\"Pare\")\n    case _:\n        print(\"Cor inválida\")"
+          }
+        },
+        {
+          "id": "sec_02_05_06",
+          "title": "Quiz: Match-Case",
+          "contentType": "quiz",
+          "order": 6,
+          "estimatedMinutes": 4,
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "question": "A partir de qual versão do Python o match-case está disponível?",
+                "options": [
+                  "Python 2.7",
+                  "Python 3.8",
+                  "Python 3.10",
+                  "Python 3.12"
+                ],
+                "correctAnswer": 2,
+                "explanation": "O match-case foi introduzido no Python 3.10 (outubro de 2021)."
+              },
+              {
+                "id": "q2",
+                "question": "O que o símbolo _ (underscore) representa no match-case?",
+                "options": [
+                  "Um erro",
+                  "O caso padrão (wildcard)",
+                  "Um valor nulo",
+                  "O último valor testado"
+                ],
+                "correctAnswer": 1,
+                "explanation": "O underscore (_) funciona como um wildcard que corresponde a qualquer valor não tratado pelos casos anteriores."
+              },
+              {
+                "id": "q3",
+                "question": "Como combinar múltiplos valores em um único case?",
+                "options": [
+                  "case valor1, valor2:",
+                  "case valor1 and valor2:",
+                  "case valor1 | valor2:",
+                  "case [valor1, valor2]:"
+                ],
+                "correctAnswer": 2,
+                "explanation": "Usa-se o operador | (pipe) para combinar múltiplos valores em um único case."
+              },
+              {
+                "id": "q4",
+                "question": "O match-case em Python tem 'fall-through' como em C/Java?",
+                "options": [
+                  "Sim, sempre",
+                  "Não, cada case é exclusivo",
+                  "Apenas se usar break",
+                  "Apenas em loops"
+                ],
+                "correctAnswer": 1,
+                "explanation": "Diferente de C/Java, o match-case do Python NÃO tem fall-through. Cada case é executado de forma exclusiva."
+              },
+              {
+                "id": "q5",
+                "question": "Qual estrutura o match-case substitui de forma mais elegante?",
+                "options": [
+                  "for/while",
+                  "try/except",
+                  "if/elif/else extenso",
+                  "def/return"
+                ],
+                "correctAnswer": 2,
+                "explanation": "O match-case é ideal para substituir longas cadeias de if/elif/else quando você precisa testar um valor contra múltiplas opções."
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

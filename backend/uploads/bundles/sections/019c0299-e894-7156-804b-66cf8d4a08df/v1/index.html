@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Navegação por Teclado</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Navegação por Teclado</h1>
+  <p class="instructions">Pressione <kbd>Tab</kbd> para navegar entre os elementos. Observe o destaque visual do foco.</p>
+
+  <div class="demo-page" id="demoPage">
+    <a href="#" class="skip-link" id="skipLink">Pular para o conteúdo</a>
+
+    <header class="dp-header">
+      <div class="dp-logo">MeuSite</div>
+      <nav class="dp-nav">
+        <a href="#" class="dp-link" tabindex="0">Home</a>
+        <a href="#" class="dp-link" tabindex="0">Sobre</a>
+        <a href="#" class="dp-link" tabindex="0">Blog</a>
+        <a href="#" class="dp-link" tabindex="0">Contato</a>
+      </nav>
+    </header>
+
+    <main class="dp-main" id="mainContent">
+      <h2 class="dp-title">Artigo Principal</h2>
+      <p class="dp-text">Este é um exemplo de página acessível por teclado.</p>
+      <button class="dp-btn" tabindex="0">Ler mais</button>
+      <button class="dp-btn dp-btn-secondary" tabindex="0">Compartilhar</button>
+
+      <div class="dp-form">
+        <label for="dp-input">Seu email:</label>
+        <input type="email" id="dp-input" placeholder="email@exemplo.com" tabindex="0">
+        <button class="dp-btn" tabindex="0">Inscrever</button>
+      </div>
+    </main>
+
+    <footer class="dp-footer">
+      <a href="#" class="dp-link" tabindex="0">Política de Privacidade</a>
+      <a href="#" class="dp-link" tabindex="0">Termos de Uso</a>
+    </footer>
+  </div>
+
+  <div class="info-panel" id="info">
+    <div class="info-title">Pressione Tab para começar</div>
+    <div class="info-text">A navegação por teclado é essencial para acessibilidade. Usuários que não usam mouse dependem do Tab para navegar.</div>
+  </div>
+
+  <div class="keyboard-hint">
+    <kbd>Tab</kbd> Próximo &nbsp;|&nbsp; <kbd>Shift+Tab</kbd> Anterior &nbsp;|&nbsp; <kbd>Enter</kbd> Ativar
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tags Semânticas de Layout</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Tags Semânticas de Layout</h1>
+  <p class="instructions">Clique em cada área da página para ver qual tag semântica usar.</p>
+
+  <div class="page-layout" id="pageLayout">
+    <div class="area" data-tag="header" id="area-header">
+      <span class="area-label">?</span>
+    </div>
+    <div class="area" data-tag="nav" id="area-nav">
+      <span class="area-label">?</span>
+      <div class="area-content">Home &nbsp; Sobre &nbsp; Blog &nbsp; Contato</div>
+    </div>
+    <div class="main-row">
+      <div class="area area-main" data-tag="main" id="area-main">
+        <span class="area-label">?</span>
+        <div class="area area-nested" data-tag="article" id="area-article">
+          <span class="area-label">?</span>
+          <div class="area-content">
+            <div class="fake-title"></div>
+            <div class="fake-text"></div>
+            <div class="fake-text short"></div>
+          </div>
+        </div>
+        <div class="area area-nested" data-tag="section" id="area-section">
+          <span class="area-label">?</span>
+          <div class="area-content">
+            <div class="fake-title short"></div>
+            <div class="fake-text"></div>
+          </div>
+        </div>
+      </div>
+      <div class="area area-side" data-tag="aside" id="area-aside">
+        <span class="area-label">?</span>
+        <div class="area-content">
+          <div class="fake-title short"></div>
+          <div class="fake-text short"></div>
+          <div class="fake-text short"></div>
+        </div>
+      </div>
+    </div>
+    <div class="area" data-tag="footer" id="area-footer">
+      <span class="area-label">?</span>
+    </div>
+  </div>
+
+  <div class="info-panel" id="info">
+    <div class="info-title">Selecione uma área</div>
+    <div class="info-text">Clique em qualquer região da página acima para descobrir qual tag semântica HTML5 é a mais adequada.</div>
+  </div>
+
+  <div class="progress-bar">
+    <span id="progressText">0 de 7 descobertas</span>
+    <div class="bar"><div class="bar-fill" id="barFill"></div></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+# =============================================================================
+# Docker Compose - Production Environment (CursosMaroquio)
+# =============================================================================
+# Usage:
+#   cp .env.production .env       # Configure environment variables
+#   docker compose build           # Build images
+#   docker compose up -d           # Start all services
+#   docker compose ps              # Check service health
+#   docker compose logs -f         # View logs
+#   docker compose down            # Stop services
+#
+# Access: http://cursos.maroquio.com:8117
+# =============================================================================
+
+name: cursos-maroquio
+
+services:
+  postgres:
+    image: postgres:18-alpine
+    container_name: cursos-maroquio-postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-cursos_maroquio}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is required}
+      POSTGRES_DB: ${POSTGRES_DB:-cursos_maroquio}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-cursos_maroquio}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    restart: always
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: cursos-maroquio-backend
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      DATABASE_URL: postgresql://${POSTGRES_USER:-cursos_maroquio}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB:-cursos_maroquio}
+      JWT_SECRET: ${JWT_SECRET:?JWT_SECRET is required}
+      JWT_ACCESS_EXPIRY: ${JWT_ACCESS_EXPIRY:-15m}
+      JWT_REFRESH_EXPIRY: ${JWT_REFRESH_EXPIRY:-7d}
+      CORS_ORIGIN: ${CORS_ORIGIN:-http://cursos.maroquio.com:8117}
+      COOKIE_DOMAIN: ${COOKIE_DOMAIN:-.maroquio.com}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      GOOGLE_API_KEY: ${GOOGLE_API_KEY:-}
+      DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY:-}
+    volumes:
+      - uploads-data:/app/uploads
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+    restart: always
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_API_URL: ""
+    container_name: cursos-maroquio-frontend
+    ports:
+      - "${APP_PORT:-8117}:8117"
+    restart: always
+    depends_on:
+      backend:
+        condition: service_healthy
+
+volumes:
+  postgres-data:
+  uploads-data:

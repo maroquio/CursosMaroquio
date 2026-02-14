@@ -1,0 +1,80 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background: #0f172a;
+  color: #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  min-height: 100vh;
+}
+h1 { font-size: 1.4rem; margin-bottom: 4px; color: #38bdf8; }
+.instructions { font-size: 0.85rem; color: #94a3b8; margin-bottom: 16px; }
+
+.tree {
+  background: #1e293b;
+  border-radius: 10px;
+  padding: 20px;
+  max-width: 400px;
+  width: 100%;
+}
+.node {
+  margin-left: 20px;
+  margin-top: 6px;
+}
+.node:first-child { margin-left: 0; }
+.node-toggle {
+  cursor: pointer;
+  display: inline-block;
+  width: 20px;
+  transition: transform 0.2s;
+  user-select: none;
+}
+.node.open > .node-toggle { transform: rotate(90deg); }
+.node-label {
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: background 0.2s;
+  font-family: monospace;
+  font-size: 0.9rem;
+}
+.node-label:hover { background: rgba(56,189,248,0.15); }
+.node.active > .node-label { background: rgba(56,189,248,0.25); outline: 1px solid #38bdf8; }
+
+.children { display: none; border-left: 2px solid #334155; padding-left: 8px; margin-left: 8px; }
+.node.open > .children { display: block; }
+.leaf .node-toggle { display: none; }
+.leaf { margin-left: 40px; }
+
+.level-1 > .node-label { color: #f472b6; font-size: 1.05rem; }
+.level-2 > .node-label { color: #fb923c; }
+.level-3 > .node-label { color: #a78bfa; font-size: 0.85rem; }
+.level-4 > .node-label { color: #34d399; font-size: 0.8rem; }
+
+.info-panel {
+  margin-top: 16px;
+  padding: 16px;
+  background: #1e293b;
+  border-radius: 8px;
+  max-width: 400px;
+  width: 100%;
+}
+.info-title { font-weight: 700; color: #38bdf8; margin-bottom: 4px; }
+.info-text { font-size: 0.85rem; line-height: 1.5; color: #cbd5e1; }
+
+.size-demo {
+  margin-top: 16px;
+  padding: 16px;
+  background: #1e293b;
+  border-radius: 8px;
+  max-width: 400px;
+  width: 100%;
+}
+.demo-h1 { font-size: 1.8rem; font-weight: 700; color: #f472b6; }
+.demo-h2 { font-size: 1.4rem; font-weight: 700; color: #fb923c; }
+.demo-h3 { font-size: 1.15rem; font-weight: 600; color: #a78bfa; }
+.demo-h4 { font-size: 1rem; font-weight: 600; color: #34d399; }
+.demo-h5 { font-size: 0.9rem; font-weight: 500; color: #fbbf24; }
+.demo-h6 { font-size: 0.8rem; font-weight: 500; color: #94a3b8; }

@@ -1,0 +1,67 @@
+# =============================================================================
+# Docker Ignore - Files excluded from Docker build context
+# =============================================================================
+
+# Dependencies (will be installed fresh in container)
+node_modules/
+
+# Build outputs
+dist/
+
+# Development files
+*.log
+*.md
+!README.md
+
+# Test files
+*.test.ts
+*.spec.ts
+tests/
+coverage/
+.nyc_output/
+
+# IDE and editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+
+# Environment files (secrets should be injected at runtime)
+.env
+.env.*
+!.env.example
+
+# Docker files (not needed in image)
+Dockerfile*
+docker-compose*.yml
+.dockerignore
+
+# CI/CD
+.github/
+Jenkinsfile
+jenkins/
+
+# Documentation
+docs/
+*.md
+!README.md
+
+# Database files (will be created fresh or mounted)
+*.db
+*.db-journal
+*.db-shm
+*.db-wal
+data/
+
+# Temporary files
+tmp/
+temp/

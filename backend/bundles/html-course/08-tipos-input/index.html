@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tipos de Input HTML5</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Tipos de Input HTML5</h1>
+  <p class="instructions">Clique em cada tipo para ver o input em ação e seu código HTML.</p>
+
+  <div class="layout">
+    <div class="types-grid" id="typesGrid">
+      <button class="type-btn active" data-type="text">text</button>
+      <button class="type-btn" data-type="email">email</button>
+      <button class="type-btn" data-type="password">password</button>
+      <button class="type-btn" data-type="number">number</button>
+      <button class="type-btn" data-type="tel">tel</button>
+      <button class="type-btn" data-type="url">url</button>
+      <button class="type-btn" data-type="date">date</button>
+      <button class="type-btn" data-type="time">time</button>
+      <button class="type-btn" data-type="color">color</button>
+      <button class="type-btn" data-type="range">range</button>
+      <button class="type-btn" data-type="search">search</button>
+      <button class="type-btn" data-type="file">file</button>
+      <button class="type-btn" data-type="checkbox">checkbox</button>
+      <button class="type-btn" data-type="radio">radio</button>
+    </div>
+
+    <div class="preview-area">
+      <div class="preview-card">
+        <h2 id="previewTitle">type="text"</h2>
+        <div class="preview-input" id="previewInput"></div>
+        <div class="preview-code">
+          <pre><code id="previewCode"></code></pre>
+        </div>
+        <p class="preview-desc" id="previewDesc"></p>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

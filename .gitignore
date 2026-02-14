@@ -1,0 +1,17 @@
+# Environment (segredos)
+.env
+.env.local
+.env.*.local
+.env.production
+
+# OS
+.DS_Store
+
+# IDE
+.vscode/
+.cursor/
+.idea/
+
+livro_python/
+docs/
+codebase.md

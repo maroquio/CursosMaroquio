@@ -1,0 +1,87 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background: #0f172a;
+  color: #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  min-height: 100vh;
+}
+h1 { font-size: 1.4rem; color: #38bdf8; margin-bottom: 4px; }
+.instructions { font-size: 0.85rem; color: #94a3b8; margin-bottom: 16px; }
+
+.slider-container {
+  width: 100%;
+  max-width: 400px;
+  margin-bottom: 16px;
+}
+label { font-size: 0.85rem; display: block; margin-bottom: 6px; }
+#vpWidth { color: #38bdf8; font-weight: 700; }
+input[type="range"] {
+  width: 100%;
+  accent-color: #38bdf8;
+}
+.breakpoints {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.7rem;
+  color: #64748b;
+  margin-top: 2px;
+}
+
+.preview-area {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+.device-frame {
+  border: 2px solid #334155;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: width 0.3s;
+  width: 100%;
+  max-width: 400px;
+}
+.image-display { padding: 8px; }
+.img-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  border-radius: 6px;
+  transition: background 0.3s;
+  min-height: 120px;
+}
+.img-placeholder.mobile  { background: #1e3a5f; }
+.img-placeholder.tablet  { background: #3b1f5e; }
+.img-placeholder.desktop { background: #1e4035; }
+.img-icon { font-size: 2.5rem; margin-bottom: 8px; }
+.img-label { font-weight: 700; font-size: 1rem; }
+.img-size  { font-size: 0.8rem; color: #94a3b8; margin-top: 4px; }
+
+.code-display {
+  background: #1e293b;
+  border-radius: 8px;
+  padding: 16px;
+  max-width: 400px;
+  width: 100%;
+  margin-bottom: 12px;
+}
+pre { font-size: 0.75rem; line-height: 1.6; }
+code { font-family: 'Fira Code', monospace; }
+.hl { color: #38bdf8; transition: all 0.3s; }
+.hl.active { color: #34d399; font-weight: 700; background: rgba(52,211,153,0.15); padding: 1px 4px; border-radius: 3px; }
+
+.active-source {
+  padding: 12px;
+  background: #1e293b;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+  border-left: 3px solid #38bdf8;
+}

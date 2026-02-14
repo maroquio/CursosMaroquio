@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Imagens Responsivas</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Imagens Responsivas</h1>
+  <p class="instructions">Arraste o slider para simular diferentes larguras de viewport e ver a imagem trocar.</p>
+
+  <div class="slider-container">
+    <label for="viewport-slider">Largura do viewport: <span id="vpWidth">1200</span>px</label>
+    <input type="range" id="viewport-slider" min="320" max="1200" value="1200" step="10">
+    <div class="breakpoints">
+      <span>320px</span>
+      <span>768px</span>
+      <span>1200px</span>
+    </div>
+  </div>
+
+  <div class="preview-area">
+    <div class="device-frame" id="deviceFrame">
+      <div class="image-display" id="imageDisplay">
+        <div class="img-placeholder" id="imgPlaceholder">
+          <div class="img-icon">🖼️</div>
+          <div class="img-label" id="imgLabel">desktop-large.jpg</div>
+          <div class="img-size" id="imgSize">1200 × 800</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="code-display">
+    <pre><code>&lt;picture&gt;
+  &lt;source
+    media="<span class="hl" id="media3">(min-width: 1024px)</span>"
+    srcset="desktop-large.jpg"&gt;
+  &lt;source
+    media="<span class="hl" id="media2">(min-width: 768px)</span>"
+    srcset="tablet-medium.jpg"&gt;
+  &lt;img
+    src="<span class="hl" id="media1">mobile-small.jpg</span>"
+    alt="Foto responsiva"&gt;
+&lt;/picture&gt;</code></pre>
+  </div>
+
+  <div class="active-source" id="activeSource">
+    Fonte ativa: <strong>desktop-large.jpg</strong> — Viewport grande (≥ 1024px)
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

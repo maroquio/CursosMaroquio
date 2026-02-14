@@ -1,0 +1,72 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background: #0f172a;
+  color: #e2e8f0;
+  padding: 20px;
+  min-height: 100vh;
+}
+h1 { font-size: 1.4rem; color: #38bdf8; text-align: center; }
+h2 { font-size: 1rem; color: #94a3b8; margin-bottom: 8px; }
+.instructions { font-size: 0.85rem; color: #94a3b8; text-align: center; margin-bottom: 16px; }
+
+.split { display: flex; gap: 16px; max-width: 700px; margin: 0 auto; }
+.code-panel, .preview-panel { flex: 1; background: #1e293b; border-radius: 10px; padding: 16px; }
+
+pre { font-size: 0.75rem; line-height: 1.6; overflow-x: auto; }
+code { font-family: 'Fira Code', monospace; }
+.hl { color: #38bdf8; font-weight: 700; }
+.hl2 { color: #34d399; font-weight: 700; }
+
+.mini-page { border: 1px solid #334155; border-radius: 6px; overflow: hidden; }
+.mini-nav {
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  background: #334155;
+  position: sticky;
+  top: 0;
+}
+.mini-link {
+  color: #94a3b8;
+  text-decoration: none;
+  font-size: 0.75rem;
+  padding: 4px 10px;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+.mini-link:hover, .mini-link.active { color: #fff; background: #475569; }
+
+.mini-content {
+  height: 180px;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  padding: 12px;
+}
+.mini-section {
+  min-height: 160px;
+  padding: 12px;
+  margin-bottom: 12px;
+  background: #0f172a;
+  border-radius: 6px;
+}
+.mini-section h3 { font-size: 0.9rem; color: #38bdf8; margin-bottom: 6px; }
+.mini-section p { font-size: 0.75rem; color: #94a3b8; margin-bottom: 6px; }
+
+.tip {
+  margin-top: 16px;
+  padding: 12px;
+  background: #1e293b;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  border-left: 3px solid #34d399;
+}
+.tip code { color: #34d399; }
+
+@media (max-width: 600px) {
+  .split { flex-direction: column; }
+}

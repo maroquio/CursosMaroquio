@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Validação Nativa HTML</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Validação Nativa com HTML</h1>
+  <p class="instructions">Preencha o formulário e veja a validação em tempo real. Clique nos atributos à direita para entender cada um.</p>
+
+  <div class="layout">
+    <form class="demo-form" id="demoForm" novalidate>
+      <div class="field" data-attr="required">
+        <label for="nome">Nome *</label>
+        <input type="text" id="nome" required minlength="3" maxlength="50" placeholder="Seu nome completo">
+        <span class="validation-msg" id="msg-nome"></span>
+      </div>
+
+      <div class="field" data-attr="pattern">
+        <label for="email">Email *</label>
+        <input type="email" id="email" required placeholder="seu@email.com">
+        <span class="validation-msg" id="msg-email"></span>
+      </div>
+
+      <div class="field" data-attr="minmax">
+        <label for="idade">Idade *</label>
+        <input type="number" id="idade" required min="16" max="120" placeholder="18">
+        <span class="validation-msg" id="msg-idade"></span>
+      </div>
+
+      <div class="field" data-attr="pattern2">
+        <label for="cep">CEP</label>
+        <input type="text" id="cep" pattern="\d{5}-?\d{3}" placeholder="12345-678" title="Formato: 12345-678">
+        <span class="validation-msg" id="msg-cep"></span>
+      </div>
+
+      <div class="field" data-attr="minlength">
+        <label for="bio">Bio</label>
+        <textarea id="bio" minlength="10" maxlength="200" placeholder="Conte sobre você (mín. 10 caracteres)"></textarea>
+        <span class="validation-msg" id="msg-bio"></span>
+        <span class="char-count" id="charCount">0/200</span>
+      </div>
+
+      <button type="submit" class="submit-btn">Enviar Cadastro</button>
+      <div class="form-result" id="formResult"></div>
+    </form>
+
+    <div class="attrs-panel">
+      <h2>Atributos de Validação</h2>
+      <div class="attr-card active" data-info="required">
+        <code>required</code>
+        <p>Campo obrigatório. O formulário não envia sem preencher.</p>
+      </div>
+      <div class="attr-card" data-info="minlength">
+        <code>minlength / maxlength</code>
+        <p>Define quantidade mínima e máxima de caracteres.</p>
+      </div>
+      <div class="attr-card" data-info="minmax">
+        <code>min / max</code>
+        <p>Define valores numéricos mínimo e máximo aceitos.</p>
+      </div>
+      <div class="attr-card" data-info="pattern">
+        <code>pattern</code>
+        <p>Expressão regular que o valor deve corresponder.</p>
+      </div>
+      <div class="attr-card" data-info="placeholder">
+        <code>placeholder</code>
+        <p>Texto de exemplo exibido quando o campo está vazio.</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
