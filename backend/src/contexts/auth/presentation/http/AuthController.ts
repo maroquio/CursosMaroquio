@@ -123,7 +123,15 @@ const LoginResponse = schema.Object({
   statusCode: schema.Literal(200),
   success: schema.Literal(true),
   data: schema.Object({
-    ...TokenResponse.properties,
+    accessToken: schema.String({
+      description: 'Token JWT de acesso válido por 15 minutos',
+      example:
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwMTkxMjNhYi1jZGVmLTc4OTAtYWJjZC1lZjEyMzQ1Njc4OTAiLCJpYXQiOjE3MDAwMDAwMDB9.xxx',
+    }),
+    expiresIn: schema.Number({
+      description: 'Tempo de expiração do access token em segundos',
+      example: 900,
+    }),
     user: schema.Object({
       id: schema.String({
         description: 'Identificador único do usuário',
