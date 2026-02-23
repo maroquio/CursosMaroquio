@@ -115,13 +115,13 @@ pipeline {
 
                     docker compose ps
 
-                    curl -sf http://localhost:8117/health || {
+                    curl -sf http://localhost:8702/health || {
                         echo "ERROR: Health check failed"
                         docker compose logs --tail=30
                         exit 1
                     }
 
-                    echo "Deploy OK: http://cursos.maroquio.com:8117"
+                    echo "Deploy OK: https://cursos.maroquio.com"
                 '''
             }
         }

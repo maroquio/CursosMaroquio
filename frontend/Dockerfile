@@ -40,6 +40,6 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 # Copy built assets from build stage
 COPY --from=build /app/dist /usr/share/nginx/html
 
-EXPOSE 8117
+EXPOSE 8702
 
 CMD ["nginx", "-g", "daemon off;"]

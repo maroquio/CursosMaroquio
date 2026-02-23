@@ -9,7 +9,7 @@
 #   docker compose logs -f         # View logs
 #   docker compose down            # Stop services
 #
-# Access: http://cursos.maroquio.com:8117
+# Access: https://cursos.maroquio.com  (CloudPanel → localhost:8702)
 # =============================================================================
 
 name: cursos-maroquio
@@ -48,7 +48,7 @@ services:
       JWT_SECRET: ${JWT_SECRET:?JWT_SECRET is required}
       JWT_ACCESS_EXPIRY: ${JWT_ACCESS_EXPIRY:-15m}
       JWT_REFRESH_EXPIRY: ${JWT_REFRESH_EXPIRY:-7d}
-      CORS_ORIGIN: ${CORS_ORIGIN:-http://cursos.maroquio.com:8117}
+      CORS_ORIGIN: ${CORS_ORIGIN:-https://cursos.maroquio.com}
       COOKIE_DOMAIN: ${COOKIE_DOMAIN:-.maroquio.com}
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
       OPENAI_API_KEY: ${OPENAI_API_KEY:-}
@@ -76,7 +76,7 @@ services:
         VITE_API_URL: ""
     container_name: cursos-maroquio-frontend
     ports:
-      - "${APP_PORT:-8117}:8117"
+      - "${APP_PORT:-8702}:8702"
     restart: always
     depends_on:
       backend:
