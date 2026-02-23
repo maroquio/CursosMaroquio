@@ -82,7 +82,7 @@ ssh -o StrictHostKeyChecking=no ${DEPLOY_USER}@${DEPLOY_HOST} << ENDSSH
     # Verify deployment
     echo "Verifying deployment..."
     for i in {1..5}; do
-        if curl -sf http://localhost:3000/health > /dev/null; then
+        if curl -sf http://localhost:8702/health > /dev/null; then
             echo "Health check passed!"
             break
         fi
