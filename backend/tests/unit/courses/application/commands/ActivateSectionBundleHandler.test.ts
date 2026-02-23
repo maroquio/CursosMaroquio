@@ -71,7 +71,7 @@ describe('ActivateSectionBundleHandler', () => {
       expect(dto.version).toBe(1);
       expect(dto.entrypoint).toBe('index.html');
       expect(dto.isActive).toBe(true);
-      expect(dto.bundleUrl).toContain('http://localhost:3000/static/');
+      expect(dto.bundleUrl).toContain('http://localhost:8702/static/');
     });
   });
 

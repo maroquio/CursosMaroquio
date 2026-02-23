@@ -313,7 +313,7 @@ Retorna o status de saúde da aplicação e suas dependências.
 
 **Exemplo de uso com curl:**
 \`\`\`bash
-curl http://localhost:3000/health
+curl http://localhost:8702/health
 \`\`\`
 
 **Resposta quando saudável:**
@@ -367,7 +367,7 @@ Retorna métricas da aplicação no formato Prometheus.
 scrape_configs:
   - job_name: 'api'
     static_configs:
-      - targets: ['localhost:3000']
+      - targets: ['localhost:8702']
     metrics_path: '/metrics'
     scrape_interval: 15s
 \`\`\`

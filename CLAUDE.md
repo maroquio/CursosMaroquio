@@ -21,7 +21,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ```bash
 bun install              # Install dependencies
-bun run dev              # Dev server with hot reload (port 3000)
+bun run dev              # Dev server with hot reload (port 8702)
 bun run build            # Build to ./dist
 bun run type-check       # TypeScript validation
 
@@ -47,7 +47,7 @@ bun run i18n             # Update i18n types
 
 ```bash
 npm install              # Install dependencies
-npm run dev              # Vite dev server (port 5173)
+npm run dev              # Vite dev server (port 5175)
 npm run build            # Production build
 npm run lint             # ESLint
 ```
@@ -172,7 +172,7 @@ Section Bundles are versioned content packages (HTML/CSS/JS) for lesson sections
 
 ## API Documentation
 
-- Swagger UI: `http://localhost:3000/swagger`
+- Swagger UI: `http://localhost:8702/swagger`
 - Health check: `GET /health`
 - Metrics: `GET /metrics`
 

@@ -175,7 +175,7 @@ creds.each { credId ->
 ```bash
 # /opt/app/.env
 NODE_ENV=production
-PORT=3000
+PORT=8702
 JWT_SECRET=your-super-secret-key-here-change-me
 JWT_ACCESS_EXPIRY=15m
 JWT_REFRESH_EXPIRY=7d
@@ -228,5 +228,5 @@ docker login registry.example.com
 docker-compose -f docker-compose.prod.yml logs -f
 
 # Verificar se a porta está acessível
-curl -v http://localhost:3000/health
+curl -v http://localhost:8702/health
 ```

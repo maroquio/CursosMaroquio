@@ -30,7 +30,7 @@ export class MockStorageService implements IStorageService {
   }
 
   getBundleUrl(storagePath: string): string {
-    return `http://localhost:3000/static/${storagePath}`;
+    return `http://localhost:8702/static/${storagePath}`;
   }
 
   async extractManifest(_storagePath: string): Promise<BundleManifest | null> {
@@ -58,7 +58,7 @@ export class MockStorageService implements IStorageService {
   }
 
   getSectionBundleUrl(storagePath: string): string {
-    return `http://localhost:3000/static/${storagePath}`;
+    return `http://localhost:8702/static/${storagePath}`;
   }
 
   async extractSectionManifest(_storagePath: string): Promise<SectionBundleManifest | null> {

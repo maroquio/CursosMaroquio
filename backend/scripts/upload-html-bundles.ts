@@ -14,7 +14,7 @@
 import { readdir } from 'node:fs/promises';
 import { join, resolve } from 'node:path';
 
-const API_BASE = process.env.API_BASE || 'http://localhost:3000';
+const API_BASE = process.env.API_BASE || 'http://localhost:8702';
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'ricardo@maroquio.com';
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || '1234aA@#';
 const BUNDLES_DIR = resolve(import.meta.dir, '../bundles/html-course');

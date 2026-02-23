@@ -42,7 +42,7 @@ interface EnvConfig {
   APPLE_PRIVATE_KEY: string | null; // Contents of .p8 file (base64 encoded)
 
   // OAuth - Common
-  OAUTH_REDIRECT_BASE_URL: string; // Base URL for OAuth callbacks (e.g., http://localhost:3000)
+  OAUTH_REDIRECT_BASE_URL: string; // Base URL for OAuth callbacks (e.g., http://localhost:8702)
 }
 
 function getEnvString(key: string, defaultValue: string): string {
@@ -132,7 +132,7 @@ const DEV_SECRET = generateDevSecret();
  * All values have sensible defaults for development
  */
 export const env: EnvConfig = {
-  PORT: getEnvNumber('PORT', 3000),
+  PORT: getEnvNumber('PORT', 8702),
   NODE_ENV: getEnvEnum('NODE_ENV', ['development', 'production', 'test'], 'development'),
   DATABASE_URL: getEnvString('DATABASE_URL', 'postgresql://app:app@localhost:5435/app'),
   CORS_ORIGIN: getEnvString('CORS_ORIGIN', '*'),
@@ -159,7 +159,7 @@ export const env: EnvConfig = {
   APPLE_PRIVATE_KEY: getEnvStringOptional('APPLE_PRIVATE_KEY'),
 
   // OAuth - Common (defaults to localhost for development)
-  OAUTH_REDIRECT_BASE_URL: getEnvString('OAUTH_REDIRECT_BASE_URL', 'http://localhost:3000'),
+  OAUTH_REDIRECT_BASE_URL: getEnvString('OAUTH_REDIRECT_BASE_URL', 'http://localhost:8702'),
 };
 
 /**

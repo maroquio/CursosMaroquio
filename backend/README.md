@@ -31,7 +31,7 @@ docker-compose up -d
 bun run db:push && bun run dev
 ```
 
-Acesse: **http://localhost:3000/swagger** para ver a documentação da API.
+Acesse: **http://localhost:8702/swagger** para ver a documentação da API.
 
 ---
 

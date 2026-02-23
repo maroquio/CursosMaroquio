@@ -191,7 +191,7 @@ export function SectionRenderer({ section, textContent, videoUrl, onComplete, is
       );
     }
 
-    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8702';
     const bundleUrl = `${API_URL}${bundle.bundleUrl}/${bundle.entrypoint}`;
 
     return (

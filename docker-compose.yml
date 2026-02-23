@@ -17,20 +17,24 @@ name: cursos-maroquio
 services:
   postgres:
     image: postgres:18-alpine
-    container_name: cursos-maroquio-postgres
+    container_name: local-postgres
+    ports:
+      - "${POSTGRES_PORT:-5435}:5432"
     environment:
-      POSTGRES_USER: ${POSTGRES_USER:-cursos_maroquio}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is required}
-      POSTGRES_DB: ${POSTGRES_DB:-cursos_maroquio}
+      POSTGRES_USER: ${POSTGRES_USER:-maroquio}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-maroquio}
+      POSTGRES_DB: ${POSTGRES_DB:-postgres}
+      POSTGRES_MULTIPLE_DATABASES: cursos_maroquio,cursos_maroquio_test
     volumes:
       - postgres-data:/var/lib/postgresql/data
+      - ./backend/scripts/init-multiple-dbs.sh:/docker-entrypoint-initdb.d/init-multiple-dbs.sh:ro
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-cursos_maroquio}"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-maroquio} -d ${POSTGRES_DB:-cursos_maroquio}"]
       interval: 10s
       timeout: 5s
       retries: 5
       start_period: 10s
-    restart: always
+    restart: unless-stopped
 
   backend:
     build:
@@ -39,7 +43,7 @@ services:
     container_name: cursos-maroquio-backend
     environment:
       NODE_ENV: production
-      PORT: 3000
+      PORT: 8702
       DATABASE_URL: postgresql://${POSTGRES_USER:-cursos_maroquio}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB:-cursos_maroquio}
       JWT_SECRET: ${JWT_SECRET:?JWT_SECRET is required}
       JWT_ACCESS_EXPIRY: ${JWT_ACCESS_EXPIRY:-15m}
@@ -54,7 +58,7 @@ services:
     volumes:
       - uploads-data:/app/uploads
     healthcheck:
-      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/health"]
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8702/health"]
       interval: 30s
       timeout: 10s
       retries: 3

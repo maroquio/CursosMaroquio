@@ -110,7 +110,7 @@ describe('Environment Configuration', () => {
   });
 
   describe('default values', () => {
-    it('should have default PORT of 3000', async () => {
+    it('should have default PORT of 8702', async () => {
       // This tests the default value when PORT is not set
       // Since we can't easily modify the cached module, we verify the expected default
       const { env } = await import('@shared/config/env.ts');
