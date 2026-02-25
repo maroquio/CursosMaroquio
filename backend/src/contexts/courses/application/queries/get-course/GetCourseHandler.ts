@@ -6,6 +6,8 @@ import { type ICourseRepository } from '../../../domain/repositories/ICourseRepo
 import { type IEnrollmentRepository } from '../../../domain/repositories/IEnrollmentRepository.ts';
 import { CourseId } from '../../../domain/value-objects/CourseId.ts';
 import { Slug } from '../../../domain/value-objects/Slug.ts';
+import { SectionContentType } from '../../../domain/value-objects/SectionContentType.ts';
+import { type QuizSectionContent, type SectionContent } from '../../../domain/entities/Section.ts';
 import { type CourseWithLessonsDto, type ModuleDto, type LessonDto, type SectionDto } from '../../dtos/CourseDto.ts';
 
 /**
@@ -47,17 +49,27 @@ export class GetCourseHandler implements IQueryHandler<GetCourseQuery, CourseWit
     // Map modules with lessons and sections to DTOs
     const modules: ModuleDto[] = course.getModules().map(module => {
       const lessons: LessonDto[] = module.getLessons().map(lesson => {
-        const sections: SectionDto[] = lesson.getSections().map(section => ({
-          id: section.getId().toValue(),
-          lessonId: section.getLessonId().toValue(),
-          title: section.getTitle(),
-          description: section.getDescription(),
-          contentType: section.getContentType(),
-          content: section.getContent(),
-          order: section.getOrder(),
-          createdAt: section.getCreatedAt().toISOString(),
-          updatedAt: section.getUpdatedAt().toISOString(),
-        }));
+        const sections: SectionDto[] = lesson.getSections().map(section => {
+          // Ensure quiz sections always have passingScore to avoid NaN comparisons on the client
+          let content: SectionContent = section.getContent();
+          if (section.getContentType() === SectionContentType.QUIZ) {
+            const quizContent = content as QuizSectionContent;
+            if (typeof quizContent?.passingScore !== 'number') {
+              content = { ...quizContent, passingScore: 70 };
+            }
+          }
+          return {
+            id: section.getId().toValue(),
+            lessonId: section.getLessonId().toValue(),
+            title: section.getTitle(),
+            description: section.getDescription(),
+            contentType: section.getContentType(),
+            content,
+            order: section.getOrder(),
+            createdAt: section.getCreatedAt().toISOString(),
+            updatedAt: section.getUpdatedAt().toISOString(),
+          };
+        });
 
         return {
           id: lesson.getId().toValue(),

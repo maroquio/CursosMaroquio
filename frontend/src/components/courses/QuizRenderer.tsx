@@ -32,6 +32,9 @@ export function QuizRenderer({ quiz, onComplete }: QuizRendererProps) {
     setAnswers(prev => ({ ...prev, [questionId]: answerIndex }));
   }, [submitted]);
 
+  // Fallback to 70 in case passingScore is missing from stored JSON content
+  const passingScore = quiz.passingScore ?? 70;
+
   const handleSubmit = useCallback(() => {
     let correctCount = 0;
     quiz.questions.forEach(question => {
@@ -43,10 +46,10 @@ export function QuizRenderer({ quiz, onComplete }: QuizRendererProps) {
     setScore(calculatedScore);
     setSubmitted(true);
 
-    if (calculatedScore >= quiz.passingScore && onComplete) {
+    if (calculatedScore >= passingScore && onComplete) {
       onComplete();
     }
-  }, [answers, quiz.questions, quiz.passingScore, onComplete]);
+  }, [answers, quiz.questions, passingScore, onComplete]);
 
   const handleReset = useCallback(() => {
     setAnswers({});
@@ -55,7 +58,7 @@ export function QuizRenderer({ quiz, onComplete }: QuizRendererProps) {
     setAttemptKey(k => k + 1);
   }, []);
 
-  const passed = score >= quiz.passingScore;
+  const passed = score >= passingScore;
 
   return (
     <Stack gap="lg">
@@ -64,7 +67,7 @@ export function QuizRenderer({ quiz, onComplete }: QuizRendererProps) {
           {Object.keys(answers).length} / {quiz.questions.length} {t('courses.questionsAnswered')}
         </Text>
         <Badge color={passed ? 'green' : score > 0 ? 'yellow' : 'gray'}>
-          {t('courses.passingScore')}: {quiz.passingScore}%
+          {t('courses.passingScore')}: {passingScore}%
         </Badge>
       </Group>
 
