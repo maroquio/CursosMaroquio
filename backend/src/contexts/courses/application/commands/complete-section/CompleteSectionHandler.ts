@@ -44,8 +44,8 @@ export class CompleteSectionHandler implements ICommandHandler<CompleteSectionCo
       return Result.fail(ErrorCode.ENROLLMENT_NOT_FOUND);
     }
 
-    // Check if enrollment is active
-    if (!enrollment.isActive()) {
+    // Block only cancelled enrollments; completed enrollments still have access
+    if (enrollment.isCancelled()) {
       return Result.fail(ErrorCode.ENROLLMENT_NOT_ACTIVE);
     }
 
