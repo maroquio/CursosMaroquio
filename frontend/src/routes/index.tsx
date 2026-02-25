@@ -28,6 +28,7 @@ import {
   AdminCalendarEvents,
   AdminLlmManufacturers,
   AdminLlmModels,
+  AdminBackup,
 } from '../pages/admin';
 
 export const router = createBrowserRouter([
@@ -183,6 +184,10 @@ export const router = createBrowserRouter([
       {
         path: 'llm-models',
         element: <AdminLlmModels />,
+      },
+      {
+        path: 'backup',
+        element: <AdminBackup />,
       },
     ],
   },

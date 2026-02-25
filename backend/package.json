@@ -50,6 +50,7 @@
     "arctic": "^3.7.0",
     "drizzle-orm": "latest",
     "elysia": "^1.4.18",
+    "jszip": "^3.10.1",
     "typesafe-i18n": "^5.26.2",
     "uuid": "latest",
     "yauzl": "^3.2.0",

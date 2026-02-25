@@ -5,6 +5,7 @@ import { getDomainEventPublisher } from '@shared/domain/events/DomainEventPublis
 import { AuthContainer } from './AuthContainer.ts';
 import { CoursesContainer } from './CoursesContainer.ts';
 import { AiContainer } from './AiContainer.ts';
+import { ExportImportAdminController } from '@courses/presentation/http/ExportImportAdminController.ts';
 
 // Re-export sub-containers for direct access if needed
 export { AuthContainer, CoursesContainer, AiContainer };
@@ -212,6 +213,16 @@ export class Container {
   static createCertificateController() { return this.courses.createCertificateController(); }
   static createCalendarEventAdminController() { return this.courses.createCalendarEventAdminController(); }
   static createCalendarEventPublicController() { return this.courses.createCalendarEventPublicController(); }
+
+  static createExportImportAdminController(): ExportImportAdminController {
+    return new ExportImportAdminController(
+      this.auth.createTokenService(),
+      this.courses.createExportCoursesHandler(),
+      this.courses.createImportCoursesHandler(),
+      this.auth.createExportUsersHandler(),
+      this.auth.createImportUsersHandler()
+    );
+  }
 
   // ========== AI Context (delegated) ==========
 

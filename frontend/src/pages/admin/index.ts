@@ -7,3 +7,4 @@ export { AdminCategories } from './AdminCategories';
 export { AdminCalendarEvents } from './AdminCalendarEvents';
 export { AdminLlmManufacturers } from './AdminLlmManufacturers';
 export { AdminLlmModels } from './AdminLlmModels';
+export { AdminBackup } from './AdminBackup';

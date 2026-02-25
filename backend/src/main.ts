@@ -457,6 +457,9 @@ calendarEventAdminController.routes(app);
 const calendarEventPublicController = Container.createCalendarEventPublicController();
 calendarEventPublicController.routes(app);
 
+// Export/Import routes
+Container.createExportImportAdminController().routes(app);
+
 // AI Context
 Container.createLlmManufacturerAdminController().routes(app);
 Container.createLlmModelAdminController().routes(app);

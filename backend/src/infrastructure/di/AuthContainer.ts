@@ -49,6 +49,10 @@ import { AssignPermissionToUserHandler } from '@auth/application/commands/assign
 import { RemovePermissionFromUserHandler } from '@auth/application/commands/remove-permission-from-user/RemovePermissionFromUserHandler.ts';
 import { GetUserPermissionsHandler } from '@auth/application/queries/get-user-permissions/GetUserPermissionsHandler.ts';
 
+// Auth Context - Export/Import Handlers
+import { ExportUsersHandler } from '@auth/application/queries/export-users/ExportUsersHandler.ts';
+import { ImportUsersHandler } from '@auth/application/commands/import-users/ImportUsersHandler.ts';
+
 // Auth Context - Event Handlers
 import { LogUserCreatedHandler, SendWelcomeEmailHandler } from '@auth/application/event-handlers/index.ts';
 
@@ -460,6 +464,16 @@ export class AuthContainer {
       this.createActivateUserHandler(),
       this.createResetPasswordAdminHandler()
     );
+  }
+
+  // ========== Export/Import Handlers ==========
+
+  createExportUsersHandler(): ExportUsersHandler {
+    return new ExportUsersHandler(this.getDatabaseProvider());
+  }
+
+  createImportUsersHandler(): ImportUsersHandler {
+    return new ImportUsersHandler(this.getDatabaseProvider());
   }
 
   // ========== Event Handlers ==========

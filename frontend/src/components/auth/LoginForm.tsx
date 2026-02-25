@@ -2,7 +2,7 @@ import { TextInput, PasswordInput, Button, Stack, Alert } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { IconAlertCircle } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAuthStore } from '../../stores/auth.store';
 import { useNavigate } from 'react-router';
 
@@ -16,6 +16,11 @@ export function LoginForm() {
   const navigate = useNavigate();
   const { login, isLoading, error, clearError } = useAuthStore();
   const [submitError, setSubmitError] = useState<string | null>(null);
+
+  // Clear any stale auth error from previous sessions when this component mounts
+  useEffect(() => {
+    clearError();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const form = useForm<LoginFormValues>({
     initialValues: {

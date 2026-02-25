@@ -38,7 +38,7 @@
     "loginSuccess": "Login realizado com sucesso!",
     "registerSuccess": "Cadastro realizado com sucesso! Faça login para continuar.",
     "logoutSuccess": "Você saiu da sua conta.",
-    "invalidCredentials": "E-mail ou senha inválidos.",
+    "invalidCredentials": "Credenciais inválidas.",
     "emailRequired": "E-mail é obrigatório",
     "emailInvalid": "E-mail inválido",
     "passwordRequired": "Senha é obrigatória",
@@ -72,7 +72,8 @@
     "adminCourses": "Cursos",
     "adminCategories": "Categorias",
     "adminLlmManufacturers": "Provedores de LLM",
-    "adminLlmModels": "Modelos de LLM"
+    "adminLlmModels": "Modelos de LLM",
+    "adminBackup": "Backup & Restauração"
   },
   "theme": {
     "light": "Modo claro",

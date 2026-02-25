@@ -38,7 +38,7 @@
     "loginSuccess": "Successfully logged in!",
     "registerSuccess": "Registration successful! Please sign in to continue.",
     "logoutSuccess": "You have been signed out.",
-    "invalidCredentials": "Invalid email or password.",
+    "invalidCredentials": "Invalid credentials.",
     "emailRequired": "Email is required",
     "emailInvalid": "Invalid email",
     "passwordRequired": "Password is required",
@@ -72,7 +72,8 @@
     "adminCourses": "Courses",
     "adminCategories": "Categories",
     "adminLlmManufacturers": "LLM Manufacturers",
-    "adminLlmModels": "LLM Models"
+    "adminLlmModels": "LLM Models",
+    "adminBackup": "Backup & Restore"
   },
   "theme": {
     "light": "Light mode",

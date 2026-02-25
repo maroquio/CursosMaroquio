@@ -10,6 +10,7 @@ import {
   IconCategory,
   IconRobot,
   IconCpu,
+  IconDatabase,
 } from '@tabler/icons-react';
 import { useLocation, useNavigate } from 'react-router';
 import { useTranslation } from 'react-i18next';
@@ -37,6 +38,7 @@ const adminNavItems: NavItem[] = [
   { icon: IconCategory, labelKey: 'nav.adminCategories', path: '/admin/categories' },
   { icon: IconRobot, labelKey: 'nav.adminLlmManufacturers', path: '/admin/llm-manufacturers' },
   { icon: IconCpu, labelKey: 'nav.adminLlmModels', path: '/admin/llm-models' },
+  { icon: IconDatabase, labelKey: 'nav.adminBackup', path: '/admin/backup' },
 ];
 
 interface SidebarNavProps {
