@@ -18,6 +18,9 @@ export interface ImagePickerProps {
   hint?: string;
   cropShape?: 'round' | 'rect';
   outputSize?: number;
+  outputWidth?: number;
+  outputHeight?: number;
+  aspectRatio?: number;
   accept?: string;
   maxFileSize?: number;
   disabled?: boolean;
@@ -35,6 +38,9 @@ export function ImagePicker({
   hint,
   cropShape = 'rect',
   outputSize = 512,
+  outputWidth,
+  outputHeight,
+  aspectRatio,
   accept = DEFAULT_ACCEPT,
   maxFileSize = DEFAULT_MAX_SIZE,
   disabled = false,
@@ -251,6 +257,9 @@ export function ImagePicker({
         onConfirm={handleCropConfirm}
         cropShape={cropShape}
         outputSize={outputSize}
+        outputWidth={outputWidth}
+        outputHeight={outputHeight}
+        aspectRatio={aspectRatio ?? (outputWidth && outputHeight ? outputWidth / outputHeight : undefined)}
         title="Ajustar imagem"
       />
     </Stack>
