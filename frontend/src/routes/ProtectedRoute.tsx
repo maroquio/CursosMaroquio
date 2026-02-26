@@ -9,9 +9,9 @@ interface ProtectedRouteProps {
 
 export function ProtectedRoute({ children, requiredRoles }: ProtectedRouteProps) {
   const location = useLocation();
-  const { isAuthenticated, isLoading, user } = useAuthStore();
+  const { isAuthenticated, isInitializing, user } = useAuthStore();
 
-  if (isLoading) {
+  if (isInitializing) {
     return (
       <Center h="100vh">
         <Loader size="xl" />

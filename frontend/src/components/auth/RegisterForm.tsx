@@ -3,6 +3,7 @@ import { useForm } from '@mantine/form';
 import { IconAlertCircle, IconCheck, IconX } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
+import { AxiosError } from 'axios';
 import { useAuthStore } from '../../stores/auth.store';
 import { useNavigate } from 'react-router';
 import { notifications } from '@mantine/notifications';
@@ -54,8 +55,9 @@ function getPasswordStrength(password: string) {
 export function RegisterForm() {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { register, isLoading, error, clearError } = useAuthStore();
+  const { register } = useAuthStore();
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const form = useForm<RegisterFormValues>({
     initialValues: {
@@ -99,7 +101,7 @@ export function RegisterForm() {
 
   const handleSubmit = async (values: RegisterFormValues) => {
     setSubmitError(null);
-    clearError();
+    setIsSubmitting(true);
     try {
       // Remove formatação do telefone antes de enviar
       const phoneDigits = values.phone.replace(/\D/g, '');
@@ -116,8 +118,17 @@ export function RegisterForm() {
       });
       navigate('/login');
     } catch (err) {
-      const message = err instanceof Error ? err.message : t('errors.generic');
-      setSubmitError(message);
+      if (err instanceof AxiosError) {
+        if (err.response?.status === 409) {
+          form.setFieldError('email', t('auth.emailAlreadyExists'));
+          return;
+        }
+        setSubmitError(err.response?.data?.error || t('errors.generic'));
+      } else {
+        setSubmitError(err instanceof Error ? err.message : t('errors.generic'));
+      }
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -135,9 +146,9 @@ export function RegisterForm() {
   return (
     <form onSubmit={form.onSubmit(handleSubmit)}>
       <Stack>
-        {(submitError || error) && (
+        {submitError && (
           <Alert icon={<IconAlertCircle size={16} />} color="red" variant="light">
-            {submitError || error}
+            {submitError}
           </Alert>
         )}
 
@@ -192,7 +203,7 @@ export function RegisterForm() {
           {...form.getInputProps('confirmPassword')}
         />
 
-        <Button type="submit" fullWidth loading={isLoading}>
+        <Button type="submit" fullWidth loading={isSubmitting}>
           {t('auth.register')}
         </Button>
       </Stack>
