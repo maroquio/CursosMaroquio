@@ -64,19 +64,6 @@ pipeline {
             }
         }
 
-        stage('Reset Database') {
-            steps {
-                sh '''
-                    echo "Stopping app containers to release DB connections..."
-                    docker compose stop backend frontend || true
-
-                    echo "Dropping and recreating database (fresh deploy, no user data)..."
-                    docker compose exec -T postgres dropdb -U cursos_maroquio --if-exists cursos_maroquio
-                    docker compose exec -T postgres createdb -U cursos_maroquio -O cursos_maroquio cursos_maroquio
-                '''
-            }
-        }
-
         stage('Run Migrations') {
             steps {
                 sh '''
@@ -84,6 +71,18 @@ pipeline {
                       -v "$(pwd)/backend/drizzle.config.ts:/app/drizzle.config.ts:ro" \
                       -v "$(pwd)/backend/src/infrastructure/database/migrations:/app/src/infrastructure/database/migrations:ro" \
                       backend bunx drizzle-kit migrate
+                '''
+            }
+        }
+
+        stage('Seed Base Data') {
+            steps {
+                sh '''
+                    docker compose run --rm --no-deps \
+                      -v "$(pwd)/backend/src:/app/src:ro" \
+                      -v "$(pwd)/backend/scripts:/app/scripts:ro" \
+                      -v "$(pwd)/backend/tsconfig.json:/app/tsconfig.json:ro" \
+                      backend bun scripts/db-seed-base.ts
                 '''
             }
         }
