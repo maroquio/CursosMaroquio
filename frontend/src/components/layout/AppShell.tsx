@@ -3,6 +3,7 @@ import { useDisclosure } from '@mantine/hooks';
 import { Outlet } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { Header } from './Header';
+import { Footer } from './Footer';
 import { ThemeToggle } from '../common/ThemeToggle';
 import { LanguageSelector } from '../common/LanguageSelector';
 
@@ -45,6 +46,7 @@ export function AppShell() {
 
       <MantineAppShell.Main>
         <Outlet />
+        <Footer />
       </MantineAppShell.Main>
     </MantineAppShell>
   );

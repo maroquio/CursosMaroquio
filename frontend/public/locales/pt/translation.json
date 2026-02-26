@@ -511,6 +511,18 @@
       "deleteConfirmMessage": "Tem certeza que deseja excluir a categoria \"{{name}}\"?"
     }
   },
+  "footer": {
+    "description": "Aprenda programação e desenvolvimento web com cursos práticos, objetivos e atualizados. Do iniciante ao avançado.",
+    "platform": "Plataforma",
+    "home": "Início",
+    "courses": "Cursos",
+    "contact": "Contato",
+    "contactEmail": "contato@maroquio.com",
+    "contactDescription": "Dúvidas ou sugestões? Envie um e-mail.",
+    "allRights": "Todos os direitos reservados.",
+    "privacy": "Privacidade",
+    "terms": "Termos de Uso"
+  },
   "errors": {
     "generic": "Ocorreu um erro. Tente novamente.",
     "network": "Erro de conexão. Verifique sua internet.",

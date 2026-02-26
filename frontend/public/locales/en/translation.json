@@ -508,6 +508,18 @@
       "deleteConfirmMessage": "Are you sure you want to delete the category \"{{name}}\"?"
     }
   },
+  "footer": {
+    "description": "Learn programming and web development with practical, focused, and up-to-date courses. From beginner to advanced.",
+    "platform": "Platform",
+    "home": "Home",
+    "courses": "Courses",
+    "contact": "Contact",
+    "contactEmail": "contact@maroquio.com",
+    "contactDescription": "Questions or suggestions? Send an email.",
+    "allRights": "All rights reserved.",
+    "privacy": "Privacy",
+    "terms": "Terms of Use"
+  },
   "errors": {
     "generic": "An error occurred. Please try again.",
     "network": "Connection error. Check your internet.",

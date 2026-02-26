@@ -35,6 +35,19 @@ export function Header({ opened, onToggle }: HeaderProps) {
               <Text fw={700} size="md" style={{ fontFamily: '"Outfit", sans-serif' }}>
                 Maroquio.com
               </Text>
+              <Text
+                size="sm"
+                c="dimmed"
+                visibleFrom="sm"
+                style={{
+                  borderLeft: '1px solid currentColor',
+                  paddingLeft: '0.5rem',
+                  opacity: 0.55,
+                  fontFamily: '"Outfit", sans-serif',
+                }}
+              >
+                Cursos Online
+              </Text>
             </Group>
           </Link>
         </Group>
