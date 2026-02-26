@@ -1,4 +1,6 @@
 import { eq } from 'drizzle-orm';
+import { join } from 'path';
+import { mkdir } from 'fs/promises';
 import { getDatabase } from '../connection.ts';
 import {
   coursesTable,
@@ -1981,6 +1983,17 @@ calcular_raiz(16)
   },
 ];
 
+async function copyCourseThumbnail(sourceName: string, destName: string): Promise<string> {
+  const THUMBNAILS_DIR = './uploads/thumbnails';
+  await mkdir(THUMBNAILS_DIR, { recursive: true });
+  const sourcePath = join(import.meta.dir, 'assets', sourceName);
+  const destPath = join(THUMBNAILS_DIR, destName);
+  if (!await Bun.file(destPath).exists()) {
+    await Bun.write(destPath, Bun.file(sourcePath));
+  }
+  return `/uploads/thumbnails/${destName}`;
+}
+
 /**
  * Seed function: create Python Essencial course with modules, lessons and sections
  * Idempotent — skips if the course already exists.
@@ -2035,11 +2048,17 @@ export async function seedPythonCourse(): Promise<void> {
   if (existingCourse.length > 0) {
     if (env.NODE_ENV !== 'test')
       console.log('  → Course "Python Essencial" already exists');
+    if (!existingCourse[0]!.thumbnailUrl) {
+      const thumbnailUrl = await copyCourseThumbnail('logo_curso_python_essencial.png', 'python-essencial.png');
+      await db.update(coursesTable).set({ thumbnailUrl }).where(eq(coursesTable.slug, 'python-essencial'));
+      if (env.NODE_ENV !== 'test') console.log('  → Updated thumbnail for "Python Essencial"');
+    }
     return;
   }
 
   // 4. Create course
   const courseId = uuidv7();
+  const thumbnailUrl = await copyCourseThumbnail('logo_curso_python_essencial.png', 'python-essencial.png');
   await db.insert(coursesTable).values({
     id: courseId,
     title: 'Python Essencial',
@@ -2054,6 +2073,7 @@ export async function seedPythonCourse(): Promise<void> {
     currency: 'BRL',
     categoryId,
     instructorId,
+    thumbnailUrl,
     createdAt: now,
     updatedAt: now,
     publishedAt: now,
