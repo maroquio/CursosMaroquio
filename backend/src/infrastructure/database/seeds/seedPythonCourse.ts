@@ -1983,15 +1983,20 @@ calcular_raiz(16)
   },
 ];
 
-async function copyCourseThumbnail(sourceName: string, destName: string): Promise<string> {
-  const THUMBNAILS_DIR = './uploads/thumbnails';
-  await mkdir(THUMBNAILS_DIR, { recursive: true });
-  const sourcePath = join(import.meta.dir, 'assets', sourceName);
-  const destPath = join(THUMBNAILS_DIR, destName);
-  if (!await Bun.file(destPath).exists()) {
-    await Bun.write(destPath, Bun.file(sourcePath));
+async function copyCourseThumbnail(sourceName: string, destName: string): Promise<string | null> {
+  try {
+    const THUMBNAILS_DIR = './uploads/thumbnails';
+    await mkdir(THUMBNAILS_DIR, { recursive: true });
+    const sourcePath = join(import.meta.dir, 'assets', sourceName);
+    const destPath = join(THUMBNAILS_DIR, destName);
+    if (!await Bun.file(destPath).exists()) {
+      await Bun.write(destPath, Bun.file(sourcePath));
+    }
+    return `/uploads/thumbnails/${destName}`;
+  } catch {
+    console.warn(`  ⚠ Could not copy thumbnail ${sourceName}, skipping`);
+    return null;
   }
-  return `/uploads/thumbnails/${destName}`;
 }
 
 /**
@@ -2050,8 +2055,10 @@ export async function seedPythonCourse(): Promise<void> {
       console.log('  → Course "Python Essencial" already exists');
     if (!existingCourse[0]!.thumbnailUrl) {
       const thumbnailUrl = await copyCourseThumbnail('logo_curso_python_essencial.png', 'python-essencial.png');
-      await db.update(coursesTable).set({ thumbnailUrl }).where(eq(coursesTable.slug, 'python-essencial'));
-      if (env.NODE_ENV !== 'test') console.log('  → Updated thumbnail for "Python Essencial"');
+      if (thumbnailUrl) {
+        await db.update(coursesTable).set({ thumbnailUrl }).where(eq(coursesTable.slug, 'python-essencial'));
+        if (env.NODE_ENV !== 'test') console.log('  → Updated thumbnail for "Python Essencial"');
+      }
     }
     return;
   }
