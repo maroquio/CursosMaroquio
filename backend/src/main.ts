@@ -95,7 +95,30 @@ const app = new Elysia()
   .onBeforeHandle(async (ctx: any) => {
     const path = new URL(ctx.request.url).pathname;
 
-    if (path === '/v1/auth/login' || path === '/v1/auth/register') {
+    if (path === '/v1/auth/login') {
+      // Key by email: multiple users from the same NAT/IP can login independently.
+      // Each account gets its own 5 req/min bucket, preventing brute force per account
+      // while not penalizing unrelated users sharing the same public IP.
+      const rateLimiter = createRateLimiter({
+        ...RateLimitPresets.strict,
+        message: ctx.t.http.rateLimitExceeded(),
+        keyExtractor: (reqCtx) => {
+          const body = (reqCtx as any).body as { email?: string } | undefined;
+          const email = body?.email?.toLowerCase().trim();
+          if (email) return `login:email:${email}`;
+          // Fallback to IP if email is not in body (malformed request)
+          const ip = reqCtx.request.headers.get('x-forwarded-for')?.split(',')[0]?.trim()
+            ?? reqCtx.request.headers.get('x-real-ip')
+            ?? (reqCtx as any).server?.requestIP?.(reqCtx.request)?.address
+            ?? 'unknown';
+          return `login:ip:${ip}`;
+        },
+      });
+      return rateLimiter(ctx);
+    }
+
+    if (path === '/v1/auth/register') {
+      // Key by IP: multiple registrations from the same IP are suspicious.
       const rateLimiter = createRateLimiter({
         ...RateLimitPresets.strict,
         message: ctx.t.http.rateLimitExceeded(),
