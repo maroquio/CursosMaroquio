@@ -99,10 +99,10 @@ export function Footer() {
               © {currentYear} Maroquio.com. {t('footer.allRights')}
             </Text>
             <Group gap="lg">
-              <Anchor component={Link} to="#" size="xs" c="slate.5" style={{ textDecoration: 'none' }}>
+              <Anchor component={Link} to="/privacidade" size="xs" c="slate.5" style={{ textDecoration: 'none' }}>
                 {t('footer.privacy')}
               </Anchor>
-              <Anchor component={Link} to="#" size="xs" c="slate.5" style={{ textDecoration: 'none' }}>
+              <Anchor component={Link} to="/termos" size="xs" c="slate.5" style={{ textDecoration: 'none' }}>
                 {t('footer.terms')}
               </Anchor>
             </Group>
