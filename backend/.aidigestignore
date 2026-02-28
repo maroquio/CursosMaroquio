@@ -1,0 +1,13 @@
+dist
+docs
+node_modules
+public
+.env*
+bundles
+jenkins
+scripts
+tests
+uploads
+*.yml
+*.sql
+*.md

@@ -95,9 +95,18 @@ const app = new Elysia()
   .onBeforeHandle(async (ctx: any) => {
     const path = new URL(ctx.request.url).pathname;
 
+    // Key extractor includes path so each endpoint has its own rate limit bucket
+    const keyWithPath = (c: any) => {
+      const ip = c.request.headers.get('x-forwarded-for')?.split(',')[0]?.trim()
+        ?? c.request.headers.get('x-real-ip')
+        ?? 'unknown';
+      return `${ip}:${path}`;
+    };
+
     if (path === '/v1/auth/login' || path === '/v1/auth/register') {
       const rateLimiter = createRateLimiter({
         ...RateLimitPresets.strict,
+        keyExtractor: keyWithPath,
         message: ctx.t.http.rateLimitExceeded(),
       });
       return rateLimiter(ctx);
@@ -106,6 +115,7 @@ const app = new Elysia()
     if (path === '/v1/auth/refresh') {
       const rateLimiter = createRateLimiter({
         ...RateLimitPresets.standard,
+        keyExtractor: keyWithPath,
         message: ctx.t.http.rateLimitRefresh(),
       });
       return rateLimiter(ctx);
@@ -114,6 +124,7 @@ const app = new Elysia()
     if (path.match(/^\/v1\/auth\/oauth\/\w+\/callback$/)) {
       const rateLimiter = createRateLimiter({
         ...RateLimitPresets.strict,
+        keyExtractor: keyWithPath,
         message: ctx.t.http.rateLimitOAuth(),
       });
       return rateLimiter(ctx);
