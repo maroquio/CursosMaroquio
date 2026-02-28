@@ -78,6 +78,7 @@ export function LessonPlayer() {
 
   const handleMarkComplete = useCallback(async () => {
     if (!enrollment || !currentLesson) return;
+    if (isLessonCompleted) return;
 
     setIsMarkingComplete(true);
     try {
@@ -104,7 +105,7 @@ export function LessonPlayer() {
     } finally {
       setIsMarkingComplete(false);
     }
-  }, [enrollment, currentLesson, setEnrollment, notification, t]);
+  }, [enrollment, currentLesson, setEnrollment, notification, t, isLessonCompleted]);
 
   const handleNavigate = useCallback(
     (lessonSlugToNavigate: string) => {

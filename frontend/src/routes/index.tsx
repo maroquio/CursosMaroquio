@@ -9,6 +9,8 @@ import { Login } from '../pages/Login';
 import { Register } from '../pages/Register';
 import { OAuthCallback } from '../pages/OAuthCallback';
 import { NotFound } from '../pages/NotFound';
+import { PrivacyPolicy } from '../pages/PrivacyPolicy';
+import { TermsOfUse } from '../pages/TermsOfUse';
 import {
   Dashboard,
   Courses,
@@ -28,6 +30,7 @@ import {
   AdminCalendarEvents,
   AdminLlmManufacturers,
   AdminLlmModels,
+  AdminBackup,
 } from '../pages/admin';
 
 export const router = createBrowserRouter([
@@ -69,6 +72,14 @@ export const router = createBrowserRouter([
       {
         path: 'courses/:slug',
         element: <CourseDetail />,
+      },
+      {
+        path: 'privacidade',
+        element: <PrivacyPolicy />,
+      },
+      {
+        path: 'termos',
+        element: <TermsOfUse />,
       },
       {
         path: '*',
@@ -183,6 +194,10 @@ export const router = createBrowserRouter([
       {
         path: 'llm-models',
         element: <AdminLlmModels />,
+      },
+      {
+        path: 'backup',
+        element: <AdminBackup />,
       },
     ],
   },

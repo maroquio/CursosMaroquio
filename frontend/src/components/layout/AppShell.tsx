@@ -1,8 +1,9 @@
-import { AppShell as MantineAppShell, Drawer, Stack, Group, Text, Divider } from '@mantine/core';
+import { AppShell as MantineAppShell, Box, Drawer, Stack, Group, Text, Divider } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { Outlet } from 'react-router';
+import { Outlet, ScrollRestoration } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { Header } from './Header';
+import { Footer } from './Footer';
 import { ThemeToggle } from '../common/ThemeToggle';
 import { LanguageSelector } from '../common/LanguageSelector';
 
@@ -43,8 +44,12 @@ export function AppShell() {
         </Stack>
       </Drawer>
 
-      <MantineAppShell.Main>
-        <Outlet />
+      <MantineAppShell.Main style={{ display: 'flex', flexDirection: 'column' }}>
+        <ScrollRestoration />
+        <Box style={{ flex: 1 }}>
+          <Outlet />
+        </Box>
+        <Footer />
       </MantineAppShell.Main>
     </MantineAppShell>
   );

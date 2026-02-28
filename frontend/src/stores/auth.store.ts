@@ -15,6 +15,7 @@ interface AuthState {
   user: User | null;
   isAuthenticated: boolean;
   isLoading: boolean;
+  isInitializing: boolean;
   error: string | null;
 }
 
@@ -39,7 +40,8 @@ type AuthStore = AuthState & AuthActions;
 const initialState: AuthState = {
   user: null,
   isAuthenticated: false,
-  isLoading: true,
+  isLoading: false,
+  isInitializing: true,
   error: null,
 };
 
@@ -88,7 +90,12 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
       }
       set({ isLoading: false });
     } catch (error) {
-      const message = error instanceof Error ? error.message : 'Registration failed';
+      const message =
+        error instanceof AxiosError && error.response?.data?.error
+          ? error.response.data.error
+          : error instanceof Error
+            ? error.message
+            : 'Registration failed';
       set({ error: message, isLoading: false });
       throw error;
     }
@@ -131,7 +138,7 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
   clearAuth: () => {
     tokenStorage.clearTokens();
     storage.remove(STORAGE_KEYS.USER);
-    set({ ...initialState, isLoading: false });
+    set({ ...initialState, isInitializing: false });
   },
 
   loadFromStorage: () => {
@@ -146,16 +153,16 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
           if (newAccessToken) {
             const userFromToken = getUserFromToken(newAccessToken);
             if (userFromToken) {
-              set({ user: userFromToken, isAuthenticated: true, isLoading: false });
+              set({ user: userFromToken, isAuthenticated: true, isInitializing: false });
             } else {
-              set({ isLoading: false });
+              set({ isInitializing: false });
             }
           } else {
-            set({ isLoading: false });
+            set({ isInitializing: false });
           }
         })
         .catch(() => {
-          set({ isLoading: false });
+          set({ isInitializing: false });
         });
       return;
     }
@@ -171,17 +178,17 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
               set({
                 user: userFromToken,
                 isAuthenticated: true,
-                isLoading: false,
+                isInitializing: false,
               });
             } else {
-              set({ isLoading: false });
+              set({ isInitializing: false });
             }
           } else {
-            set({ isLoading: false });
+            set({ isInitializing: false });
           }
         })
         .catch(() => {
-          set({ isLoading: false });
+          set({ isInitializing: false });
         });
     } else {
       const userFromToken = getUserFromToken(accessToken);
@@ -195,10 +202,10 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
         set({
           user,
           isAuthenticated: true,
-          isLoading: false,
+          isInitializing: false,
         });
       } else {
-        set({ isLoading: false });
+        set({ isInitializing: false });
       }
     }
   },

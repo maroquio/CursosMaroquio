@@ -9,10 +9,10 @@ interface PublicRouteProps {
 
 export function PublicRoute({ children, redirectAuthenticated = false }: PublicRouteProps) {
   const location = useLocation();
-  const { isAuthenticated, isLoading } = useAuthStore();
+  const { isAuthenticated, isInitializing } = useAuthStore();
   const from = (location.state as { from?: Location })?.from?.pathname || '/app/dashboard';
 
-  if (isLoading) {
+  if (isInitializing) {
     return (
       <Center h="100vh">
         <Loader size="xl" />

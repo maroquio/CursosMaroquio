@@ -8,11 +8,13 @@
 import { SQL } from 'bun';
 
 const port = Number(process.env.POSTGRES_PORT) || 5435;
+const user = process.env.POSTGRES_USER || 'maroquio';
+const password = process.env.POSTGRES_PASSWORD || 'maroquio';
 const databases = ['cursos_maroquio', 'cursos_maroquio_test'];
 
 async function createDatabases() {
-  console.log('Conectando ao PostgreSQL (banco postgres) com usuário maroquio...');
-  const sql = new SQL(`postgresql://maroquio:maroquio@localhost:${port}/postgres`);
+  console.log(`Conectando ao PostgreSQL (banco postgres) com usuário ${user}...`);
+  const sql = new SQL(`postgresql://${user}:${password}@localhost:${port}/postgres`);
 
   try {
     for (const dbName of databases) {

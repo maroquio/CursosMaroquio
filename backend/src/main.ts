@@ -95,18 +95,38 @@ const app = new Elysia()
   .onBeforeHandle(async (ctx: any) => {
     const path = new URL(ctx.request.url).pathname;
 
-    // Key extractor includes path so each endpoint has its own rate limit bucket
-    const keyWithPath = (c: any) => {
+    // IP-based key extractor for rate limiting
+    const keyByIp = (prefix: string) => (c: any) => {
       const ip = c.request.headers.get('x-forwarded-for')?.split(',')[0]?.trim()
         ?? c.request.headers.get('x-real-ip')
+        ?? (c as any).server?.requestIP?.(c.request)?.address
         ?? 'unknown';
-      return `${ip}:${path}`;
+      return `${prefix}:${ip}`;
     };
 
-    if (path === '/v1/auth/login' || path === '/v1/auth/register') {
+    if (path === '/v1/auth/login') {
+      // Key by email: multiple users from the same NAT/IP can login independently.
+      // Each account gets its own 5 req/min bucket, preventing brute force per account
+      // while not penalizing unrelated users sharing the same public IP.
       const rateLimiter = createRateLimiter({
         ...RateLimitPresets.strict,
-        keyExtractor: keyWithPath,
+        message: ctx.t.http.rateLimitExceeded(),
+        keyExtractor: (reqCtx) => {
+          const body = (reqCtx as any).body as { email?: string } | undefined;
+          const email = body?.email?.toLowerCase().trim();
+          if (email) return `login:email:${email}`;
+          // Fallback to IP if email is not in body (malformed request)
+          return keyByIp('login')(reqCtx);
+        },
+      });
+      return rateLimiter(ctx);
+    }
+
+    if (path === '/v1/auth/register') {
+      // Key by IP: multiple registrations from the same IP are suspicious.
+      const rateLimiter = createRateLimiter({
+        ...RateLimitPresets.strict,
+        keyExtractor: keyByIp('register'),
         message: ctx.t.http.rateLimitExceeded(),
       });
       return rateLimiter(ctx);
@@ -115,7 +135,7 @@ const app = new Elysia()
     if (path === '/v1/auth/refresh') {
       const rateLimiter = createRateLimiter({
         ...RateLimitPresets.standard,
-        keyExtractor: keyWithPath,
+        keyExtractor: keyByIp('refresh'),
         message: ctx.t.http.rateLimitRefresh(),
       });
       return rateLimiter(ctx);
@@ -124,7 +144,7 @@ const app = new Elysia()
     if (path.match(/^\/v1\/auth\/oauth\/\w+\/callback$/)) {
       const rateLimiter = createRateLimiter({
         ...RateLimitPresets.strict,
-        keyExtractor: keyWithPath,
+        keyExtractor: keyByIp('oauth'),
         message: ctx.t.http.rateLimitOAuth(),
       });
       return rateLimiter(ctx);
@@ -467,6 +487,9 @@ calendarEventAdminController.routes(app);
 
 const calendarEventPublicController = Container.createCalendarEventPublicController();
 calendarEventPublicController.routes(app);
+
+// Export/Import routes
+Container.createExportImportAdminController().routes(app);
 
 // AI Context
 Container.createLlmManufacturerAdminController().routes(app);

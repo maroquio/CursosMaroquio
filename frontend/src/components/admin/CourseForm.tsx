@@ -153,7 +153,8 @@ export const CourseForm = memo(function CourseForm({
             placeholder={t('admin.courses.thumbnailPlaceholder')}
             hint={t('admin.courses.thumbnailHint')}
             cropShape="rect"
-            outputSize={512}
+            outputWidth={848}
+            outputHeight={280}
             disabled={isSubmitting}
           />
 

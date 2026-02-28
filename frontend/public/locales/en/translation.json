@@ -38,7 +38,7 @@
     "loginSuccess": "Successfully logged in!",
     "registerSuccess": "Registration successful! Please sign in to continue.",
     "logoutSuccess": "You have been signed out.",
-    "invalidCredentials": "Invalid email or password.",
+    "invalidCredentials": "Invalid credentials.",
     "emailRequired": "Email is required",
     "emailInvalid": "Invalid email",
     "passwordRequired": "Password is required",
@@ -72,7 +72,8 @@
     "adminCourses": "Courses",
     "adminCategories": "Categories",
     "adminLlmManufacturers": "LLM Manufacturers",
-    "adminLlmModels": "LLM Models"
+    "adminLlmModels": "LLM Models",
+    "adminBackup": "Backup & Restore"
   },
   "theme": {
     "light": "Light mode",
@@ -506,6 +507,18 @@
       "deleteConfirmTitle": "Confirm deletion",
       "deleteConfirmMessage": "Are you sure you want to delete the category \"{{name}}\"?"
     }
+  },
+  "footer": {
+    "description": "Learn programming and web development with practical, focused, and up-to-date courses. From beginner to advanced.",
+    "platform": "Platform",
+    "home": "Home",
+    "courses": "Courses",
+    "contact": "Contact",
+    "contactEmail": "contact@maroquio.com",
+    "contactDescription": "Questions or suggestions? Send an email.",
+    "allRights": "All rights reserved.",
+    "privacy": "Privacy",
+    "terms": "Terms of Use"
   },
   "errors": {
     "generic": "An error occurred. Please try again.",

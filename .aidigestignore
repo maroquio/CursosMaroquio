@@ -1,74 +1,124 @@
-# Environment
+# ================================================================
+# .aidigestignore — Arquivos irrelevantes para compreensão do codebase
+# Nota: *.md foi REMOVIDO intencionalmente — CLAUDE.md, PRD.md e
+# docs/ são fontes primárias de contexto arquitetural.
+# ================================================================
+
+# --- Dependências ---
+node_modules/
+bun.lock
+bun.lockb
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# --- Build / output ---
+dist/
+dist-ssr/
+out/
+build/
+*.tgz
+
+# --- Ambiente e segredos ---
 .env
 .env.local
 .env.*.local
+.env.development.local
+.env.test.local
+.env.production.local
 
-# Logs
-logs
+# --- Logs ---
+logs/
 *.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
-lerna-debug.log*
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
-node_modules
-dist
-dist-ssr
-*.local
+# --- Cobertura de testes e relatórios ---
+coverage/
+*.lcov
+junit.xml
+test-results/
+html-report/
 
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
+# --- Cache ---
+.cache/
+.eslintcache
+*.tsbuildinfo
+.vite/
+.parcel-cache/
+
+# --- Editor e sistema operacional ---
+.vscode/
+.cursor/
+.idea/
 .DS_Store
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
+Thumbs.db
 
-# dependencies (bun install)
-node_modules
-bun.lockb
+# --- Arquivos enviados em runtime (não são código-fonte) ---
+backend/uploads/
 
-# output
-out
-dist
-*.tgz
+# --- Pacotes de conteúdo de aulas (HTML/CSS/JS servidos, não arquitetura) ---
+backend/bundles/
 
-# code coverage
-coverage
-*.lcov
+# --- Dados de conteúdo do curso (JSONs de importação, não código) ---
+content/
 
-# logs
-logs
-*.log
-report.[0-9]_.[0-9]_.[0-9]_.[0-9]_.json
+# --- Snapshots gerados pelo Drizzle (não editados manualmente) ---
+backend/src/infrastructure/database/migrations/meta/
 
-# dotenv environment variable files
-.env
-.env.development.local
-.env.test.local
-.env.production.local
-.env.local
+# --- CI/CD ---
+Jenkinsfile
+backend/jenkins/
 
-# caches
-.eslintcache
-.cache
-*.tsbuildinfo
+# --- Scripts e arquivos avulsos descartáveis ---
+backend/check-enrollments.ts
+backend/fix-accents.sql
 
-# IntelliJ based IDEs
-.idea
+# --- Ativos binários ---
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.ico
+*.svg
+*.webp
+*.avif
+*.bmp
+*.tiff
 
-# Finder (MacOS) folder config
-.DS_Store
+# --- Fontes ---
+*.woff
+*.woff2
+*.ttf
+*.eot
+*.otf
 
-# IDE
-.vscode/
-.cursor/
+# --- Source maps ---
+*.map
 
-# Database
+# --- Arquivos compactados ---
+*.zip
+*.tar
+*.tar.gz
+*.gz
+*.rar
+*.7z
+
+# --- Volumes de dados locais ---
 data/
+postgres-data/
+
+# --- Utilitários gerados pelo typesafe-i18n (boilerplate, não arquitetura) ---
+backend/src/shared/infrastructure/i18n/i18n-util.ts
+backend/src/shared/infrastructure/i18n/i18n-util.async.ts
+backend/src/shared/infrastructure/i18n/i18n-util.sync.ts
 
 *.md

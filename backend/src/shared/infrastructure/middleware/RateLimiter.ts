@@ -138,7 +138,7 @@ function getDefaultStore(): InMemoryRateLimitStore {
  * Default IP extractor
  */
 function getClientIP(ctx: Context): string {
-  // Check common proxy headers
+  // Check common proxy headers (injected by nginx, Cloudflare, etc.)
   const forwarded = ctx.request.headers.get('x-forwarded-for');
   if (forwarded) {
     return forwarded.split(',')[0]?.trim() ?? 'unknown';
@@ -149,8 +149,12 @@ function getClientIP(ctx: Context): string {
     return realIP;
   }
 
-  // Fallback to server connection info
-  // Note: In Bun/Elysia, we may need to access this differently
+  // Fallback to Bun socket IP (not spoofable by client)
+  const socketInfo = (ctx as any).server?.requestIP?.(ctx.request);
+  if (socketInfo?.address) {
+    return socketInfo.address;
+  }
+
   return 'unknown';
 }
 

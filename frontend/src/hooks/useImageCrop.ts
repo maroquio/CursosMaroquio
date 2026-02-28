@@ -33,7 +33,9 @@ async function getCroppedImage(
   imageSrc: string,
   cropArea: CropArea,
   quality: number = DEFAULT_QUALITY,
-  outputSize?: number
+  outputSize?: number,
+  outputWidth?: number,
+  outputHeight?: number
 ): Promise<Blob> {
   const image = await createImage(imageSrc);
   const canvas = document.createElement('canvas');
@@ -44,8 +46,10 @@ async function getCroppedImage(
   }
 
   const size = outputSize ?? getMaxSize();
-  canvas.width = size;
-  canvas.height = size;
+  const canvasWidth = outputWidth ?? size;
+  const canvasHeight = outputHeight ?? size;
+  canvas.width = canvasWidth;
+  canvas.height = canvasHeight;
 
   ctx.drawImage(
     image,
@@ -55,8 +59,8 @@ async function getCroppedImage(
     cropArea.height,
     0,
     0,
-    size,
-    size
+    canvasWidth,
+    canvasHeight
   );
 
   return new Promise((resolve, reject) => {
@@ -86,9 +90,11 @@ export function useImageCrop() {
     cropArea: CropArea,
     fileName: string = 'profile.jpg',
     quality: number = DEFAULT_QUALITY,
-    outputSize?: number
+    outputSize?: number,
+    outputWidth?: number,
+    outputHeight?: number
   ): Promise<File> => {
-    const blob = await getCroppedImage(imageSrc, cropArea, quality, outputSize);
+    const blob = await getCroppedImage(imageSrc, cropArea, quality, outputSize, outputWidth, outputHeight);
     return blobToFile(blob, fileName);
   };
 

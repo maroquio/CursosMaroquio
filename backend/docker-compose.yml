@@ -21,10 +21,10 @@ services:
     ports:
       - "${POSTGRES_PORT:-5435}:5432"
     environment:
-      POSTGRES_USER: ${POSTGRES_USER:-app}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-app}
-      POSTGRES_DB: ${POSTGRES_DB:-app}
-      POSTGRES_MULTIPLE_DATABASES: app,app_test
+      POSTGRES_USER: ${POSTGRES_USER:-maroquio}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-maroquio}
+      POSTGRES_DB: ${POSTGRES_DB:-postgres}
+      POSTGRES_MULTIPLE_DATABASES: cursos_maroquio,cursos_maroquio_test
     volumes:
       - postgres-data:/var/lib/postgresql/data
       - ./scripts/init-multiple-dbs.sh:/docker-entrypoint-initdb.d/init-multiple-dbs.sh:ro
@@ -32,7 +32,7 @@ services:
       test:
         [
           "CMD-SHELL",
-          "pg_isready -U ${POSTGRES_USER:-app} -d ${POSTGRES_DB:-app}",
+          "pg_isready -U ${POSTGRES_USER:-maroquio} -d ${POSTGRES_DB:-postgres}",
         ]
       interval: 10s
       timeout: 5s
@@ -51,7 +51,7 @@ services:
     environment:
       - NODE_ENV=development
       - PORT=8702
-      - DATABASE_URL=postgresql://${POSTGRES_USER:-app}:${POSTGRES_PASSWORD:-app}@maroquio-postgres:5432/${POSTGRES_DB:-app}
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-maroquio}:${POSTGRES_PASSWORD:-maroquio}@maroquio-postgres:5432/${POSTGRES_DB:-postgres}
       - JWT_SECRET=${JWT_SECRET:-dev-secret-change-in-production}
       - JWT_ACCESS_EXPIRY=${JWT_ACCESS_EXPIRY:-15m}
       - JWT_REFRESH_EXPIRY=${JWT_REFRESH_EXPIRY:-7d}

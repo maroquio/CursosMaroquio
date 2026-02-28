@@ -13,6 +13,8 @@ export interface PhotoCropModalProps {
   isProcessing?: boolean;
   cropShape?: 'round' | 'rect';
   outputSize?: number;
+  outputWidth?: number;
+  outputHeight?: number;
   aspectRatio?: number;
   title?: string;
 }
@@ -25,6 +27,8 @@ export function PhotoCropModal({
   isProcessing = false,
   cropShape = 'round',
   outputSize,
+  outputWidth,
+  outputHeight,
   aspectRatio = 1,
   title = 'Recortar foto de perfil',
 }: PhotoCropModalProps) {
@@ -45,7 +49,7 @@ export function PhotoCropModal({
 
     setIsProcessingCrop(true);
     try {
-      const croppedFile = await cropImage(imageSrc, croppedAreaPixels, 'cropped.jpg', 0.85, finalOutputSize);
+      const croppedFile = await cropImage(imageSrc, croppedAreaPixels, 'cropped.jpg', 0.85, finalOutputSize, outputWidth, outputHeight);
       onConfirm(croppedFile);
     } catch {
     } finally {
@@ -112,7 +116,7 @@ export function PhotoCropModal({
         </Group>
 
         <Text size="xs" c="dimmed" ta="center">
-          A imagem final terá {finalOutputSize}x{finalOutputSize} pixels
+          A imagem final terá {outputWidth ?? finalOutputSize}x{outputHeight ?? finalOutputSize} pixels
         </Text>
 
         <Group justify="flex-end" gap="sm">

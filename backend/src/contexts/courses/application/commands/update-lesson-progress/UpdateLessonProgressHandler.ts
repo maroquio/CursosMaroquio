@@ -41,8 +41,8 @@ export class UpdateLessonProgressHandler implements ICommandHandler<UpdateLesson
       return Result.fail(ErrorCode.ENROLLMENT_NOT_FOUND);
     }
 
-    // Check if enrollment is active
-    if (!enrollment.isActive()) {
+    // Block only cancelled enrollments; completed enrollments still have access
+    if (enrollment.isCancelled()) {
       return Result.fail(ErrorCode.ENROLLMENT_NOT_ACTIVE);
     }
 
@@ -129,6 +129,9 @@ export class UpdateLessonProgressHandler implements ICommandHandler<UpdateLesson
     enrollment: import('../../../domain/entities/Enrollment.ts').Enrollment,
     enrollmentId: EnrollmentId
   ): Promise<void> {
+    // Skip unnecessary writes when enrollment is already completed
+    if (enrollment.isCompleted()) return;
+
     // Get course to know total lessons
     const course = await this.courseRepository.findById(enrollment.getCourseId());
     if (!course) return;

@@ -394,6 +394,66 @@ export const adminApi = {
     );
     return response.data;
   },
+
+  // Export/Import
+  async exportCourses(): Promise<void> {
+    const response = await apiClient.get('/admin/export/courses', { responseType: 'blob' });
+    const url = URL.createObjectURL(new Blob([response.data]));
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `courses_export_${Date.now()}.zip`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  },
+
+  async importCourses(file: File): Promise<ApiResponse<{
+    coursesUpserted: number;
+    modulesUpserted: number;
+    lessonsUpserted: number;
+    sectionsUpserted: number;
+    bundlesUpserted: number;
+    bundleFilesExtracted: number;
+    errors: string[];
+  }>> {
+    const formData = new FormData();
+    formData.append('file', file);
+    const response = await apiClient.post('/admin/import/courses', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+    return response.data;
+  },
+
+  async exportUsers(): Promise<void> {
+    const response = await apiClient.get('/admin/export/users', { responseType: 'blob' });
+    const url = URL.createObjectURL(new Blob([response.data]));
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `users_export_${Date.now()}.zip`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  },
+
+  async importUsers(file: File): Promise<ApiResponse<{
+    usersUpserted: number;
+    rolesUpserted: number;
+    userRolesUpserted: number;
+    permissionsUpserted: number;
+    userPermissionsUpserted: number;
+    enrollmentsUpserted: number;
+    progressUpserted: number;
+    errors: string[];
+  }>> {
+    const formData = new FormData();
+    formData.append('file', file);
+    const response = await apiClient.post('/admin/import/users', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+    return response.data;
+  },
 };
 
 export default adminApi;

@@ -95,6 +95,10 @@ import { VerifyCertificateHandler } from '@courses/application/queries/verify-ce
 import { ListCalendarEventsHandler } from '@courses/application/queries/list-calendar-events/ListCalendarEventsHandler.ts';
 import { GetStudentCalendarEventsHandler } from '@courses/application/queries/get-student-calendar-events/GetStudentCalendarEventsHandler.ts';
 
+// Courses Context - Export/Import Handlers
+import { ExportCoursesHandler } from '@courses/application/queries/export-courses/ExportCoursesHandler.ts';
+import { ImportCoursesHandler } from '@courses/application/commands/import-courses/ImportCoursesHandler.ts';
+
 // Courses Context - Presentation
 import { CourseAdminController } from '@courses/presentation/http/CourseAdminController.ts';
 import { CoursePublicController } from '@courses/presentation/http/CoursePublicController.ts';
@@ -108,6 +112,7 @@ import { CategoryPublicController } from '@courses/presentation/http/CategoryPub
 import { CertificateController } from '@courses/presentation/http/CertificateController.ts';
 import { CalendarEventAdminController } from '@courses/presentation/http/CalendarEventAdminController.ts';
 import { CalendarEventPublicController } from '@courses/presentation/http/CalendarEventPublicController.ts';
+import { ExportImportAdminController } from '@courses/presentation/http/ExportImportAdminController.ts';
 
 // Repository Interfaces
 import type { ICourseRepository } from '@courses/domain/repositories/ICourseRepository.ts';
@@ -630,6 +635,16 @@ export class CoursesContainer {
       this.getTokenService(),
       this.createGetStudentCalendarEventsHandler()
     );
+  }
+
+  // ========== Export/Import ==========
+
+  createExportCoursesHandler(): ExportCoursesHandler {
+    return new ExportCoursesHandler(this.getDatabaseProvider());
+  }
+
+  createImportCoursesHandler(): ImportCoursesHandler {
+    return new ImportCoursesHandler(this.getDatabaseProvider());
   }
 
   // ========== Cleanup ==========
