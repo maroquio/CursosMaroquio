@@ -1,0 +1,75 @@
+{
+  "title": "CSS Grid",
+  "description": "Criar layouts bidimensionais poderosos com grid-template, fr, areas, auto-fill e minmax.",
+  "order": 6,
+  "lessons": [
+    {
+      "title": "Introdução ao CSS Grid",
+      "slug": "introducao-ao-css-grid",
+      "description": "Entender o modelo de grade bidimensional do CSS.",
+      "type": "text",
+      "isFree": true,
+      "order": 1,
+      "sections": [
+        {
+          "title": "O que é CSS Grid?",
+          "contentType": "text",
+          "order": 1,
+          "content": {
+            "body": "# CSS Grid\n\nCSS Grid é um sistema de layout **bidimensional** — controla linhas E colunas ao mesmo tempo. É ideal para layouts complexos de páginas.\n\n## Flexbox vs Grid\n\n| | Flexbox | Grid |\n|--|---------|------|\n| Dimensões | 1D (linha OU coluna) | 2D (linhas E colunas) |\n| Ideal para | Componentes, nav, cards | Layouts de página |\n| Controle | Pelos itens | Pelo container |\n\n## Ativando o Grid\n\n```css\n.container {\n  display: grid;\n  grid-template-columns: 200px 1fr 1fr; /* 3 colunas */\n  grid-template-rows: auto;             /* linhas automáticas */\n  gap: 16px;\n}\n```\n\n## A unidade fr (fraction)\n\n`fr` representa uma **fração do espaço disponível**:\n\n```css\n/* 3 colunas iguais */\ngrid-template-columns: 1fr 1fr 1fr;\n\n/* Coluna do meio 2x maior */\ngrid-template-columns: 1fr 2fr 1fr;\n\n/* Sidebar fixa + conteúdo flexível */\ngrid-template-columns: 250px 1fr;\n```\n\n## repeat()\n\nEvite repetição:\n\n```css\n/* 3 colunas iguais */\ngrid-template-columns: repeat(3, 1fr);\n\n/* 12 colunas como um sistema Bootstrap */\ngrid-template-columns: repeat(12, 1fr);\n```\n\n## gap\n\n```css\n.grid {\n  gap: 16px;        /* entre linhas e colunas */\n  column-gap: 24px; /* apenas entre colunas */\n  row-gap: 8px;     /* apenas entre linhas */\n}\n```"
+          }
+        },
+        {
+          "title": "Primeiro layout com Grid",
+          "contentType": "exercise",
+          "order": 2,
+          "content": {
+            "problem": "## Layout de 3 colunas com Grid\n\nCrie um layout de galeria com 3 colunas:\n\n1. No `.galeria`, defina `display: grid`\n2. No `.galeria`, defina `grid-template-columns: repeat(3, 1fr)`\n3. No `.galeria`, defina `gap: 16px`\n4. No `.item`, defina `background-color: #e3f2fd`, `padding: 24px`, `border-radius: 8px` e `text-align: center`",
+            "language": "css",
+            "starterCode": ".galeria {\n\n}\n\n.item {\n\n}",
+            "htmlContent": "<div class=\"galeria\">\n  <div class=\"item\">Item 1</div>\n  <div class=\"item\">Item 2</div>\n  <div class=\"item\">Item 3</div>\n  <div class=\"item\">Item 4</div>\n  <div class=\"item\">Item 5</div>\n  <div class=\"item\">Item 6</div>\n</div>",
+            "hints": [
+              "`repeat(3, 1fr)` cria 3 colunas de tamanho igual",
+              "O `gap` cria espaçamento entre todos os itens do grid"
+            ],
+            "solution": ".galeria {\n  display: grid;\n  grid-template-columns: repeat(3, 1fr);\n  gap: 16px;\n}\n\n.item {\n  background-color: #e3f2fd;\n  padding: 24px;\n  border-radius: 8px;\n  text-align: center;\n}"
+          }
+        }
+      ]
+    },
+    {
+      "title": "Grid Areas e técnicas avançadas",
+      "slug": "grid-areas",
+      "description": "Usar grid-template-areas, auto-fill, minmax e posicionamento de itens.",
+      "type": "text",
+      "isFree": false,
+      "order": 2,
+      "sections": [
+        {
+          "title": "Grid Template Areas",
+          "contentType": "text",
+          "order": 1,
+          "content": {
+            "body": "# Grid Template Areas\n\n`grid-template-areas` permite definir o layout usando **nomes semânticos**:\n\n```css\n.layout {\n  display: grid;\n  grid-template-columns: 250px 1fr;\n  grid-template-rows: 64px 1fr 48px;\n  grid-template-areas:\n    \"header  header\"\n    \"sidebar main\"\n    \"footer  footer\";\n  min-height: 100vh;\n}\n\nheader  { grid-area: header; }\n.sidebar { grid-area: sidebar; }\nmain    { grid-area: main; }\nfooter  { grid-area: footer; }\n```\n\n## auto-fill e minmax\n\nCria grades responsivas sem media queries:\n\n```css\n.cards {\n  display: grid;\n  /* Colunas de no mínimo 250px, expandindo para preencher */\n  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));\n  gap: 16px;\n}\n```\n\n- `auto-fill`: cria quantas colunas couberem\n- `minmax(250px, 1fr)`: cada coluna tem no mínimo 250px e no máximo 1fr\n\n## Posicionando itens individualmente\n\n```css\n.destaque {\n  grid-column: 1 / 3;  /* da linha 1 até a linha 3 (2 colunas) */\n  grid-row: 1 / 2;     /* apenas a primeira linha */\n  /* Atalho: */\n  grid-column: span 2; /* ocupa 2 colunas */\n}\n```"
+          }
+        },
+        {
+          "title": "Layout de página com Grid Areas",
+          "contentType": "exercise",
+          "order": 2,
+          "content": {
+            "problem": "## Layout clássico com Grid Areas\n\nCrie um layout de página com header, sidebar, main e footer:\n\n1. No `.layout`, defina `display: grid`, `grid-template-columns: 200px 1fr`, e `grid-template-rows: 60px 1fr 40px`\n2. No `.layout`, defina `grid-template-areas` com o layout: header ocupa as 2 colunas, sidebar à esquerda, main à direita, footer ocupa as 2 colunas\n3. Defina `grid-area` para cada elemento filho\n4. Dê cores de fundo distintas a cada área",
+            "language": "css",
+            "starterCode": ".layout {\n  display: grid;\n  grid-template-columns: 200px 1fr;\n  grid-template-rows: 60px 1fr 40px;\n  min-height: 300px;\n  gap: 4px;\n  /* Adicione grid-template-areas */\n}\n\n.header  { }\n.sidebar { }\n.main    { }\n.footer  { }",
+            "htmlContent": "<div class=\"layout\">\n  <header class=\"header\">Header</header>\n  <aside class=\"sidebar\">Sidebar</aside>\n  <main class=\"main\">Conteúdo principal</main>\n  <footer class=\"footer\">Footer</footer>\n</div>",
+            "hints": [
+              "Na área de texto do grid-template-areas, cada linha representa uma linha da grade e cada palavra representa uma célula",
+              "Use `.` para células vazias no grid-template-areas"
+            ],
+            "solution": ".layout {\n  display: grid;\n  grid-template-columns: 200px 1fr;\n  grid-template-rows: 60px 1fr 40px;\n  min-height: 300px;\n  gap: 4px;\n  grid-template-areas:\n    \"header  header\"\n    \"sidebar main\"\n    \"footer  footer\";\n}\n\n.header  { grid-area: header;  background: #3498db; color: white; padding: 0 16px; display: flex; align-items: center; }\n.sidebar { grid-area: sidebar; background: #ecf0f1; padding: 16px; }\n.main    { grid-area: main;    background: #ffffff; padding: 16px; }\n.footer  { grid-area: footer;  background: #2c3e50; color: white; padding: 0 16px; display: flex; align-items: center; }"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,75 @@
+{
+  "title": "Cores e Fundos",
+  "description": "Trabalhar com sistemas de cores (hex, rgb, hsl), fundos, gradientes e opacidade.",
+  "order": 4,
+  "lessons": [
+    {
+      "title": "Sistemas de cores no CSS",
+      "slug": "sistemas-de-cores",
+      "description": "Entender como representar cores com hex, rgb, rgba, hsl e hsla.",
+      "type": "text",
+      "isFree": true,
+      "order": 1,
+      "sections": [
+        {
+          "title": "Formatos de cores",
+          "contentType": "text",
+          "order": 1,
+          "content": {
+            "body": "# Sistemas de cores no CSS\n\n## Nomes de cores\nCSS suporta 140+ nomes de cores:\n```css\ncolor: red;\ncolor: darkblue;\ncolor: cornflowerblue;\n```\n\n## Hexadecimal\nFormato `#RRGGBB` — cada par representa vermelho, verde e azul (0-255 em hex):\n```css\ncolor: #ff0000;  /* vermelho puro */\ncolor: #000000;  /* preto */\ncolor: #ffffff;  /* branco */\ncolor: #3498db;  /* azul bonito */\ncolor: #2ecc71;  /* verde bonito */\n\n/* Forma curta (quando os pares se repetem) */\ncolor: #f00;  /* = #ff0000 */\ncolor: #333;  /* = #333333 */\n```\n\n## RGB e RGBA\n```css\ncolor: rgb(52, 152, 219);         /* mesmo azul de #3498db */\nbackground: rgba(0, 0, 0, 0.5);   /* preto com 50% de opacidade */\n```\n\nO quarto valor do `rgba` é o **canal alfa**: 0 = transparente, 1 = opaco.\n\n## HSL e HSLA\nHue (matiz 0-360°), Saturation (saturação 0-100%), Lightness (luminosidade 0-100%):\n```css\ncolor: hsl(210, 70%, 50%);          /* azul saturado */\ncolor: hsla(210, 70%, 50%, 0.8);    /* mesmo azul, 80% opaco */\n```\n\nHSL é mais intuitivo para criar variações de cor:\n```css\n.primary     { color: hsl(210, 70%, 40%); }  /* escuro */\n.primary-mid { color: hsl(210, 70%, 55%); }  /* médio */\n.primary-lt  { color: hsl(210, 70%, 85%); }  /* claro */\n```\n\n## opacity\nAplica transparência ao elemento inteiro (incluindo filhos):\n```css\n.semi-transparente { opacity: 0.7; }\n```"
+          }
+        },
+        {
+          "title": "Aplicando cores e fundo",
+          "contentType": "exercise",
+          "order": 2,
+          "content": {
+            "problem": "## Aplicando cores e fundo\n\nCrie uma paleta de cards coloridos:\n\n1. Defina `background-color: #3498db` e `color: white` no `.card-azul`\n2. Defina `background-color: hsl(145, 63%, 42%)` e `color: white` no `.card-verde`\n3. Defina `background-color: rgba(231, 76, 60, 0.85)` e `color: white` no `.card-vermelho`\n4. Adicione `padding: 20px` e `border-radius: 8px` em todos os `.card`",
+            "language": "css",
+            "starterCode": ".card {\n  /* Estilos comuns */\n}\n\n.card-azul {\n\n}\n\n.card-verde {\n\n}\n\n.card-vermelho {\n\n}",
+            "htmlContent": "<div style=\"display: flex; gap: 16px; flex-wrap: wrap;\">\n  <div class=\"card card-azul\">\n    <h3>Azul</h3>\n    <p>#3498db</p>\n  </div>\n  <div class=\"card card-verde\">\n    <h3>Verde</h3>\n    <p>hsl(145, 63%, 42%)</p>\n  </div>\n  <div class=\"card card-vermelho\">\n    <h3>Vermelho</h3>\n    <p>rgba(231, 76, 60, 0.85)</p>\n  </div>\n</div>",
+            "hints": [
+              "Use `color: white` para que o texto seja legível nos fundos coloridos",
+              "Você pode compartilhar estilos comuns no seletor `.card` e estilos específicos nos seletores individuais"
+            ],
+            "solution": ".card {\n  padding: 20px;\n  border-radius: 8px;\n}\n\n.card-azul {\n  background-color: #3498db;\n  color: white;\n}\n\n.card-verde {\n  background-color: hsl(145, 63%, 42%);\n  color: white;\n}\n\n.card-vermelho {\n  background-color: rgba(231, 76, 60, 0.85);\n  color: white;\n}"
+          }
+        }
+      ]
+    },
+    {
+      "title": "Fundos e gradientes",
+      "slug": "fundos-e-gradientes",
+      "description": "Usar background-image, gradientes lineares e radiais.",
+      "type": "text",
+      "isFree": false,
+      "order": 2,
+      "sections": [
+        {
+          "title": "Gradientes CSS",
+          "contentType": "text",
+          "order": 1,
+          "content": {
+            "body": "# Fundos e Gradientes\n\n## background-color\n```css\nbody { background-color: #f5f5f5; }\n```\n\n## background-image\n```css\n.hero {\n  background-image: url('banner.jpg');\n  background-size: cover;     /* cobre todo o elemento */\n  background-position: center; /* centraliza a imagem */\n  background-repeat: no-repeat; /* não repete */\n}\n```\n\n## Gradiente linear\n```css\n.gradiente {\n  background: linear-gradient(to right, #667eea, #764ba2);\n  background: linear-gradient(135deg, #f093fb, #f5576c);\n  background: linear-gradient(to bottom, #4facfe 0%, #00f2fe 100%);\n}\n```\n\n## Gradiente radial\n```css\n.radial {\n  background: radial-gradient(circle, #a18cd1, #fbc2eb);\n}\n```\n\n## Múltiplos fundos\n```css\n.multi {\n  background:\n    linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)),\n    url('foto.jpg') center/cover;\n}\n```\n\n## background shorthand\n```css\n.box {\n  background: #fff url('pattern.png') repeat-x top center;\n  /* color | image | repeat | position */\n}\n```"
+          }
+        },
+        {
+          "title": "Criando gradiente",
+          "contentType": "exercise",
+          "order": 2,
+          "content": {
+            "problem": "## Criando um banner com gradiente\n\nCrie um banner com gradiente de fundo:\n\n1. Defina `background: linear-gradient(135deg, #667eea, #764ba2)` no `.banner`\n2. Defina `color: white` e `text-align: center` no `.banner`\n3. Defina `padding: 60px 20px` no `.banner`\n4. Defina `font-size: 2rem` no `.banner h1` e `font-size: 1.1rem` no `.banner p`",
+            "language": "css",
+            "starterCode": ".banner {\n\n}\n\n.banner h1 {\n\n}\n\n.banner p {\n\n}",
+            "htmlContent": "<div class=\"banner\">\n  <h1>Bem-vindo ao Curso</h1>\n  <p>Aprenda CSS com exercícios práticos e interativos</p>\n</div>",
+            "hints": [
+              "O `linear-gradient` é um valor de `background`, não de `background-color`",
+              "Combine `color: white` e `text-align: center` para o texto ficar visível e centralizado"
+            ],
+            "solution": ".banner {\n  background: linear-gradient(135deg, #667eea, #764ba2);\n  color: white;\n  text-align: center;\n  padding: 60px 20px;\n}\n\n.banner h1 {\n  font-size: 2rem;\n}\n\n.banner p {\n  font-size: 1.1rem;\n}"
+          }
+        }
+      ]
+    }
+  ]
+}

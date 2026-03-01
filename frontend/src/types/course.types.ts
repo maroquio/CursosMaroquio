@@ -93,6 +93,8 @@ export interface ExerciseSectionContent {
   solution?: string;
   /** Programming language for the exercise (e.g., 'python', 'javascript'). If 'python', enables Pyodide runner. */
   language?: 'python' | 'javascript' | 'typescript' | 'html' | 'css' | 'sql' | 'text';
+  /** HTML template used as the base document for CSS exercises */
+  htmlContent?: string;
 }
 
 export interface VideoSectionContent {

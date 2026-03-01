@@ -1,0 +1,75 @@
+{
+  "title": "Responsividade",
+  "description": "Criar layouts adaptáveis com unidades relativas, viewport units, media queries e abordagem mobile-first.",
+  "order": 8,
+  "lessons": [
+    {
+      "title": "Unidades relativas e viewport",
+      "slug": "unidades-relativas-e-viewport",
+      "description": "Dominar as unidades relativas (em, rem, %, vw, vh) para layouts flexíveis.",
+      "type": "text",
+      "isFree": true,
+      "order": 1,
+      "sections": [
+        {
+          "title": "Unidades relativas",
+          "contentType": "text",
+          "order": 1,
+          "content": {
+            "body": "# Unidades Relativas no CSS\n\n## px vs unidades relativas\n\n`px` é absoluto — 16px é sempre 16px. Unidades relativas se adaptam ao contexto.\n\n## em\nRelativo ao `font-size` do elemento pai:\n```css\n.container { font-size: 16px; }\n.container p { font-size: 1.5em; } /* = 24px */\n.container p span { font-size: 2em; } /* = 48px (2 × 24px) */\n```\n\n## rem\nRelativo ao `font-size` do **elemento raiz** (`html`):\n```css\nhtml { font-size: 16px; } /* padrão dos navegadores */\nh1 { font-size: 2rem; }   /* = 32px, sempre */\nh2 { font-size: 1.5rem; } /* = 24px, sempre */\n```\n\nPrefira `rem` para tipografia — é previsível.\n\n## % (porcentagem)\nRelativo ao elemento pai:\n```css\n.sidebar { width: 30%; }   /* 30% do pai */\n.main    { width: 70%; }   /* 70% do pai */\n```\n\n## Viewport units\n- `vw` — viewport width (1vw = 1% da largura da janela)\n- `vh` — viewport height (1vh = 1% da altura da janela)\n- `vmin` — menor entre vw e vh\n- `vmax` — maior entre vw e vh\n\n```css\n.hero {\n  width: 100vw;     /* largura total da tela */\n  min-height: 100vh; /* altura total da tela */\n}\n\n.titulo-fluido {\n  font-size: clamp(1.5rem, 4vw, 3rem); /* min, ideal, max */\n}\n```\n\n## clamp()\nLimita valores entre mínimo e máximo:\n```css\n.container {\n  width: clamp(300px, 80%, 1200px);\n  /* pelo menos 300px, ideal 80%, no máximo 1200px */\n}\n```"
+          }
+        },
+        {
+          "title": "Usando unidades de viewport",
+          "contentType": "exercise",
+          "order": 2,
+          "content": {
+            "problem": "## Hero section com viewport units\n\nCrie uma seção hero que ocupa a tela inteira:\n\n1. No `.hero`, defina `min-height: 100vh` e `width: 100%`\n2. No `.hero`, use `display: flex`, `align-items: center` e `justify-content: center`\n3. No `.hero`, defina `background: linear-gradient(135deg, #1a1a2e, #16213e)`\n4. No `.hero h1`, use `font-size: clamp(2rem, 5vw, 4rem)` e `color: white`\n5. No `.hero p`, use `font-size: clamp(1rem, 2vw, 1.25rem)` e `color: rgba(255,255,255,0.8)`",
+            "language": "css",
+            "starterCode": ".hero {\n\n}\n\n.hero-content {\n  text-align: center;\n  max-width: 600px;\n  padding: 24px;\n}\n\n.hero h1 {\n\n}\n\n.hero p {\n\n}",
+            "htmlContent": "<section class=\"hero\">\n  <div class=\"hero-content\">\n    <h1>CSS Responsivo</h1>\n    <p>Layouts que se adaptam a qualquer tela, do mobile ao desktop.</p>\n  </div>\n</section>",
+            "hints": [
+              "`100vh` equivale a 100% da altura da viewport — o elemento ocupa a tela inteira",
+              "`clamp(min, ideal, max)` cria tamanhos de fonte fluidos que se adaptam ao tamanho da tela"
+            ],
+            "solution": ".hero {\n  min-height: 100vh;\n  width: 100%;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  background: linear-gradient(135deg, #1a1a2e, #16213e);\n}\n\n.hero-content {\n  text-align: center;\n  max-width: 600px;\n  padding: 24px;\n}\n\n.hero h1 {\n  font-size: clamp(2rem, 5vw, 4rem);\n  color: white;\n}\n\n.hero p {\n  font-size: clamp(1rem, 2vw, 1.25rem);\n  color: rgba(255,255,255,0.8);\n}"
+          }
+        }
+      ]
+    },
+    {
+      "title": "Media Queries",
+      "slug": "media-queries",
+      "description": "Aplicar estilos condicionais baseados no tamanho da tela com mobile-first.",
+      "type": "text",
+      "isFree": false,
+      "order": 2,
+      "sections": [
+        {
+          "title": "Media queries e mobile-first",
+          "contentType": "text",
+          "order": 1,
+          "content": {
+            "body": "# Media Queries\n\nMedia queries permitem aplicar CSS **condicionalmente** baseado nas características do dispositivo.\n\n## Sintaxe\n\n```css\n@media (max-width: 768px) {\n  /* Estilos para telas até 768px */\n  .sidebar { display: none; }\n}\n\n@media (min-width: 768px) {\n  /* Estilos para telas a partir de 768px */\n  .nav-mobile { display: none; }\n}\n```\n\n## Abordagem Mobile-First\n\nEscreva primeiro os estilos para mobile, depois adicione estilos para telas maiores com `min-width`:\n\n```css\n/* Mobile (padrão) */\n.container {\n  padding: 16px;\n  flex-direction: column;\n}\n\n/* Tablet (768px+) */\n@media (min-width: 768px) {\n  .container {\n    padding: 24px;\n    flex-direction: row;\n  }\n}\n\n/* Desktop (1024px+) */\n@media (min-width: 1024px) {\n  .container {\n    padding: 32px;\n    max-width: 1200px;\n    margin: 0 auto;\n  }\n}\n```\n\n## Breakpoints comuns\n\n```css\n/* Extra small: < 576px (padrão, mobile) */\n/* Small: ≥ 576px */\n@media (min-width: 576px) { ... }\n/* Medium (tablet): ≥ 768px */\n@media (min-width: 768px) { ... }\n/* Large (desktop): ≥ 1024px */\n@media (min-width: 1024px) { ... }\n/* Extra large: ≥ 1280px */\n@media (min-width: 1280px) { ... }\n```\n\n## Outras condições\n\n```css\n@media (orientation: landscape) { ... }  /* paisagem */\n@media (prefers-color-scheme: dark) { ... }  /* modo escuro */\n@media print { ... }  /* impressão */\n```"
+          }
+        },
+        {
+          "title": "Layout responsivo com media query",
+          "contentType": "exercise",
+          "order": 2,
+          "content": {
+            "problem": "## Layout responsivo\n\nCrie um layout que empilha no mobile e fica lado a lado no desktop:\n\n1. No `.layout` (mobile-first), defina `display: flex`, `flex-direction: column` e `gap: 16px`\n2. No `.sidebar`, defina `background: #f8f9fa`, `padding: 16px` e `border-radius: 8px`\n3. No `.main`, defina `flex: 1`, `background: white`, `padding: 16px` e `border: 1px solid #dee2e6`\n4. Dentro de `@media (min-width: 768px)`, mude `.layout` para `flex-direction: row`\n5. Dentro do mesmo media query, defina `width: 200px` no `.sidebar`",
+            "language": "css",
+            "starterCode": "/* Mobile primeiro */\n.layout {\n\n}\n\n.sidebar {\n\n}\n\n.main {\n\n}\n\n/* Tablet e desktop */\n@media (min-width: 768px) {\n  .layout {\n\n  }\n\n  .sidebar {\n\n  }\n}",
+            "htmlContent": "<div class=\"layout\">\n  <aside class=\"sidebar\">\n    <h3>Menu</h3>\n    <ul>\n      <li>Introdução</li>\n      <li>Fundamentos</li>\n      <li>Avançado</li>\n    </ul>\n  </aside>\n  <main class=\"main\">\n    <h2>Conteúdo Principal</h2>\n    <p>No mobile, a sidebar fica em cima. No desktop (≥768px), ela fica ao lado.</p>\n  </main>\n</div>",
+            "hints": [
+              "Mobile-first: comece com os estilos para mobile e adicione media queries para telas maiores",
+              "Use `flex-direction: column` para empilhar e `flex-direction: row` para lado a lado"
+            ],
+            "solution": "/* Mobile primeiro */\n.layout {\n  display: flex;\n  flex-direction: column;\n  gap: 16px;\n}\n\n.sidebar {\n  background: #f8f9fa;\n  padding: 16px;\n  border-radius: 8px;\n}\n\n.main {\n  flex: 1;\n  background: white;\n  padding: 16px;\n  border: 1px solid #dee2e6;\n}\n\n/* Tablet e desktop */\n@media (min-width: 768px) {\n  .layout {\n    flex-direction: row;\n  }\n\n  .sidebar {\n    width: 200px;\n  }\n}"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -10,6 +10,7 @@ import {
   seedAdminUser,
   seedHtmlCourse,
   seedPythonCourse,
+  seedCssCourse,
 } from '../src/infrastructure/database/seeds/index.ts';
 import { closeDatabase } from '../src/infrastructure/database/connection.ts';
 
@@ -31,6 +32,9 @@ async function runSeeds() {
 
     await seedPythonCourse();
     console.log('  ✓ Python course');
+
+    await seedCssCourse();
+    console.log('  ✓ CSS course');
 
     console.log('Seeds executados com sucesso!');
   } catch (error) {

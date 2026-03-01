@@ -1,0 +1,101 @@
+{
+  "title": "Posicionamento",
+  "description": "Dominar as propriedades position (static, relative, absolute, fixed, sticky) e z-index.",
+  "order": 7,
+  "lessons": [
+    {
+      "title": "A propriedade position",
+      "slug": "a-propriedade-position",
+      "description": "Entender como cada valor de position afeta o elemento no documento.",
+      "type": "text",
+      "isFree": true,
+      "order": 1,
+      "sections": [
+        {
+          "title": "Tipos de posicionamento",
+          "contentType": "text",
+          "order": 1,
+          "content": {
+            "body": "# A propriedade position\n\nA propriedade `position` controla **como um elemento é posicionado** no documento. Junto com `top`, `right`, `bottom` e `left`, ela define a posição exata.\n\n## static (padrão)\nTodo elemento começa como `static` — posicionado pelo fluxo normal do documento. `top/right/bottom/left` não têm efeito.\n\n```css\n.normal { position: static; } /* padrão, você raramente escreve isso */\n```\n\n## relative\nO elemento permanece no fluxo normal, mas você pode deslocá-lo **relativamente à sua posição original**. O espaço original é preservado.\n\n```css\n.deslocado {\n  position: relative;\n  top: 20px;   /* desce 20px */\n  left: 10px;  /* desloca 10px para a direita */\n}\n```\n\n## absolute\nO elemento **sai do fluxo** e é posicionado relativo ao ancestral mais próximo com `position != static`.\n\n```css\n.container {\n  position: relative; /* cria contexto de posicionamento */\n}\n\n.badge {\n  position: absolute;\n  top: -8px;\n  right: -8px; /* canto superior direito do .container */\n}\n```\n\n## fixed\nPositionado relativo à **viewport** — fica fixo na tela mesmo com scroll.\n\n```css\n.navbar {\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0; /* ocupa toda a largura */\n  z-index: 100;\n}\n```\n\n## sticky\nComportamento híbrido: age como `relative` até atingir um limite, então age como `fixed`.\n\n```css\nth {\n  position: sticky;\n  top: 0; /* fica grudado no topo ao fazer scroll */\n  background: white;\n}\n```\n\n## z-index\nControla qual elemento fica **em cima** quando há sobreposição (apenas funciona em elementos posicionados):\n\n```css\n.modal    { z-index: 1000; }\n.overlay  { z-index: 999; }\n.dropdown { z-index: 500; }\n```"
+          }
+        },
+        {
+          "title": "Posicionamento absolute",
+          "contentType": "exercise",
+          "order": 2,
+          "content": {
+            "problem": "## Badge com posicionamento absolute\n\nCrie um card com um badge no canto superior direito:\n\n1. No `.card`, defina `position: relative` (cria contexto de posicionamento)\n2. No `.badge`, defina `position: absolute`, `top: -10px` e `right: -10px`\n3. Estilize o `.badge` com `background: #e74c3c`, `color: white`, `padding: 4px 8px`, `border-radius: 12px` e `font-size: 12px`\n4. Adicione `padding: 20px`, `border: 1px solid #ddd` e `border-radius: 8px` ao `.card`",
+            "language": "css",
+            "starterCode": ".card {\n\n}\n\n.badge {\n\n}",
+            "htmlContent": "<div class=\"card\">\n  <span class=\"badge\">Novo</span>\n  <h3>Produto Incrível</h3>\n  <p>Este produto tem um badge no canto superior direito, criado com position: absolute.</p>\n</div>",
+            "hints": [
+              "O elemento pai precisa de `position: relative` para ser o contexto de posicionamento do filho `absolute`",
+              "Com `top: -10px` e `right: -10px`, o badge fica parcialmente fora do card"
+            ],
+            "solution": ".card {\n  position: relative;\n  padding: 20px;\n  border: 1px solid #ddd;\n  border-radius: 8px;\n  display: inline-block;\n}\n\n.badge {\n  position: absolute;\n  top: -10px;\n  right: -10px;\n  background: #e74c3c;\n  color: white;\n  padding: 4px 8px;\n  border-radius: 12px;\n  font-size: 12px;\n}"
+          }
+        }
+      ]
+    },
+    {
+      "title": "Fixed, sticky e z-index",
+      "slug": "fixed-sticky-z-index",
+      "description": "Criar navbars fixas, headers sticky e gerenciar camadas com z-index.",
+      "type": "text",
+      "isFree": false,
+      "order": 2,
+      "sections": [
+        {
+          "title": "Navbar fixa com position fixed",
+          "contentType": "exercise",
+          "order": 1,
+          "content": {
+            "problem": "## Navbar fixa\n\nCrie uma navbar que fica fixa no topo da página:\n\n1. Na `.navbar`, defina `position: fixed`, `top: 0`, `left: 0` e `right: 0`\n2. Na `.navbar`, defina `background: #2c3e50`, `color: white`, `padding: 0 24px`, `height: 56px`\n3. Na `.navbar`, use `display: flex`, `align-items: center` e `justify-content: space-between`\n4. No `.content`, adicione `margin-top: 56px` para compensar a navbar fixa\n5. Defina `z-index: 100` na `.navbar`",
+            "language": "css",
+            "starterCode": ".navbar {\n\n}\n\n.navbar a {\n  color: white;\n  text-decoration: none;\n  margin-left: 16px;\n}\n\n.content {\n\n}",
+            "htmlContent": "<nav class=\"navbar\">\n  <strong>MeuSite</strong>\n  <div>\n    <a href=\"#\">Início</a>\n    <a href=\"#\">Sobre</a>\n    <a href=\"#\">Contato</a>\n  </div>\n</nav>\n<div class=\"content\">\n  <h2>Conteúdo da Página</h2>\n  <p>A navbar acima está fixada no topo. Mesmo com scroll, ela permanece visível.</p>\n</div>",
+            "hints": [
+              "Com `position: fixed`, o elemento sai do fluxo — por isso o content precisa de `margin-top` para não ficar embaixo da navbar",
+              "`left: 0` e `right: 0` fazem a navbar ocupar toda a largura"
+            ],
+            "solution": ".navbar {\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  background: #2c3e50;\n  color: white;\n  padding: 0 24px;\n  height: 56px;\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  z-index: 100;\n}\n\n.navbar a {\n  color: white;\n  text-decoration: none;\n  margin-left: 16px;\n}\n\n.content {\n  margin-top: 56px;\n  padding: 24px;\n}"
+          }
+        },
+        {
+          "title": "Quiz: Posicionamento",
+          "contentType": "quiz",
+          "order": 2,
+          "content": {
+            "passingScore": 70,
+            "questions": [
+              {
+                "id": "q1",
+                "type": "multiple_choice",
+                "question": "Um elemento com `position: absolute` é posicionado relativamente a quê?",
+                "options": ["Sempre relativo à janela do navegador", "Ao ancestral mais próximo com position != static", "Sempre relativo ao body", "À sua posição original no fluxo"],
+                "correctAnswer": 1,
+                "explanation": "position: absolute sobe na árvore DOM procurando o primeiro ancestral com position diferente de static. Se não encontrar, usa o body."
+              },
+              {
+                "id": "q2",
+                "type": "multiple_choice",
+                "question": "Qual valor de position é ideal para uma navbar que deve ficar visível durante o scroll?",
+                "options": ["relative", "absolute", "fixed", "sticky"],
+                "correctAnswer": 2,
+                "explanation": "position: fixed posiciona o elemento relativo à viewport e ele permanece na mesma posição durante o scroll."
+              },
+              {
+                "id": "q3",
+                "type": "true_false",
+                "question": "A propriedade `z-index` funciona em elementos com `position: static`.",
+                "options": ["Verdadeiro", "Falso"],
+                "correctAnswer": 1,
+                "explanation": "z-index só funciona em elementos posicionados (position != static). Sem position, o z-index é ignorado."
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

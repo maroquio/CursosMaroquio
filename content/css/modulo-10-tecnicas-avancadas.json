@@ -1,0 +1,117 @@
+{
+  "title": "Técnicas Avançadas",
+  "description": "Dominar variáveis CSS (custom properties), pseudo-elementos (::before, ::after), pseudo-classes e a propriedade filter.",
+  "order": 10,
+  "lessons": [
+    {
+      "title": "Variáveis CSS",
+      "slug": "variaveis-css",
+      "description": "Usar Custom Properties (variáveis CSS) para criar sistemas de design consistentes.",
+      "type": "text",
+      "isFree": true,
+      "order": 1,
+      "sections": [
+        {
+          "title": "Custom Properties (variáveis CSS)",
+          "contentType": "text",
+          "order": 1,
+          "content": {
+            "body": "# Variáveis CSS (Custom Properties)\n\nVariáveis CSS permitem **reutilizar valores** em todo o documento e criar sistemas de design consistentes.\n\n## Definindo variáveis\n\n```css\n:root {\n  /* Paleta de cores */\n  --color-primary: #3498db;\n  --color-secondary: #2ecc71;\n  --color-danger: #e74c3c;\n\n  /* Tipografia */\n  --font-base: 1rem;\n  --font-lg: 1.25rem;\n  --font-xl: 1.5rem;\n\n  /* Espaçamento */\n  --spacing-sm: 8px;\n  --spacing-md: 16px;\n  --spacing-lg: 24px;\n\n  /* Bordas */\n  --radius-sm: 4px;\n  --radius-md: 8px;\n  --radius-lg: 16px;\n  --radius-full: 9999px;\n}\n```\n\n## Usando variáveis\n\n```css\n.btn-primary {\n  background: var(--color-primary);\n  padding: var(--spacing-sm) var(--spacing-md);\n  border-radius: var(--radius-md);\n}\n\n.card {\n  padding: var(--spacing-lg);\n  border-radius: var(--radius-md);\n}\n```\n\n## Valor fallback\n\n```css\n.elemento {\n  color: var(--cor-inexistente, #333); /* usa #333 se a variável não existir */\n}\n```\n\n## Alterando variáveis com JavaScript\n\n```javascript\ndocument.documentElement.style.setProperty('--color-primary', '#e74c3c');\n```\n\n## Tema escuro com variáveis\n\n```css\n:root {\n  --bg: #ffffff;\n  --text: #333333;\n}\n\n@media (prefers-color-scheme: dark) {\n  :root {\n    --bg: #1a1a1a;\n    --text: #f0f0f0;\n  }\n}\n\nbody {\n  background: var(--bg);\n  color: var(--text);\n}\n```"
+          }
+        },
+        {
+          "title": "Criando sistema de design com variáveis",
+          "contentType": "exercise",
+          "order": 2,
+          "content": {
+            "problem": "## Sistema de design com CSS variables\n\nCrie um sistema de design usando variáveis CSS:\n\n1. No `:root`, defina `--primary: #6c63ff`, `--secondary: #ff6584`, `--text: #2d3748`, `--bg-light: #f7fafc`\n2. No `:root`, defina `--radius: 8px`, `--shadow: 0 4px 6px rgba(0,0,0,0.1)`\n3. No `.btn-primary`, use `var(--primary)` para o background\n4. No `.btn-secondary`, use `var(--secondary)` para o background\n5. No `.card`, use as variáveis de radius e shadow",
+            "language": "css",
+            "starterCode": ":root {\n  /* Defina suas variáveis aqui */\n}\n\n.btn {\n  padding: 10px 24px;\n  border: none;\n  border-radius: var(--radius);\n  color: white;\n  cursor: pointer;\n  font-size: 1rem;\n  margin-right: 8px;\n}\n\n.btn-primary {\n\n}\n\n.btn-secondary {\n\n}\n\n.card {\n  padding: 24px;\n  background: var(--bg-light);\n  color: var(--text);\n  margin-top: 16px;\n}",
+            "htmlContent": "<div>\n  <button class=\"btn btn-primary\">Primário</button>\n  <button class=\"btn btn-secondary\">Secundário</button>\n</div>\n<div class=\"card\">\n  <h3>Card com variáveis CSS</h3>\n  <p>As cores, raios e sombras vêm de variáveis definidas no :root.</p>\n</div>",
+            "hints": [
+              "Use `var(--nome-da-variavel)` para aplicar o valor",
+              "`border-radius: var(--radius)` aplicará o valor definido no :root"
+            ],
+            "solution": ":root {\n  --primary: #6c63ff;\n  --secondary: #ff6584;\n  --text: #2d3748;\n  --bg-light: #f7fafc;\n  --radius: 8px;\n  --shadow: 0 4px 6px rgba(0,0,0,0.1);\n}\n\n.btn {\n  padding: 10px 24px;\n  border: none;\n  border-radius: var(--radius);\n  color: white;\n  cursor: pointer;\n  font-size: 1rem;\n  margin-right: 8px;\n}\n\n.btn-primary {\n  background: var(--primary);\n}\n\n.btn-secondary {\n  background: var(--secondary);\n}\n\n.card {\n  padding: 24px;\n  background: var(--bg-light);\n  color: var(--text);\n  margin-top: 16px;\n  border-radius: var(--radius);\n  box-shadow: var(--shadow);\n}"
+          }
+        }
+      ]
+    },
+    {
+      "title": "Pseudo-elementos e pseudo-classes",
+      "slug": "pseudo-elementos-pseudo-classes",
+      "description": "Usar ::before, ::after, :hover, :focus, :nth-child e outros seletores avançados.",
+      "type": "text",
+      "isFree": false,
+      "order": 2,
+      "sections": [
+        {
+          "title": "Pseudo-elementos e pseudo-classes",
+          "contentType": "text",
+          "order": 1,
+          "content": {
+            "body": "# Pseudo-elementos e Pseudo-classes\n\n## Pseudo-classes\n\nSelecionam elementos em **estados** específicos:\n\n```css\na:hover   { color: darkblue; }      /* ao passar o mouse */\na:visited { color: purple; }         /* links visitados */\ninput:focus { outline: 2px solid blue; } /* campo focado */\n\n/* Estrutura */\nli:first-child { font-weight: bold; }    /* primeiro filho */\nli:last-child  { margin-bottom: 0; }     /* último filho */\nli:nth-child(2) { color: red; }          /* segundo filho */\nli:nth-child(odd)  { background: #f5f5f5; } /* ímpares */\nli:nth-child(even) { background: #fff; }    /* pares */\n\n/* Estados de formulário */\ninput:disabled { opacity: 0.5; }\ninput:checked + label { font-weight: bold; }\n```\n\n## Pseudo-elementos\n\nCriam **elementos virtuais** sem alterar o HTML:\n\n```css\n/* ::before e ::after */\n.quote::before { content: '\\\"'; color: gray; font-size: 2em; }\n.quote::after  { content: '\\\"'; color: gray; font-size: 2em; }\n\n/* Deve ter content (pode ser vazio) */\n.linha::after {\n  content: '';\n  display: block;\n  width: 60px;\n  height: 3px;\n  background: blue;\n  margin-top: 8px;\n}\n```\n\n## filter\n\n```css\n.imagem:hover {\n  filter: brightness(1.2);           /* mais brilhante */\n  filter: grayscale(100%);            /* preto e branco */\n  filter: blur(4px);                  /* desfocado */\n  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2)); /* sombra */\n  filter: brightness(1.1) contrast(1.2); /* combinando */\n}\n```\n\n## :is() e :where()\n\nSelecionam múltiplos elementos de forma elegante:\n\n```css\n:is(h1, h2, h3) { font-family: Georgia; }\n:where(article, section) > p { line-height: 1.8; }\n```"
+          }
+        },
+        {
+          "title": "Decorações com ::before e ::after",
+          "contentType": "exercise",
+          "order": 2,
+          "content": {
+            "problem": "## Decoração com pseudo-elementos\n\nCrie elementos decorativos sem alterar o HTML:\n\n1. No `.titulo::after`, crie uma linha decorativa: `content: ''`, `display: block`, `width: 60px`, `height: 3px`, `background: #3498db`, `margin-top: 8px`\n2. No `.badge::before`, adicione um ícone: `content: '★ '`\n3. Nos `li:nth-child(odd)`, defina `background: #f8f9fa`\n4. Nos `li:hover`, defina `background: #e3f2fd` e `padding-left: 20px` com `transition: all 0.2s`",
+            "language": "css",
+            "starterCode": ".titulo {\n  font-size: 1.5rem;\n  color: #2c3e50;\n}\n\n.titulo::after {\n  /* Linha decorativa */\n}\n\n.badge {\n  font-weight: bold;\n  color: #e67e22;\n}\n\n.badge::before {\n  /* Ícone */\n}\n\nli {\n  padding: 10px 16px;\n  list-style: none;\n  transition: all 0.2s;\n}\n\nli:nth-child(odd) {\n\n}\n\nli:hover {\n\n}",
+            "htmlContent": "<h2 class=\"titulo\">Pseudo-elementos</h2>\n<p class=\"badge\">Destaque especial</p>\n<ul>\n  <li>Primeiro item</li>\n  <li>Segundo item</li>\n  <li>Terceiro item</li>\n  <li>Quarto item</li>\n</ul>",
+            "hints": [
+              "Pseudo-elementos sempre precisam da propriedade `content` (mesmo que vazia: `content: ''`)",
+              "Para criar uma linha com ::after, use `display: block` e defina `width` e `height`"
+            ],
+            "solution": ".titulo {\n  font-size: 1.5rem;\n  color: #2c3e50;\n}\n\n.titulo::after {\n  content: '';\n  display: block;\n  width: 60px;\n  height: 3px;\n  background: #3498db;\n  margin-top: 8px;\n}\n\n.badge {\n  font-weight: bold;\n  color: #e67e22;\n}\n\n.badge::before {\n  content: '★ ';\n}\n\nli {\n  padding: 10px 16px;\n  list-style: none;\n  transition: all 0.2s;\n}\n\nli:nth-child(odd) {\n  background: #f8f9fa;\n}\n\nli:hover {\n  background: #e3f2fd;\n  padding-left: 20px;\n}"
+          }
+        },
+        {
+          "title": "Quiz: Técnicas Avançadas",
+          "contentType": "quiz",
+          "order": 3,
+          "content": {
+            "passingScore": 70,
+            "questions": [
+              {
+                "id": "q1",
+                "type": "multiple_choice",
+                "question": "Qual é a sintaxe correta para usar uma variável CSS?",
+                "options": ["$primary", "@primary", "var(--primary)", "#{primary}"],
+                "correctAnswer": 2,
+                "explanation": "Variáveis CSS (Custom Properties) são acessadas com var(--nome-da-variavel). O prefixo -- é obrigatório."
+              },
+              {
+                "id": "q2",
+                "type": "multiple_choice",
+                "question": "Qual pseudo-elemento é usado para inserir conteúdo ANTES do elemento?",
+                "options": ["::after", "::first", "::before", ":before"],
+                "correctAnswer": 2,
+                "explanation": "::before insere conteúdo antes do elemento. Note: a sintaxe correta usa :: (dois pontos duplos), embora :before também seja suportado por compatibilidade."
+              },
+              {
+                "id": "q3",
+                "type": "true_false",
+                "question": "A propriedade `filter: grayscale(100%)` remove todas as cores de um elemento.",
+                "options": ["Verdadeiro", "Falso"],
+                "correctAnswer": 0,
+                "explanation": "filter: grayscale(100%) converte o elemento para preto e branco, removendo toda a saturação de cor."
+              },
+              {
+                "id": "q4",
+                "type": "multiple_choice",
+                "question": "Qual seletor seleciona os elementos filhos em posições ímpares?",
+                "options": [":odd", ":nth-child(odd)", ":nth-child(2n+1)", ":nth-child(odd) e :nth-child(2n+1)"],
+                "correctAnswer": 3,
+                "explanation": "Ambos :nth-child(odd) e :nth-child(2n+1) selecionam elementos nas posições ímpares (1, 3, 5...). São equivalentes."
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

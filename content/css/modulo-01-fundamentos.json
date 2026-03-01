@@ -1,0 +1,128 @@
+{
+  "title": "Fundamentos do CSS",
+  "description": "Entender o que é CSS, como ele funciona e seus conceitos essenciais: seletores, propriedades, cascata, especificidade e herança.",
+  "order": 1,
+  "lessons": [
+    {
+      "title": "O que é CSS?",
+      "slug": "o-que-e-css",
+      "description": "Compreender o papel do CSS na web e como ele se relaciona com o HTML.",
+      "type": "text",
+      "isFree": true,
+      "order": 1,
+      "sections": [
+        {
+          "title": "O papel do CSS na web",
+          "contentType": "text",
+          "order": 1,
+          "content": {
+            "body": "# O papel do CSS na web\n\nCSS significa **Cascading Style Sheets** — Folhas de Estilo em Cascata. É a linguagem responsável pela **aparência visual** de todas as páginas da internet.\n\n## A tríade da web\n\n| Tecnologia | Responsabilidade | Analogia |\n|-----------|-----------------|----------|\n| **HTML** | Estrutura | A planta e as paredes da casa |\n| **CSS** | Apresentação | A pintura, decoração e mobília |\n| **JavaScript** | Comportamento | A eletricidade e automação |\n\nSem CSS, as páginas seriam apenas texto preto no fundo branco, sem tipografia, cores, layouts ou qualquer personalidade visual.\n\n## Como o CSS funciona?\n\nO CSS funciona **selecionando elementos HTML** e aplicando **propriedades visuais** a eles:\n\n```css\np {\n  color: blue;\n  font-size: 16px;\n}\n```\n\nNeste exemplo:\n- `p` é o **seletor** (seleciona todos os parágrafos)\n- `color` e `font-size` são **propriedades**\n- `blue` e `16px` são os **valores**\n\n## Três formas de aplicar CSS\n\n### 1. Inline (diretamente no elemento)\n```html\n<p style=\"color: red;\">Texto vermelho</p>\n```\n\n### 2. Interno (no `<head>` da página)\n```html\n<style>\n  p { color: red; }\n</style>\n```\n\n### 3. Externo (arquivo `.css` separado)\n```html\n<link rel=\"stylesheet\" href=\"estilos.css\">\n```\n\nA forma **externa** é a recomendada para projetos reais, pois separa conteúdo de apresentação e permite reutilizar o mesmo estilo em múltiplas páginas."
+          }
+        },
+        {
+          "title": "Sua primeira regra CSS",
+          "contentType": "exercise",
+          "order": 2,
+          "content": {
+            "problem": "## Primeira regra CSS\n\nAplique estilo ao título e ao parágrafo da página:\n\n1. Defina a cor do `h1` como `darkblue`\n2. Defina o `font-size` do parágrafo (`p`) como `18px`\n3. Defina a cor do parágrafo como `#333`",
+            "language": "css",
+            "starterCode": "/* Escreva seu CSS aqui */\nh1 {\n\n}\n\np {\n\n}",
+            "htmlContent": "<h1>Olá, CSS!</h1>\n<p>Este é meu primeiro parágrafo estilizado com CSS.</p>",
+            "hints": [
+              "Use `color: darkblue;` dentro do bloco `h1 { }`",
+              "Use `font-size: 18px;` dentro do bloco `p { }`",
+              "Adicione `color: #333;` também ao bloco `p { }`"
+            ],
+            "solution": "h1 {\n  color: darkblue;\n}\n\np {\n  font-size: 18px;\n  color: #333;\n}"
+          }
+        }
+      ]
+    },
+    {
+      "title": "Seletores CSS",
+      "slug": "seletores-css",
+      "description": "Aprender a selecionar elementos HTML para aplicar estilos com precisão.",
+      "type": "text",
+      "isFree": true,
+      "order": 2,
+      "sections": [
+        {
+          "title": "Tipos de seletores",
+          "contentType": "text",
+          "order": 1,
+          "content": {
+            "body": "# Tipos de seletores CSS\n\nOs seletores determinam **quais elementos** receberão os estilos definidos. Existem vários tipos:\n\n## Seletor de elemento\nSeleciona **todos** os elementos de um tipo:\n```css\nh1 { color: navy; }\np { font-size: 16px; }\n```\n\n## Seletor de classe\nSeleciona elementos com um **atributo `class`** específico. Use um ponto `.`:\n```css\n.destaque { background-color: yellow; }\n.erro { color: red; }\n```\n```html\n<p class=\"destaque\">Texto destacado</p>\n```\n\n## Seletor de ID\nSeleciona **um único elemento** com o `id` específico. Use `#`:\n```css\n#cabecalho { background: #333; color: white; }\n```\n```html\n<header id=\"cabecalho\">...</header>\n```\n\n## Seletor descendente\nSeleciona elementos **dentro** de outro elemento:\n```css\n/* Parágrafos dentro de artigos */\narticle p { line-height: 1.8; }\n```\n\n## Múltiplos seletores\nAplique o mesmo estilo a vários seletores separados por vírgula:\n```css\nh1, h2, h3 { font-family: Georgia, serif; }\n```\n\n## Seletor universal\nSeleciona **todos** os elementos:\n```css\n* { box-sizing: border-box; }\n```\n\n## Qual usar?\n- **Elemento**: para estilos gerais de todos os `p`, `h1`, etc.\n- **Classe**: para estilos reutilizáveis (pode ser aplicado a vários elementos)\n- **ID**: para um elemento único na página (use com moderação)"
+          }
+        },
+        {
+          "title": "Praticando seletores",
+          "contentType": "exercise",
+          "order": 2,
+          "content": {
+            "problem": "## Praticando seletores\n\nUse diferentes tipos de seletores para estilizar o HTML:\n\n1. Selecione o elemento `h2` e defina `color: darkgreen`\n2. Selecione a **classe** `.destaque` e defina `background-color: lightyellow` e `padding: 4px 8px`\n3. Selecione o **ID** `#aviso` e defina `color: red` e `font-weight: bold`",
+            "language": "css",
+            "starterCode": "/* Seletor de elemento */\nh2 {\n\n}\n\n/* Seletor de classe */\n.destaque {\n\n}\n\n/* Seletor de ID */\n#aviso {\n\n}",
+            "htmlContent": "<h2>Bem-vindo ao CSS</h2>\n<p>Este parágrafo é <span class=\"destaque\">muito importante</span> para entender seletores.</p>\n<p id=\"aviso\">Atenção: leia as instruções com cuidado!</p>",
+            "hints": [
+              "Para classes use `.nome-da-classe { }` e para IDs use `#nome-do-id { }`",
+              "O `padding` adiciona espaço interno ao redor do texto"
+            ],
+            "solution": "h2 {\n  color: darkgreen;\n}\n\n.destaque {\n  background-color: lightyellow;\n  padding: 4px 8px;\n}\n\n#aviso {\n  color: red;\n  font-weight: bold;\n}"
+          }
+        }
+      ]
+    },
+    {
+      "title": "Cascata, Especificidade e Herança",
+      "slug": "cascata-especificidade-heranca",
+      "description": "Entender como o CSS decide qual estilo aplicar quando existem regras conflitantes.",
+      "type": "text",
+      "isFree": false,
+      "order": 3,
+      "sections": [
+        {
+          "title": "Como a cascata funciona",
+          "contentType": "text",
+          "order": 1,
+          "content": {
+            "body": "# Cascata, Especificidade e Herança\n\n## A Cascata\n\nO \"C\" de CSS significa **Cascading** (em cascata). Quando múltiplas regras se aplicam ao mesmo elemento, o CSS usa uma hierarquia para resolver conflitos.\n\nOrdem de prioridade (da menor para a maior):\n1. Estilos padrão do navegador\n2. Folha de estilos externa\n3. Estilos inline (`style=\"\"`)\n4. `!important` (evite usar)\n\n## Especificidade\n\nA especificidade determina qual regra \"ganha\" quando há conflito. Cada tipo de seletor tem um peso:\n\n| Seletor | Peso |\n|---------|------|\n| Elemento (`p`, `h1`) | 0,0,1 |\n| Classe (`.destaque`) | 0,1,0 |\n| ID (`#cabecalho`) | 1,0,0 |\n| Inline (`style=\"\"`) | maior que tudo |\n\n```css\np { color: blue; }        /* especificidade: 0,0,1 */\n.texto { color: green; }  /* especificidade: 0,1,0 — GANHA */\n```\n\n## Herança\n\nMuitas propriedades CSS são **herdadas** pelos elementos filhos:\n\n```css\nbody {\n  font-family: Arial;\n  color: #333;\n}\n/* Todos os elementos herdam essa fonte e cor */\n```\n\nPropriedades **herdáveis**: `color`, `font-family`, `font-size`, `line-height`, `text-align`\n\nPropriedades **não herdáveis**: `margin`, `padding`, `border`, `background`, `width`"
+          }
+        },
+        {
+          "title": "Quiz: Fundamentos do CSS",
+          "contentType": "quiz",
+          "order": 2,
+          "content": {
+            "passingScore": 70,
+            "questions": [
+              {
+                "id": "q1",
+                "type": "multiple_choice",
+                "question": "Qual tipo de seletor tem maior especificidade?",
+                "options": ["Seletor de elemento (p)", "Seletor de classe (.texto)", "Seletor de ID (#cabecalho)", "Seletor universal (*)"],
+                "correctAnswer": 2,
+                "explanation": "O seletor de ID tem especificidade 1,0,0 — muito maior que classe (0,1,0) ou elemento (0,0,1)."
+              },
+              {
+                "id": "q2",
+                "type": "multiple_choice",
+                "question": "Qual é a forma recomendada de aplicar CSS em projetos reais?",
+                "options": ["Inline, diretamente no atributo style=\"\"", "No bloco <style> dentro do HTML", "Em um arquivo .css externo", "Com o atributo class em cada elemento"],
+                "correctAnswer": 2,
+                "explanation": "Arquivos CSS externos separam conteúdo de apresentação, são reutilizáveis e facilitam manutenção."
+              },
+              {
+                "id": "q3",
+                "type": "true_false",
+                "question": "A propriedade `margin` é herdada pelos elementos filhos.",
+                "options": ["Verdadeiro", "Falso"],
+                "correctAnswer": 1,
+                "explanation": "Margin NÃO é herdada. Propriedades de layout como margin, padding e border não são herdáveis — apenas propriedades tipográficas como color e font-family são."
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

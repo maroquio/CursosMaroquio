@@ -7,3 +7,4 @@ export { seedPermissions } from './seedPermissions.ts';
 export { seedAdminUser } from './seedAdminUser.ts';
 export { seedHtmlCourse } from './seedHtmlCourse.ts';
 export { seedPythonCourse } from './seedPythonCourse.ts';
+export { seedCssCourse } from './seedCssCourse.ts';

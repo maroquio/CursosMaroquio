@@ -1,0 +1,94 @@
+{
+  "title": "Tipografia",
+  "description": "Controlar fontes, tamanhos, alturas de linha, alinhamento de texto e usar Google Fonts.",
+  "order": 3,
+  "lessons": [
+    {
+      "title": "Fontes e tamanhos",
+      "slug": "fontes-e-tamanhos",
+      "description": "Aprender a controlar famílias de fontes e tamanhos no CSS.",
+      "type": "text",
+      "isFree": true,
+      "order": 1,
+      "sections": [
+        {
+          "title": "Propriedades de fonte",
+          "contentType": "text",
+          "order": 1,
+          "content": {
+            "body": "# Propriedades de fonte\n\n## font-family\n\nDefine a **família tipográfica** do texto:\n\n```css\nbody {\n  font-family: 'Roboto', Arial, sans-serif;\n}\n```\n\nSempre inclua **fontes fallback** separadas por vírgulas. O navegador usa a primeira disponível.\n\n### Categorias de fontes\n- `serif` — com serifas (Times New Roman)\n- `sans-serif` — sem serifas (Arial, Helvetica)\n- `monospace` — espaçamento fixo (Courier, Consolas)\n\n## font-size\n\n```css\nh1 { font-size: 2rem; }     /* relativo ao root (html) */\nh2 { font-size: 1.5rem; }   /* recomendado */\np  { font-size: 1rem; }     /* = 16px por padrão */\nsmall { font-size: 0.875rem; }\n\n/* Unidades absolutas (evite para texto) */\nh1 { font-size: 32px; }\n```\n\n## font-weight\n\n```css\n.leve   { font-weight: 300; }\n.normal { font-weight: 400; } /* normal */\n.medio  { font-weight: 500; }\n.bold   { font-weight: 700; } /* negrito */\n.black  { font-weight: 900; }\n```\n\n## font-style\n\n```css\nem { font-style: italic; }\n```\n\n## Google Fonts\n\n```html\n<link href=\"https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap\" rel=\"stylesheet\">\n```\n```css\nbody { font-family: 'Inter', sans-serif; }\n```"
+          }
+        },
+        {
+          "title": "Estilizando tipografia",
+          "contentType": "exercise",
+          "order": 2,
+          "content": {
+            "problem": "## Estilizando tipografia\n\nMelhore a legibilidade do artigo abaixo:\n\n1. Defina `font-family: Georgia, 'Times New Roman', serif` no `body`\n2. Defina `font-size: 2rem` no `h1`\n3. Defina `font-weight: 400` e `font-size: 1.1rem` no parágrafo `p`\n4. Defina `font-style: italic` no elemento `.autor`",
+            "language": "css",
+            "starterCode": "body {\n\n}\n\nh1 {\n\n}\n\np {\n\n}\n\n.autor {\n\n}",
+            "htmlContent": "<article>\n  <h1>A Arte da Tipografia</h1>\n  <p class=\"autor\">Por João Silva</p>\n  <p>A tipografia é a arte e técnica de organizar o tipo para tornar a linguagem escrita legível, atraente e compreensível.</p>\n  <p>Uma boa escolha tipográfica pode transformar completamente a experiência de leitura.</p>\n</article>",
+            "hints": [
+              "A propriedade `font-family` é herdada, então definí-la no `body` afeta toda a página",
+              "Use `rem` para tamanhos de fonte — é relativo ao tamanho base do documento",
+              "O valor `400` de font-weight equivale ao estilo normal"
+            ],
+            "solution": "body {\n  font-family: Georgia, 'Times New Roman', serif;\n}\n\nh1 {\n  font-size: 2rem;\n}\n\np {\n  font-weight: 400;\n  font-size: 1.1rem;\n}\n\n.autor {\n  font-style: italic;\n}"
+          }
+        }
+      ]
+    },
+    {
+      "title": "Espaçamento e alinhamento de texto",
+      "slug": "espacamento-e-alinhamento",
+      "description": "Controlar line-height, letter-spacing, text-align e outras propriedades de texto.",
+      "type": "text",
+      "isFree": false,
+      "order": 2,
+      "sections": [
+        {
+          "title": "Propriedades de espaçamento de texto",
+          "contentType": "text",
+          "order": 1,
+          "content": {
+            "body": "# Espaçamento e alinhamento de texto\n\n## line-height\n\nControla o **espaço entre linhas**. Um valor entre 1.4 e 1.8 melhora a legibilidade:\n\n```css\np {\n  line-height: 1.6; /* sem unidade — relativo ao font-size */\n}\n```\n\n## letter-spacing\n\nEspaço entre **caracteres**:\n\n```css\nh1 { letter-spacing: -0.02em; } /* títulos: ligeiramente comprimidos */\n.caixa-alta { letter-spacing: 0.1em; } /* letras maiúsculas: mais espaçadas */\n```\n\n## text-align\n\n```css\n.centro  { text-align: center; }\n.direita { text-align: right; }\n.justify { text-align: justify; }\n.esquerda { text-align: left; } /* padrão */\n```\n\n## text-transform\n\n```css\n.maiusculo { text-transform: uppercase; }\n.minusculo { text-transform: lowercase; }\n.capitalizado { text-transform: capitalize; } /* Primeira Letra Maiúscula */\n```\n\n## text-decoration\n\n```css\na { text-decoration: none; }       /* remove sublinhado de links */\n.riscado { text-decoration: line-through; }\n.sublinhado { text-decoration: underline; }\n```\n\n## Receita para texto legível\n\n```css\nbody {\n  font-family: 'Inter', system-ui, sans-serif;\n  font-size: 1rem;    /* 16px base */\n  line-height: 1.6;   /* espaçamento confortável */\n  color: #333;        /* cinza escuro (não preto puro) */\n  max-width: 65ch;    /* largura ótima: ~65 caracteres */\n}\n```"
+          }
+        },
+        {
+          "title": "Quiz: Tipografia",
+          "contentType": "quiz",
+          "order": 2,
+          "content": {
+            "passingScore": 70,
+            "questions": [
+              {
+                "id": "q1",
+                "type": "multiple_choice",
+                "question": "Qual unidade é recomendada para font-size para manter acessibilidade?",
+                "options": ["px", "rem", "pt", "cm"],
+                "correctAnswer": 1,
+                "explanation": "rem (root em) é relativo ao tamanho de fonte base do documento. Se o usuário alterar o tamanho de fonte no navegador, elementos em rem se ajustam automaticamente."
+              },
+              {
+                "id": "q2",
+                "type": "multiple_choice",
+                "question": "Qual valor de line-height é considerado ideal para legibilidade em parágrafos?",
+                "options": ["1.0 (simples)", "1.4 a 1.8", "3.0", "0.5"],
+                "correctAnswer": 1,
+                "explanation": "Entre 1.4 e 1.8 é o ideal — linhas muito próximas (< 1.2) dificultam a leitura, e linhas muito distantes (> 2.0) fragmentam o texto visualmente."
+              },
+              {
+                "id": "q3",
+                "type": "true_false",
+                "question": "A propriedade `font-family` se aplica apenas ao elemento onde é declarada, não sendo herdada pelos filhos.",
+                "options": ["Verdadeiro", "Falso"],
+                "correctAnswer": 1,
+                "explanation": "font-family É herdada. Definindo no body, todos os elementos filhos herdarão a fonte, a menos que sejam sobrescritos."
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

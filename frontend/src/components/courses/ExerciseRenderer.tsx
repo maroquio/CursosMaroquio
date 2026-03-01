@@ -14,7 +14,7 @@ import {
 import { IconCheck, IconX, IconBulb, IconCode } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
 import { aiApi } from '../../api/ai';
-import { MarkdownRenderer, PythonRunner, HtmlRunner, CodeBlock } from '../common';
+import { MarkdownRenderer, PythonRunner, HtmlRunner, CssRunner, CodeBlock } from '../common';
 import type { ExerciseSectionContent } from '../../types/course.types';
 
 export interface ExerciseRendererProps {
@@ -40,6 +40,7 @@ export function ExerciseRenderer({ exercise, sectionId, onComplete, isLessonComp
 
   const isPythonExercise = !exercise.language || exercise.language === 'python';
   const isHtmlExercise = exercise.language === 'html';
+  const isCssExercise = exercise.language === 'css';
 
   const handleShowNextHint = useCallback(() => {
     if (exercise.hints && hintIndex < exercise.hints.length - 1) {
@@ -101,6 +102,12 @@ export function ExerciseRenderer({ exercise, sectionId, onComplete, isLessonComp
       ) : isHtmlExercise ? (
         <HtmlRunner
           initialCode={exercise.starterCode || '<!-- Write your HTML code here -->\n'}
+          onCodeChange={setCode}
+        />
+      ) : isCssExercise ? (
+        <CssRunner
+          initialCss={exercise.starterCode || '/* Write your CSS here */\n'}
+          htmlTemplate={exercise.htmlContent}
           onCodeChange={setCode}
         />
       ) : (
@@ -257,7 +264,7 @@ export function ExerciseRenderer({ exercise, sectionId, onComplete, isLessonComp
             </Button>
           </>
         )}
-        {!isPythonExercise && !isHtmlExercise && (
+        {!isPythonExercise && !isHtmlExercise && !isCssExercise && (
           <Button
             variant="subtle"
             onClick={() => setCode(exercise.starterCode || '')}

@@ -6,7 +6,7 @@ import { Container } from './infrastructure/di/Container.ts';
 import { env, validateEnv } from '@shared/config/env.ts';
 import { createLogger } from '@shared/infrastructure/logging/Logger.ts';
 import { getDatabase } from './infrastructure/database/connection.ts';
-import { seedRoles, seedPermissions, seedAdminUser, seedHtmlCourse, seedPythonCourse } from './infrastructure/database/seeds/index.ts';
+import { seedRoles, seedPermissions, seedAdminUser, seedHtmlCourse, seedPythonCourse, seedCssCourse } from './infrastructure/database/seeds/index.ts';
 import {
   createRateLimiter,
   createSecurityHeaders,
@@ -50,6 +50,7 @@ seedRoles()
   .then(() => seedAdminUser())
   .then(() => seedHtmlCourse())
   .then(() => seedPythonCourse())
+  .then(() => seedCssCourse())
   .catch((err) => {
     log.error('Failed to seed initial data', err instanceof Error ? err : new Error(String(err)));
   });

@@ -1,0 +1,94 @@
+{
+  "title": "Box Model",
+  "description": "Compreender o modelo de caixas do CSS: margin, padding, border, outline e box-sizing.",
+  "order": 2,
+  "lessons": [
+    {
+      "title": "O modelo de caixas",
+      "slug": "o-modelo-de-caixas",
+      "description": "Entender como todo elemento HTML é uma caixa com camadas de espaçamento.",
+      "type": "text",
+      "isFree": true,
+      "order": 1,
+      "sections": [
+        {
+          "title": "Entendendo o Box Model",
+          "contentType": "text",
+          "order": 1,
+          "content": {
+            "body": "# O Box Model do CSS\n\nTodo elemento HTML é tratado pelo CSS como uma **caixa retangular**. Essa caixa tem quatro camadas:\n\n```\n┌─────────────────────────────────┐\n│           MARGIN                │\n│  ┌───────────────────────────┐  │\n│  │         BORDER            │  │\n│  │  ┌─────────────────────┐  │  │\n│  │  │      PADDING        │  │  │\n│  │  │  ┌───────────────┐  │  │  │\n│  │  │  │    CONTENT    │  │  │  │\n│  │  │  └───────────────┘  │  │  │\n│  │  └─────────────────────┘  │  │\n│  └───────────────────────────┘  │\n└─────────────────────────────────┘\n```\n\n## As quatro camadas\n\n### Content (Conteúdo)\nÉ o conteúdo real do elemento (texto, imagem). Controlado por `width` e `height`.\n\n### Padding (Preenchimento)\nEspaço **interno** entre o conteúdo e a borda. A cor de fundo do elemento se estende pelo padding.\n```css\npadding: 20px;           /* todos os lados */\npadding: 10px 20px;      /* vertical | horizontal */\npadding: 5px 10px 15px 20px; /* top right bottom left */\n```\n\n### Border (Borda)\nA linha ao redor do padding:\n```css\nborder: 2px solid #333;\nborder: 1px dashed red;\nborder-radius: 8px;  /* cantos arredondados */\n```\n\n### Margin (Margem)\nEspaço **externo** entre o elemento e os vizinhos. Transparente (não tem cor de fundo).\n```css\nmargin: 20px;\nmargin: 0 auto;  /* centraliza horizontalmente */\n```\n\n## box-sizing\n\nPor padrão, `width` define apenas o conteúdo. Com `box-sizing: border-box`, `width` inclui padding e border:\n\n```css\n/* Comportamento padrão */\n.box { width: 200px; padding: 20px; } /* largura total: 240px */\n\n/* Com border-box */\n.box { box-sizing: border-box; width: 200px; padding: 20px; } /* largura total: 200px */\n```\n\nA prática moderna é aplicar `border-box` a todos os elementos:\n```css\n* { box-sizing: border-box; }\n```"
+          }
+        },
+        {
+          "title": "Explorando margin e padding",
+          "contentType": "exercise",
+          "order": 2,
+          "content": {
+            "problem": "## Explorando margin e padding\n\nEstilize o card abaixo aplicando o Box Model:\n\n1. Adicione `padding: 24px` ao `.card`\n2. Adicione `margin-bottom: 16px` ao `.card`\n3. Defina `border: 2px solid #dee2e6` ao `.card`\n4. Defina `border-radius: 8px` ao `.card`\n5. Defina `background-color: #f8f9fa` ao `.card`",
+            "language": "css",
+            "starterCode": "* {\n  box-sizing: border-box;\n}\n\n.card {\n  /* Adicione suas propriedades aqui */\n}\n\n.card h3 {\n  margin-top: 0;\n  color: #212529;\n}\n\n.card p {\n  margin-bottom: 0;\n  color: #6c757d;\n}",
+            "htmlContent": "<div class=\"card\">\n  <h3>Título do Card</h3>\n  <p>Este é o conteúdo do card. O Box Model define o espaço ao redor deste texto.</p>\n</div>\n<div class=\"card\">\n  <h3>Segundo Card</h3>\n  <p>Note a margem entre os dois cards.</p>\n</div>",
+            "hints": [
+              "O `padding` cria espaço interno; o `margin` cria espaço externo",
+              "O `border-radius` arredonda as bordas do elemento",
+              "A propriedade `border` tem o formato: espessura estilo cor"
+            ],
+            "solution": "* {\n  box-sizing: border-box;\n}\n\n.card {\n  padding: 24px;\n  margin-bottom: 16px;\n  border: 2px solid #dee2e6;\n  border-radius: 8px;\n  background-color: #f8f9fa;\n}\n\n.card h3 {\n  margin-top: 0;\n  color: #212529;\n}\n\n.card p {\n  margin-bottom: 0;\n  color: #6c757d;\n}"
+          }
+        }
+      ]
+    },
+    {
+      "title": "Display e visibilidade",
+      "slug": "display-e-visibilidade",
+      "description": "Entender as propriedades display, width, height e como elementos se comportam no fluxo da página.",
+      "type": "text",
+      "isFree": false,
+      "order": 2,
+      "sections": [
+        {
+          "title": "Propriedade display",
+          "contentType": "text",
+          "order": 1,
+          "content": {
+            "body": "# Propriedade display\n\nA propriedade `display` controla **como um elemento se comporta** no fluxo do documento.\n\n## Os valores principais\n\n### `display: block`\n- Ocupa **toda a largura disponível**\n- Começa em uma nova linha\n- Aceita `width` e `height`\n- Exemplos: `<div>`, `<p>`, `<h1>` a `<h6>`\n\n### `display: inline`\n- Ocupa apenas o **espaço do conteúdo**\n- Não quebra linha\n- **Ignora** `width` e `height`\n- Exemplos: `<span>`, `<a>`, `<strong>`\n\n### `display: inline-block`\n- Comporta-se como inline (não quebra linha)\n- Mas aceita `width`, `height`, `padding`, `margin`\n\n### `display: none`\n- Remove o elemento do fluxo (como se não existisse)\n\n## Diferença importante: block vs inline\n\n```css\nspan {\n  display: inline;   /* padrão - ignora width/height */\n  width: 100px;      /* sem efeito! */\n  height: 50px;      /* sem efeito! */\n}\n\nspan {\n  display: inline-block; /* agora aceita dimensões */\n  width: 100px;          /* funciona! */\n  height: 50px;          /* funciona! */\n}\n```\n\n## width e height\n\n```css\n.box {\n  width: 300px;      /* largura fixa */\n  width: 50%;        /* relativa ao pai */\n  width: 100vw;      /* 100% da viewport */\n  max-width: 800px;  /* nunca maior que 800px */\n  min-height: 200px; /* pelo menos 200px de altura */\n}\n```"
+          }
+        },
+        {
+          "title": "Quiz: Box Model",
+          "contentType": "quiz",
+          "order": 2,
+          "content": {
+            "passingScore": 70,
+            "questions": [
+              {
+                "id": "q1",
+                "type": "multiple_choice",
+                "question": "Com `box-sizing: border-box` e `width: 200px`, `padding: 20px`, qual é a largura total do elemento?",
+                "options": ["240px", "200px", "180px", "160px"],
+                "correctAnswer": 1,
+                "explanation": "Com border-box, a width (200px) inclui o padding. Então a largura total é 200px."
+              },
+              {
+                "id": "q2",
+                "type": "multiple_choice",
+                "question": "Qual propriedade cria espaço EXTERNO ao redor de um elemento?",
+                "options": ["padding", "border", "margin", "outline"],
+                "correctAnswer": 2,
+                "explanation": "O margin cria espaço externo entre o elemento e seus vizinhos. O padding cria espaço interno."
+              },
+              {
+                "id": "q3",
+                "type": "true_false",
+                "question": "Um elemento `<span>` com `display: inline` (padrão) responde à propriedade `width`.",
+                "options": ["Verdadeiro", "Falso"],
+                "correctAnswer": 1,
+                "explanation": "Elementos inline ignoram width e height. Use display: inline-block ou block para que essas propriedades funcionem."
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

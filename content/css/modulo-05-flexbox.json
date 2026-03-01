@@ -1,0 +1,76 @@
+{
+  "title": "Flexbox",
+  "description": "Dominar o layout flexível com flex-container, flex-items, justify-content, align-items, flex-wrap e gap.",
+  "order": 5,
+  "lessons": [
+    {
+      "title": "Introdução ao Flexbox",
+      "slug": "introducao-ao-flexbox",
+      "description": "Entender o modelo de layout flexível e seus conceitos principais.",
+      "type": "text",
+      "isFree": true,
+      "order": 1,
+      "sections": [
+        {
+          "title": "O que é Flexbox?",
+          "contentType": "text",
+          "order": 1,
+          "content": {
+            "body": "# Flexbox\n\nFlexbox (Flexible Box Layout) é um sistema de layout que permite **distribuir espaço** e **alinhar itens** dentro de um container de forma eficiente, mesmo quando o tamanho dos itens é desconhecido.\n\n## Ativando o Flexbox\n\n```css\n.container {\n  display: flex;\n}\n```\n\nIsso transforma o `.container` em um **flex container**, e todos os filhos diretos se tornam **flex items**.\n\n## Eixos do Flexbox\n\nFlexbox trabalha com dois eixos:\n- **Eixo principal** (main axis): horizontal por padrão\n- **Eixo transversal** (cross axis): perpendicular ao principal\n\n## flex-direction\n\n```css\n.container {\n  display: flex;\n  flex-direction: row;           /* padrão: horizontal */\n  flex-direction: row-reverse;   /* horizontal, invertido */\n  flex-direction: column;        /* vertical */\n  flex-direction: column-reverse; /* vertical, invertido */\n}\n```\n\n## justify-content (eixo principal)\n\n```css\n.container {\n  justify-content: flex-start;    /* padrão: alinha no início */\n  justify-content: center;        /* centraliza */\n  justify-content: flex-end;      /* alinha no fim */\n  justify-content: space-between; /* espaço entre os itens */\n  justify-content: space-around;  /* espaço ao redor dos itens */\n  justify-content: space-evenly;  /* espaço igual entre todos */\n}\n```\n\n## align-items (eixo transversal)\n\n```css\n.container {\n  align-items: stretch;     /* padrão: estica para preencher */\n  align-items: center;      /* centraliza verticalmente */\n  align-items: flex-start;  /* alinha no topo */\n  align-items: flex-end;    /* alinha na base */\n}\n```"
+          }
+        },
+        {
+          "title": "Centralizando com Flexbox",
+          "contentType": "exercise",
+          "order": 2,
+          "content": {
+            "problem": "## Centralizando com Flexbox\n\nO Flexbox tornou o centering vertical/horizontal trivial. Centralize o card na tela:\n\n1. No `.container`, defina `display: flex`\n2. No `.container`, defina `justify-content: center` (centraliza horizontalmente)\n3. No `.container`, defina `align-items: center` (centraliza verticalmente)\n4. No `.container`, defina `min-height: 300px` para dar altura ao container",
+            "language": "css",
+            "starterCode": ".container {\n  background-color: #f0f4f8;\n  /* Adicione as propriedades flexbox aqui */\n}\n\n.card {\n  background: white;\n  padding: 32px;\n  border-radius: 12px;\n  box-shadow: 0 4px 12px rgba(0,0,0,0.1);\n  text-align: center;\n}",
+            "htmlContent": "<div class=\"container\">\n  <div class=\"card\">\n    <h2>Centralizado!</h2>\n    <p>Flexbox torna a centralização simples.</p>\n  </div>\n</div>",
+            "hints": [
+              "Com `display: flex` no container, os filhos se tornam flex items",
+              "Para centralizar em ambos os eixos, use `justify-content: center` E `align-items: center`",
+              "O container precisa de altura (min-height) para que a centralização vertical seja visível"
+            ],
+            "solution": ".container {\n  background-color: #f0f4f8;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  min-height: 300px;\n}\n\n.card {\n  background: white;\n  padding: 32px;\n  border-radius: 12px;\n  box-shadow: 0 4px 12px rgba(0,0,0,0.1);\n  text-align: center;\n}"
+          }
+        }
+      ]
+    },
+    {
+      "title": "Flex items e wrap",
+      "slug": "flex-items-e-wrap",
+      "description": "Controlar o comportamento individual dos flex items e o wrapping.",
+      "type": "text",
+      "isFree": false,
+      "order": 2,
+      "sections": [
+        {
+          "title": "Propriedades dos flex items",
+          "contentType": "text",
+          "order": 1,
+          "content": {
+            "body": "# Propriedades dos Flex Items\n\n## flex-wrap\n\nPor padrão, itens não quebram linha. Com `flex-wrap: wrap`, eles se ajustam:\n\n```css\n.container {\n  display: flex;\n  flex-wrap: wrap;     /* quebra quando não couber */\n  gap: 16px;           /* espaço entre itens */\n}\n```\n\n## gap\n\nCria espaçamento entre itens (substitui margin hacks):\n\n```css\n.container {\n  gap: 16px;          /* horizontal e vertical */\n  gap: 8px 16px;      /* vertical | horizontal */\n  column-gap: 16px;   /* apenas horizontal */\n  row-gap: 8px;       /* apenas vertical */\n}\n```\n\n## flex (shorthand)\n\nControla como o item cresce/encolhe:\n\n```css\n.item {\n  flex: 1;        /* cresce para preencher o espaço */\n  flex: 0 0 auto; /* tamanho fixo: não cresce, não encolhe */\n  flex: 2;        /* cresce o dobro dos itens flex: 1 */\n}\n```\n\n## align-self\n\nSobrescreve `align-items` para um item específico:\n\n```css\n.item-especial {\n  align-self: flex-end; /* alinha na base, ignorando os outros */\n}\n```\n\n## order\n\nControla a ordem visual dos itens (sem alterar o HTML):\n\n```css\n.primeiro  { order: -1; } /* aparece antes de todos */\n.ultimo    { order: 99; } /* aparece depois de todos */\n```\n\n## Exemplo: Nav com flexbox\n\n```css\nnav {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  padding: 0 24px;\n  height: 64px;\n}\n\n.logo { font-weight: bold; }\n.nav-links { display: flex; gap: 24px; }\n```"
+          }
+        },
+        {
+          "title": "Layout de cards com Flexbox",
+          "contentType": "exercise",
+          "order": 2,
+          "content": {
+            "problem": "## Layout de cards responsivo\n\nCrie um grid de cards usando Flexbox:\n\n1. No `.cards`, defina `display: flex`, `flex-wrap: wrap` e `gap: 16px`\n2. No `.card`, defina `flex: 1 1 200px` (cresce, encolhe, base de 200px)\n3. No `.card`, adicione `padding: 16px`, `border: 1px solid #dee2e6` e `border-radius: 8px`\n4. No `.card h3`, defina `margin-top: 0`",
+            "language": "css",
+            "starterCode": ".cards {\n\n}\n\n.card {\n\n}\n\n.card h3 {\n\n}",
+            "htmlContent": "<div class=\"cards\">\n  <div class=\"card\">\n    <h3>HTML</h3>\n    <p>A estrutura da web. Tags e semântica.</p>\n  </div>\n  <div class=\"card\">\n    <h3>CSS</h3>\n    <p>A apresentação visual. Estilos e layouts.</p>\n  </div>\n  <div class=\"card\">\n    <h3>JavaScript</h3>\n    <p>O comportamento. Lógica e interatividade.</p>\n  </div>\n  <div class=\"card\">\n    <h3>React</h3>\n    <p>Biblioteca para interfaces modernas.</p>\n  </div>\n</div>",
+            "hints": [
+              "`flex: 1 1 200px` significa: pode crescer (1), pode encolher (1), tamanho base 200px",
+              "`flex-wrap: wrap` permite que os cards quebrem para a próxima linha quando não couberem"
+            ],
+            "solution": ".cards {\n  display: flex;\n  flex-wrap: wrap;\n  gap: 16px;\n}\n\n.card {\n  flex: 1 1 200px;\n  padding: 16px;\n  border: 1px solid #dee2e6;\n  border-radius: 8px;\n}\n\n.card h3 {\n  margin-top: 0;\n}"
+          }
+        }
+      ]
+    }
+  ]
+}
