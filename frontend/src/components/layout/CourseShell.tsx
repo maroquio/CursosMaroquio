@@ -177,7 +177,7 @@ export function CourseShell() {
             <ActionIcon
               variant="subtle"
               size="lg"
-              onClick={() => navigate('/app/courses')}
+              onClick={() => navigate('/courses')}
               aria-label={t('courses.backToCourse')}
             >
               <IconArrowLeft size={20} />
@@ -193,7 +193,7 @@ export function CourseShell() {
               <ActionIcon
                 variant="subtle"
                 size="lg"
-                onClick={() => navigate('/app/courses')}
+                onClick={() => navigate('/courses')}
                 aria-label={t('courses.backToCourse')}
               >
                 <IconArrowLeft size={20} />
