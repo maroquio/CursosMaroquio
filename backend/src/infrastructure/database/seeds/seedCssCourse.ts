@@ -41,7 +41,7 @@ interface ModuleJsonData {
 }
 
 async function loadModuleFiles(): Promise<ModuleJsonData[]> {
-  const contentDir = join(import.meta.dir, '../../../../../..', 'content', 'css');
+  const contentDir = join(import.meta.dir, '../../../../..', 'content', 'css');
   const files = [
     'modulo-01-fundamentos.json',
     'modulo-02-box-model.json',
@@ -137,15 +137,78 @@ export async function seedCssCourse(): Promise<void> {
     .limit(1);
 
   if (existingCourse.length > 0) {
+    const courseId = existingCourse[0]!.id;
+
+    // Check if modules already exist — if so, seed is complete
+    const existingModules = await db
+      .select()
+      .from(modulesTable)
+      .where(eq(modulesTable.courseId, courseId))
+      .limit(1);
+
+    if (existingModules.length > 0) {
+      if (env.NODE_ENV !== 'test')
+        console.log('  → Course "CSS Essencial" already exists');
+      if (!existingCourse[0]!.thumbnailUrl) {
+        const thumbnailUrl = await copyCourseThumbnail('logo_curso_css_essencial.png', 'css-essencial.png');
+        if (thumbnailUrl) {
+          await db.update(coursesTable).set({ thumbnailUrl }).where(eq(coursesTable.slug, 'css-essencial'));
+          if (env.NODE_ENV !== 'test') console.log('  → Updated thumbnail for "CSS Essencial"');
+        }
+      }
+      return;
+    }
+
+    // Course exists but has no modules — re-seed content using existing courseId
     if (env.NODE_ENV !== 'test')
-      console.log('  → Course "CSS Essencial" already exists');
-    if (!existingCourse[0]!.thumbnailUrl) {
-      const thumbnailUrl = await copyCourseThumbnail('logo_curso_css_essencial.png', 'css-essencial.png');
-      if (thumbnailUrl) {
-        await db.update(coursesTable).set({ thumbnailUrl }).where(eq(coursesTable.slug, 'css-essencial'));
-        if (env.NODE_ENV !== 'test') console.log('  → Updated thumbnail for "CSS Essencial"');
+      console.log('  → Re-seeding modules for "CSS Essencial" (was empty)...');
+
+    const modulesData = await loadModuleFiles();
+
+    for (const moduleData of modulesData) {
+      const moduleId = uuidv7();
+      await db.insert(modulesTable).values({
+        id: moduleId,
+        courseId,
+        title: moduleData.title,
+        description: moduleData.description ?? null,
+        order: moduleData.order,
+        createdAt: now,
+        updatedAt: now,
+      });
+
+      for (const lessonData of moduleData.lessons) {
+        const lessonId = uuidv7();
+        await db.insert(lessonsTable).values({
+          id: lessonId,
+          moduleId,
+          title: lessonData.title,
+          slug: lessonData.slug,
+          description: lessonData.description ?? null,
+          type: lessonData.type,
+          isFree: lessonData.isFree ?? false,
+          order: lessonData.order,
+          createdAt: now,
+          updatedAt: now,
+        });
+
+        for (const sectionData of lessonData.sections) {
+          await db.insert(sectionsTable).values({
+            id: uuidv7(),
+            lessonId,
+            title: sectionData.title,
+            contentType: sectionData.contentType,
+            content: sectionData.content,
+            order: sectionData.order,
+            createdAt: now,
+            updatedAt: now,
+          });
+        }
       }
     }
+
+    if (env.NODE_ENV !== 'test')
+      console.log('  ✓ Modules re-seeded for "CSS Essencial".');
     return;
   }
 
