@@ -1,0 +1,1110 @@
+{
+  "moduleId": "modulo-08-classes-objetos",
+  "title": "Programação Orientada a Objetos",
+  "description": "Python é uma linguagem orientada a objetos, o que significa que ela permite a criação de objetos que podem interagir entre si por meio de métodos e que podem manter seus estados através de atributos. Neste módulo, vamos conhecer os recursos essenciais de programação orientada a objetos em Python.",
+  "version": "1.0.0",
+  "estimatedHours": 8,
+  "lessons": [
+    {
+      "lessonId": "lesson-01-introducao-poo",
+      "title": "Introdução à Programação Orientada a Objetos",
+      "order": 1,
+      "estimatedMinutes": 25,
+      "sections": [
+        {
+          "sectionId": "section-01-conceitos-poo",
+          "type": "text",
+          "title": "O que é Programação Orientada a Objetos",
+          "order": 1,
+          "durationMinutes": 4,
+          "content": "A Programação Orientada a Objetos (POO) é um paradigma de programação que se baseia em objetos. Um objeto, por sua vez, é uma entidade baseada em abstrações (classes) que possuem atributos (dados) e métodos (ações). A POO é baseada em quatro pilares fundamentais: abstração, encapsulamento, herança e polimorfismo.\n\nO primeiro pilar, **abstração**, refere-se à possibilidade de representar conceitos do mundo real em um modelo de objetos. A abstração envolve a seleção e a organização dos atributos e métodos de um objeto, com o objetivo de representar de forma eficiente os aspectos relevantes de uma entidade do mundo real no contexto de um programa de computador que resolve um problema específico. A abstração torna o código mais fácil de entender e de modificar, pois permite que os objetos sejam pensados em termos de suas funções e responsabilidades para o contexto em que serão usados."
+        },
+        {
+          "sectionId": "section-02-encapsulamento-heranca",
+          "type": "text",
+          "title": "Encapsulamento e Herança",
+          "order": 2,
+          "durationMinutes": 5,
+          "content": "O segundo pilar, **encapsulamento**, refere-se à ideia de que um objeto deve manter seus atributos e métodos internos ocultos, ou seja, protegidos do acesso externo. Isso significa que os dados armazenados em um objeto só podem ser acessados e modificados por meio de métodos específicos, chamados de métodos de acesso. O encapsulamento torna o código mais seguro e modular, permitindo que as mudanças internas em um objeto não afetem outras partes do programa. Isso ajuda a garantir que objetos nunca existam em um estado inválido.\n\nO terceiro pilar, **herança**, refere-se à possibilidade de se criar classes a partir de outras classes já criadas, herdando atributos e métodos das classes existentes. Isso permite que as classes de um programa sejam organizadas em uma hierarquia, em que as classes filhas (subclasses) herdam as características das classes pais (superclasses). A herança promove a reutilização de código, tornando-o mais flexível e extensível."
+        },
+        {
+          "sectionId": "section-03-polimorfismo",
+          "type": "text",
+          "title": "Polimorfismo e Conclusão",
+          "order": 3,
+          "durationMinutes": 4,
+          "content": "O quarto pilar, **polimorfismo**, refere-se à capacidade de um objeto comportar-se de diferentes maneiras em diferentes contextos. O polimorfismo permite que objetos oriundos de uma mesma superclasse possam ser tratados de forma similar. Isso é implementado por meio da definição de métodos com o mesmo nome, mas com o corpo de código diferente. O polimorfismo torna o código mais genérico e flexível, permitindo a fácil substituição de um objeto por outro compatível.\n\nConcluindo, a Programação Orientada a Objetos é um paradigma de programação que permite a criação de programas mais organizados, reutilizáveis e fáceis de manter. Compreender os quatro pilares da POO é essencial para se tornar um programador Python profissional. Com o conhecimento adequado de POO, é possível criar programas capazes de lidar melhor com problemas complexos, mantendo um código organizado e menos suscetível a erros."
+        },
+        {
+          "sectionId": "section-04-exercise-poo",
+          "type": "exercise",
+          "title": "Exercício: Identificando os Pilares da POO",
+          "order": 4,
+          "durationMinutes": 7,
+          "problem": "Crie um programa que demonstre os conceitos básicos da POO. Defina uma classe `Conta` com um atributo privado `saldo` e métodos para depositar e sacar valores. O método de saque deve validar se há saldo suficiente antes de realizar a operação.",
+          "starterCode": "class Conta:\n    def __init__(self, saldo_inicial):\n        # Defina o atributo privado saldo aqui\n        pass\n    \n    def depositar(self, valor):\n        # Implemente o método de depósito\n        pass\n    \n    def sacar(self, valor):\n        # Implemente o método de saque com validação\n        pass\n    \n    def obter_saldo(self):\n        # Retorne o saldo atual\n        pass\n\n# Teste sua implementação\nconta = Conta(100)\nconta.depositar(50)\nprint(conta.obter_saldo())  # Esperado: 150\nconta.sacar(30)\nprint(conta.obter_saldo())  # Esperado: 120",
+          "testCases": [
+            {
+              "input": "Conta(100); depositar(50); obter_saldo()",
+              "expectedOutput": "150"
+            },
+            {
+              "input": "Conta(100); sacar(150)",
+              "expectedOutput": "Saldo insuficiente (exceção ou mensagem)"
+            },
+            {
+              "input": "Conta(0); depositar(200); sacar(50); obter_saldo()",
+              "expectedOutput": "150"
+            }
+          ],
+          "hints": [
+            "Use dois underscores (__) antes do nome do atributo para indicá-lo como privado",
+            "No método sacar, verifique se o valor é menor ou igual ao saldo antes de subtrair",
+            "Você pode lançar uma exceção ValueError quando o saldo for insuficiente"
+          ],
+          "solution": "class Conta:\n    def __init__(self, saldo_inicial):\n        self.__saldo = saldo_inicial\n    \n    def depositar(self, valor):\n        self.__saldo += valor\n    \n    def sacar(self, valor):\n        if valor > self.__saldo:\n            raise ValueError(\"Saldo insuficiente.\")\n        self.__saldo -= valor\n    \n    def obter_saldo(self):\n        return self.__saldo\n\n# Teste\nconta = Conta(100)\nconta.depositar(50)\nprint(conta.obter_saldo())  # 150\nconta.sacar(30)\nprint(conta.obter_saldo())  # 120"
+        },
+        {
+          "sectionId": "section-05-quiz-introducao",
+          "type": "quiz",
+          "title": "Quiz: Fundamentos da POO",
+          "order": 5,
+          "durationMinutes": 5,
+          "questions": [
+            {
+              "questionId": "q1",
+              "question": "Qual pilar da POO permite que uma classe herde atributos e métodos de outra classe?",
+              "type": "multiple_choice",
+              "options": [
+                "Abstração",
+                "Encapsulamento",
+                "Herança",
+                "Polimorfismo"
+              ],
+              "correctAnswer": 2,
+              "explanation": "A herança é o pilar que permite criar classes a partir de outras classes já existentes, herdando seus atributos e métodos."
+            },
+            {
+              "questionId": "q2",
+              "question": "O que o encapsulamento ajuda a garantir em relação aos objetos?",
+              "type": "multiple_choice",
+              "options": [
+                "Que os objetos possam ter múltiplos comportamentos",
+                "Que os objetos nunca existam em um estado inválido",
+                "Que os objetos possam herdar de múltiplas classes",
+                "Que os objetos representem conceitos do mundo real"
+              ],
+              "correctAnswer": 1,
+              "explanation": "O encapsulamento protege os dados internos de um objeto, garantindo que eles só sejam modificados de forma controlada, evitando estados inválidos."
+            },
+            {
+              "questionId": "q3",
+              "question": "Qual pilar da POO permite que objetos de diferentes classes respondam de forma diferente ao mesmo método?",
+              "type": "multiple_choice",
+              "options": [
+                "Abstração",
+                "Encapsulamento",
+                "Herança",
+                "Polimorfismo"
+              ],
+              "correctAnswer": 3,
+              "explanation": "O polimorfismo permite que diferentes objetos respondam de maneiras diferentes à mesma chamada de método, baseado em sua classe específica."
+            },
+            {
+              "questionId": "q4",
+              "question": "A abstração na POO refere-se a:",
+              "type": "multiple_choice",
+              "options": [
+                "Ocultar os detalhes de implementação",
+                "Representar conceitos do mundo real em um modelo de objetos",
+                "Herdar características de uma classe pai",
+                "Permitir múltiplos comportamentos para um mesmo método"
+              ],
+              "correctAnswer": 1,
+              "explanation": "A abstração envolve selecionar e organizar os aspectos relevantes de uma entidade do mundo real para representá-la em um programa."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "lessonId": "lesson-02-classes-python",
+      "title": "Definindo Classes em Python",
+      "order": 2,
+      "estimatedMinutes": 30,
+      "sections": [
+        {
+          "sectionId": "section-01-definicao-classe",
+          "type": "text",
+          "title": "Criando Classes em Python",
+          "order": 1,
+          "durationMinutes": 5,
+          "content": "Uma classe é um modelo para a criação de objetos que define a estrutura de dados e comportamentos que tal objeto terá. Em Python, podemos definir uma classe utilizando a palavra-chave `class`, seguida do **nome da classe** e do caractere `:`.\n\n```python\nclass Pessoa:\n    def __init__(self, nome, idade):\n        self.nome = nome\n        self.idade = idade\n\n    def falar(self, mensagem):\n        print(f\"{self.nome} diz: {mensagem}\")\n```\n\nNeste exemplo, definimos a classe `Pessoa`, que possui dois atributos (`nome` e `idade`) e um método (`falar`). O método `__init__` é um método especial que é executado automaticamente quando um objeto da classe é criado. Ele recebe os valores dos atributos que serão armazenados no objeto, definindo o **estado** desse objeto."
+        },
+        {
+          "sectionId": "section-02-metodos-especiais",
+          "type": "text",
+          "title": "Métodos Especiais: Construtor e Destrutor",
+          "order": 2,
+          "durationMinutes": 5,
+          "content": "As classes Python possuem alguns métodos especiais. Alguns desses métodos são executados automaticamente em determinadas situações. Eles são facilmente reconhecidos por terem dois caracteres de sublinhado (`__`) no início e no final do nome do método.\n\nOs métodos especiais mais comuns são o `__init__` e o `__del__`, que são os métodos **construtor** e **destrutor**, respectivamente. O método construtor é executado quando um objeto da classe é criado, enquanto o método destrutor é executado quando o objeto é destruído.\n\n```python\nclass Pessoa:\n    def __init__(self, nome, idade):\n        self.nome = nome\n        self.idade = idade\n        print(f\"{self.nome} foi criado.\")\n\n    def __del__(self):\n        print(f\"{self.nome} foi destruído.\")\n\n    def falar(self, mensagem):\n        print(f\"{self.nome} diz: {mensagem}\")\n```\n\nNeste exemplo, o construtor recebe os valores dos atributos da classe e imprime uma mensagem indicando que o objeto foi criado. O destrutor imprime uma mensagem indicando que o objeto foi destruído."
+        },
+        {
+          "sectionId": "section-03-str-repr",
+          "type": "text",
+          "title": "Os Métodos __str__ e __repr__",
+          "order": 3,
+          "durationMinutes": 6,
+          "content": "Dois métodos especiais importantes para representação de objetos são `__str__` e `__repr__`. Ambos são usados para fornecer representações textuais de objetos, mas têm propósitos diferentes.\n\n**O método __str__:** É chamado pela função `str()` e pela função `print()`. Seu objetivo é fornecer uma representação legível e amigável do objeto, destinada ao usuário final.\n\n**O método __repr__:** É chamado pela função `repr()` e pelo console interativo do Python. Seu objetivo é fornecer uma representação técnica e não ambígua do objeto, destinada a desenvolvedores.\n\n```python\nclass Produto:\n    def __init__(self, nome, preco, codigo):\n        self.nome = nome\n        self.preco = preco\n        self.codigo = codigo\n\n    def __str__(self):\n        return f\"{self.nome} - R$ {self.preco:.2f}\"\n\n    def __repr__(self):\n        return f\"Produto(nome='{self.nome}', preco={self.preco}, codigo='{self.codigo}')\"\n\nnotebook = Produto(\"Notebook Dell\", 2500.00, \"NB-001\")\nprint(notebook)       # Notebook Dell - R$ 2500.00\nprint(repr(notebook)) # Produto(nome='Notebook Dell', preco=2500.0, codigo='NB-001')\n```\n\n**Convenção importante:** Se você implementar apenas `__repr__`, ele será usado também quando `__str__` for necessário (mas não vice-versa)."
+        },
+        {
+          "sectionId": "section-04-instanciando",
+          "type": "text",
+          "title": "Instanciando Objetos",
+          "order": 4,
+          "durationMinutes": 3,
+          "content": "Para criar um objeto de uma classe em Python, é necessário realizar uma chamada ao nome da classe, como se ela fosse uma função, sendo que os argumentos passados para essa \"função\" são aqueles definidos no construtor da classe, quando houver.\n\n```python\npessoa1 = Pessoa(\"Maria\", 30)\npessoa2 = Pessoa(\"João\", 40)\n```\n\nNeste exemplo, instanciamos dois objetos da classe `Pessoa`, passando os valores dos atributos da classe como argumentos do construtor. Cada objeto possui seu próprio estado independente, ou seja, `pessoa1` tem nome \"Maria\" e idade 30, enquanto `pessoa2` tem nome \"João\" e idade 40.\n\nApós criar os objetos, podemos acessar seus atributos e chamar seus métodos usando a notação de ponto:\n\n```python\nprint(pessoa1.nome)        # Maria\npessoa1.falar(\"Olá!\")      # Maria diz: Olá!\n```"
+        },
+        {
+          "sectionId": "section-05-exercise-classes",
+          "type": "exercise",
+          "title": "Exercício: Criando uma Classe Completa",
+          "order": 5,
+          "durationMinutes": 8,
+          "problem": "Crie uma classe chamada `Retangulo` com um método `__init__` que inicialize a largura e a altura do retângulo. Implemente os métodos `area` (retorna a área), `perimetro` (retorna o perímetro), `__str__` (representação amigável) e `__repr__` (representação técnica). Crie uma instância e teste os métodos.",
+          "starterCode": "class Retangulo:\n    def __init__(self, largura, altura):\n        # Inicialize os atributos\n        pass\n    \n    def area(self):\n        # Retorne a área (largura * altura)\n        pass\n    \n    def perimetro(self):\n        # Retorne o perímetro (2 * (largura + altura))\n        pass\n    \n    def __str__(self):\n        # Retorne uma representação amigável\n        pass\n    \n    def __repr__(self):\n        # Retorne uma representação técnica\n        pass\n\n# Teste sua implementação\nret = Retangulo(5, 3)\nprint(ret)           # Esperado: Retangulo 5x3\nprint(repr(ret))     # Esperado: Retangulo(largura=5, altura=3)\nprint(ret.area())    # Esperado: 15\nprint(ret.perimetro()) # Esperado: 16",
+          "testCases": [
+            {
+              "input": "Retangulo(5, 3).area()",
+              "expectedOutput": "15"
+            },
+            {
+              "input": "Retangulo(5, 3).perimetro()",
+              "expectedOutput": "16"
+            },
+            {
+              "input": "str(Retangulo(4, 2))",
+              "expectedOutput": "Retangulo 4x2"
+            }
+          ],
+          "hints": [
+            "A área de um retângulo é calculada multiplicando largura por altura",
+            "O perímetro é a soma de todos os lados: 2 * (largura + altura)",
+            "Use f-strings para formatar as representações __str__ e __repr__"
+          ],
+          "solution": "class Retangulo:\n    def __init__(self, largura, altura):\n        self.largura = largura\n        self.altura = altura\n    \n    def area(self):\n        return self.largura * self.altura\n    \n    def perimetro(self):\n        return 2 * (self.largura + self.altura)\n    \n    def __str__(self):\n        return f\"Retangulo {self.largura}x{self.altura}\"\n    \n    def __repr__(self):\n        return f\"Retangulo(largura={self.largura}, altura={self.altura})\"\n\n# Teste\nret = Retangulo(5, 3)\nprint(ret)             # Retangulo 5x3\nprint(repr(ret))       # Retangulo(largura=5, altura=3)\nprint(ret.area())      # 15\nprint(ret.perimetro()) # 16"
+        },
+        {
+          "sectionId": "section-06-quiz-classes",
+          "type": "quiz",
+          "title": "Quiz: Classes em Python",
+          "order": 6,
+          "durationMinutes": 5,
+          "questions": [
+            {
+              "questionId": "q1",
+              "question": "Qual palavra-chave é usada para definir uma classe em Python?",
+              "type": "multiple_choice",
+              "options": [
+                "def",
+                "class",
+                "object",
+                "type"
+              ],
+              "correctAnswer": 1,
+              "explanation": "A palavra-chave 'class' é usada para definir uma classe em Python, seguida do nome da classe e dois pontos."
+            },
+            {
+              "questionId": "q2",
+              "question": "Qual método especial é executado automaticamente quando um objeto é criado?",
+              "type": "multiple_choice",
+              "options": [
+                "__del__",
+                "__str__",
+                "__init__",
+                "__new__"
+              ],
+              "correctAnswer": 2,
+              "explanation": "O método __init__ é o construtor da classe e é executado automaticamente quando um novo objeto é instanciado."
+            },
+            {
+              "questionId": "q3",
+              "question": "Se você implementar apenas __repr__ em uma classe, o que acontece quando você usa print() em um objeto dessa classe?",
+              "type": "multiple_choice",
+              "options": [
+                "Um erro é lançado",
+                "Nada é impresso",
+                "O método __repr__ é usado",
+                "O endereço de memória do objeto é impresso"
+              ],
+              "correctAnswer": 2,
+              "explanation": "Se __str__ não está definido, Python usa __repr__ como fallback para representação do objeto em print()."
+            },
+            {
+              "questionId": "q4",
+              "question": "O que o parâmetro 'self' representa em um método de classe?",
+              "type": "multiple_choice",
+              "options": [
+                "A classe em si",
+                "O objeto atual (instância)",
+                "O método sendo chamado",
+                "Uma variável global"
+              ],
+              "correctAnswer": 1,
+              "explanation": "O parâmetro 'self' representa a instância atual do objeto, permitindo acessar seus atributos e métodos."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "lessonId": "lesson-03-encapsulamento",
+      "title": "Encapsulamento em Python",
+      "order": 3,
+      "estimatedMinutes": 28,
+      "sections": [
+        {
+          "sectionId": "section-01-conceito-encapsulamento",
+          "type": "text",
+          "title": "Conceito de Encapsulamento",
+          "order": 1,
+          "durationMinutes": 5,
+          "content": "O encapsulamento é um conceito da POO que consiste em esconder os detalhes de implementação de uma classe e expor uma interface pública que seja necessária para acessar as funcionalidades dos objetos dessa classe. Em Python, podemos indicar a visibilidade dos atributos e métodos de uma classe utilizando um ou dois caracteres de sublinhado (`_` ou `__`) no início do nome do atributo ou método.\n\nÉ importante entender que Python adota uma filosofia diferente de linguagens como Java ou C++: **não existe verdadeira privacidade de membros em Python**. A linguagem segue o princípio \"somos todos adultos conscientes\" (*we are all consenting adults here*), confiando que os programadores respeitarão as convenções estabelecidas.\n\nQuando utilizamos apenas um caractere de sublinhado antes do nome de um membro (`_atributo`), estamos seguindo uma convenção que sinaliza: \"este membro é para uso interno da classe\". Não há restrição técnica alguma, mas essa convenção comunica claramente a intenção de que o membro não faz parte da interface pública da classe."
+        },
+        {
+          "sectionId": "section-02-name-mangling",
+          "type": "text",
+          "title": "Name Mangling com Duplo Sublinhado",
+          "order": 2,
+          "durationMinutes": 6,
+          "content": "Ao utilizar dois caracteres de sublinhado (`__atributo`), o interpretador Python aplica um mecanismo chamado *name mangling* (ofuscamento de nome). Esse recurso transforma o nome do atributo de `__atributo` para `_NomeDaClasse__atributo`.\n\nPorém, é fundamental compreender que o *name mangling* **não foi criado para implementar privacidade ou segurança**. Seu propósito real é evitar colisões acidentais de nomes em hierarquias de herança, permitindo que classes derivadas tenham atributos com o mesmo nome sem conflitos.\n\n```python\nclass Cliente:\n    def __init__(self, nome, idade, limite):\n        self.nome = nome\n        self.idade = idade\n        self.__limite = limite\n        \n    def comprar(self, valor):\n        if valor > self.__limite:\n            print(\"Compra não autorizada.\")\n        else:\n            print(\"Compra autorizada.\")\n```\n\nNeste exemplo, quando aplicamos o duplo sublinhado, o interpretador Python automaticamente transforma o nome `__limite` em `_Cliente__limite` através do mecanismo de *name mangling*."
+        },
+        {
+          "sectionId": "section-03-acessando-privados",
+          "type": "text",
+          "title": "Acessando Atributos com Name Mangling",
+          "order": 3,
+          "durationMinutes": 5,
+          "content": "Embora o atributo não possa ser acessado diretamente pelo nome original `__limite` de fora da classe, ele continua perfeitamente acessível através de seu nome transformado `_Cliente__limite`. Isso demonstra que o *name mangling* não é um mecanismo de segurança, mas sim uma ferramenta para organização de código.\n\n```python\ncliente = Cliente(\"Maria\", 30, 1000)\ncliente._Cliente__limite = 2000  # Acesso permitido\ncliente.comprar(1500)  # Compra autorizada\n```\n\nEsse tipo de acesso direto a atributos com *name mangling*, embora tecnicamente possível e até previsto pela linguagem, deve ser usado com cautela. Na prática, se você precisa acessar ou modificar frequentemente um atributo de fora da classe, isso geralmente indica que:\n\n1. O atributo deveria ser público (sem sublinhados)\n2. Você deveria criar métodos públicos (getters/setters)\n3. Você deveria usar propriedades para gerenciar esse acesso de forma controlada\n\nA convenção do duplo sublinhado serve principalmente para sinalizar \"este é um detalhe interno de implementação\"."
+        },
+        {
+          "sectionId": "section-04-exercise-encapsulamento",
+          "type": "exercise",
+          "title": "Exercício: Aplicando Encapsulamento",
+          "order": 4,
+          "durationMinutes": 8,
+          "problem": "Crie uma classe `ContaBancaria` com atributo privado `__saldo` (usando name mangling) e métodos para depositar, sacar e consultar o saldo. O método de saque deve validar se há saldo suficiente. Além disso, crie uma propriedade `saldo` que permita apenas leitura do valor (sem setter).",
+          "starterCode": "class ContaBancaria:\n    def __init__(self, titular, saldo_inicial=0):\n        self.titular = titular\n        # Defina o atributo privado __saldo\n        pass\n    \n    def depositar(self, valor):\n        # Adicione valor ao saldo\n        pass\n    \n    def sacar(self, valor):\n        # Subtraia valor do saldo (com validação)\n        pass\n    \n    @property\n    def saldo(self):\n        # Retorne o saldo (somente leitura)\n        pass\n\n# Teste\nconta = ContaBancaria(\"Maria\", 1000)\nprint(conta.saldo)      # 1000\nconta.depositar(500)\nprint(conta.saldo)      # 1500\nconta.sacar(200)\nprint(conta.saldo)      # 1300",
+          "testCases": [
+            {
+              "input": "ContaBancaria('Maria', 1000).saldo",
+              "expectedOutput": "1000"
+            },
+            {
+              "input": "c = ContaBancaria('João', 500); c.depositar(300); c.saldo",
+              "expectedOutput": "800"
+            },
+            {
+              "input": "c = ContaBancaria('Ana', 100); c.sacar(150)",
+              "expectedOutput": "Erro ou exceção (saldo insuficiente)"
+            }
+          ],
+          "hints": [
+            "Use self.__saldo para criar um atributo com name mangling",
+            "A propriedade @property permite definir um getter sem setter",
+            "Lance ValueError quando o saque for maior que o saldo disponível"
+          ],
+          "solution": "class ContaBancaria:\n    def __init__(self, titular, saldo_inicial=0):\n        self.titular = titular\n        self.__saldo = saldo_inicial\n    \n    def depositar(self, valor):\n        if valor > 0:\n            self.__saldo += valor\n    \n    def sacar(self, valor):\n        if valor > self.__saldo:\n            raise ValueError(\"Saldo insuficiente.\")\n        self.__saldo -= valor\n    \n    @property\n    def saldo(self):\n        return self.__saldo\n\n# Teste\nconta = ContaBancaria(\"Maria\", 1000)\nprint(conta.saldo)      # 1000\nconta.depositar(500)\nprint(conta.saldo)      # 1500\nconta.sacar(200)\nprint(conta.saldo)      # 1300"
+        },
+        {
+          "sectionId": "section-05-quiz-encapsulamento",
+          "type": "quiz",
+          "title": "Quiz: Encapsulamento em Python",
+          "order": 5,
+          "durationMinutes": 4,
+          "questions": [
+            {
+              "questionId": "q1",
+              "question": "Qual convenção indica que um atributo é para uso interno da classe em Python?",
+              "type": "multiple_choice",
+              "options": [
+                "Usar 'private' antes do nome",
+                "Usar um sublinhado no início (_atributo)",
+                "Usar 'protected' antes do nome",
+                "Colocar o atributo em maiúsculas"
+              ],
+              "correctAnswer": 1,
+              "explanation": "Em Python, um sublinhado no início do nome (_atributo) é a convenção para indicar que o membro é para uso interno."
+            },
+            {
+              "questionId": "q2",
+              "question": "O que acontece quando usamos dois sublinhados no início de um atributo (__atributo)?",
+              "type": "multiple_choice",
+              "options": [
+                "O atributo se torna completamente inacessível",
+                "O Python aplica name mangling, transformando o nome",
+                "O atributo é deletado automaticamente",
+                "Ocorre um erro de sintaxe"
+              ],
+              "correctAnswer": 1,
+              "explanation": "O Python aplica name mangling, transformando __atributo em _NomeDaClasse__atributo."
+            },
+            {
+              "questionId": "q3",
+              "question": "Qual é o principal propósito do name mangling em Python?",
+              "type": "multiple_choice",
+              "options": [
+                "Implementar segurança total dos dados",
+                "Evitar colisões de nomes em hierarquias de herança",
+                "Melhorar a performance do código",
+                "Criptografar os valores dos atributos"
+              ],
+              "correctAnswer": 1,
+              "explanation": "O name mangling foi criado para evitar colisões acidentais de nomes em hierarquias de herança, não para segurança."
+            },
+            {
+              "questionId": "q4",
+              "question": "Se uma classe Carro tem um atributo __velocidade, como ele pode ser acessado de fora da classe?",
+              "type": "multiple_choice",
+              "options": [
+                "carro.__velocidade",
+                "carro._Carro__velocidade",
+                "carro.velocidade",
+                "Não pode ser acessado de forma alguma"
+              ],
+              "correctAnswer": 1,
+              "explanation": "O atributo pode ser acessado usando o nome transformado pelo name mangling: _NomeDaClasse__atributo."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "lessonId": "lesson-04-heranca",
+      "title": "Herança em Python",
+      "order": 4,
+      "estimatedMinutes": 32,
+      "sections": [
+        {
+          "sectionId": "section-01-conceito-heranca",
+          "type": "text",
+          "title": "Conceito de Herança",
+          "order": 1,
+          "durationMinutes": 5,
+          "content": "A herança é o recurso que permite a uma classe herdar atributos e métodos de outra classe. Em Python, podemos utilizar a palavra-chave `class` seguida do nome da classe e do nome da superclasse (classe base) entre parênteses para definir uma subclasse derivada de uma superclasse.\n\n```python\nclass Pessoa:\n    def __init__(self, nome, idade):\n        self.nome = nome\n        self.idade = idade\n\n    def falar(self, mensagem):\n        print(f\"{self.nome} diz: {mensagem}\")\n        \nclass Funcionario(Pessoa):\n    def __init__(self, nome, idade, salario):\n        super().__init__(nome, idade)\n        self.salario = salario\n\n    def falar(self, mensagem):\n        print(f\"{self.nome} diz: {mensagem} Estou trabalhando!\")\n        \n    def trabalhar(self):\n        print(f\"{self.nome} está trabalhando.\")\n```\n\nNeste exemplo, a classe `Funcionario` herda da classe `Pessoa` e adiciona o atributo `salario` e os métodos `falar` e `trabalhar`. Como a classe ancestral já possui o método `falar`, dizemos que ele está sendo **sobrescrito** na subclasse."
+        },
+        {
+          "sectionId": "section-02-super",
+          "type": "text",
+          "title": "Usando super() para Chamar a Superclasse",
+          "order": 2,
+          "durationMinutes": 5,
+          "content": "A função `super()` permite acessar métodos e atributos da classe pai (superclasse) a partir da classe filha (subclasse). Isso é especialmente útil no construtor para inicializar atributos herdados.\n\n```python\nclass Funcionario(Pessoa):\n    def __init__(self, nome, idade, salario):\n        super().__init__(nome, idade)  # Chama o construtor da superclasse\n        self.salario = salario\n```\n\nO `super().__init__(nome, idade)` garante que os atributos `nome` e `idade` sejam inicializados corretamente pela classe `Pessoa`. Sem isso, esses atributos não existiriam no objeto `Funcionario`.\n\nA sobrescrita de métodos não é algo obrigatório, mas sim uma decisão de projeto que depende de uma análise do problema que está sendo resolvido pelo programa. Quando uma classe descendente precisa responder à mesma ação da classe ancestral de forma diferente, a sobrescrita é a solução adequada."
+        },
+        {
+          "sectionId": "section-03-heranca-multipla",
+          "type": "text",
+          "title": "Herança Múltipla",
+          "order": 3,
+          "durationMinutes": 6,
+          "content": "Em Python, é possível herdar de mais de uma classe, o que é chamado de **herança múltipla**. Para herdar de múltiplas classes, basta separar os nomes das classes ancestrais por vírgula.\n\n```python\nclass Pessoa:\n    def __init__(self, nome, idade):\n        self.nome = nome\n        self.idade = idade\n\n    def falar(self, mensagem):\n        print(f\"{self.nome} diz: {mensagem}\")\n\nclass Funcionario:\n    def __init__(self, nome, salario):\n        self.nome = nome\n        self.salario = salario\n\n    def falar(self, mensagem):\n        print(f\"{self.nome} diz: {mensagem}. Estou trabalhando.\")\n\nclass Gerente(Pessoa, Funcionario):\n    def __init__(self, nome, idade, salario, senha):\n        super().__init__(nome, idade)\n        self.salario = salario\n        self.senha = senha\n```\n\nUm problema que pode ocorrer é o conflito de nomes de membros das classes ancestrais. Quando duas ou mais classes ancestrais possuem atributos ou métodos com o mesmo nome, Python escolhe o método do **primeiro ancestral** na lista. Para acessar o método de outra classe ancestral, use: `NomeDaClasse.metodo(self)`."
+        },
+        {
+          "sectionId": "section-04-exercise-heranca",
+          "type": "exercise",
+          "title": "Exercício: Implementando Herança",
+          "order": 4,
+          "durationMinutes": 10,
+          "problem": "Crie uma classe base `Animal` com atributos `nome` e `idade`, e um método `emitir_som` que imprime 'Som genérico'. Crie duas subclasses: `Cachorro` (emite 'Au au!') e `Gato` (emite 'Miau!'). Cada subclasse deve sobrescrever o método `emitir_som`. Crie uma lista com animais de diferentes tipos e faça um laço para chamar `emitir_som` de cada um.",
+          "starterCode": "class Animal:\n    def __init__(self, nome, idade):\n        # Inicialize os atributos\n        pass\n    \n    def emitir_som(self):\n        # Implemente o som genérico\n        pass\n\nclass Cachorro(Animal):\n    def emitir_som(self):\n        # Sobrescreva para emitir 'Au au!'\n        pass\n\nclass Gato(Animal):\n    def emitir_som(self):\n        # Sobrescreva para emitir 'Miau!'\n        pass\n\n# Teste com polimorfismo\nanimais = [\n    # Crie instâncias de diferentes animais\n]\n\nfor animal in animais:\n    print(f\"{animal.nome}: \", end=\"\")\n    animal.emitir_som()",
+          "testCases": [
+            {
+              "input": "Cachorro('Rex', 3).emitir_som()",
+              "expectedOutput": "Au au!"
+            },
+            {
+              "input": "Gato('Mimi', 2).emitir_som()",
+              "expectedOutput": "Miau!"
+            },
+            {
+              "input": "Animal('Criatura', 1).emitir_som()",
+              "expectedOutput": "Som genérico"
+            }
+          ],
+          "hints": [
+            "Use super().__init__(nome, idade) no construtor das subclasses se precisar adicionar atributos",
+            "Sobrescreva o método emitir_som em cada subclasse com print() específico",
+            "A lista pode conter objetos de diferentes classes que herdam de Animal"
+          ],
+          "solution": "class Animal:\n    def __init__(self, nome, idade):\n        self.nome = nome\n        self.idade = idade\n    \n    def emitir_som(self):\n        print(\"Som genérico\")\n\nclass Cachorro(Animal):\n    def emitir_som(self):\n        print(\"Au au!\")\n\nclass Gato(Animal):\n    def emitir_som(self):\n        print(\"Miau!\")\n\n# Teste com polimorfismo\nanimais = [\n    Cachorro(\"Rex\", 3),\n    Gato(\"Mimi\", 2),\n    Animal(\"Criatura\", 1),\n    Cachorro(\"Bob\", 5)\n]\n\nfor animal in animais:\n    print(f\"{animal.nome}: \", end=\"\")\n    animal.emitir_som()"
+        },
+        {
+          "sectionId": "section-05-quiz-heranca",
+          "type": "quiz",
+          "title": "Quiz: Herança em Python",
+          "order": 5,
+          "durationMinutes": 6,
+          "questions": [
+            {
+              "questionId": "q1",
+              "question": "Como declaramos que uma classe Aluno herda de uma classe Pessoa em Python?",
+              "type": "multiple_choice",
+              "options": [
+                "class Aluno extends Pessoa:",
+                "class Aluno(Pessoa):",
+                "class Aluno inherits Pessoa:",
+                "class Aluno : Pessoa"
+              ],
+              "correctAnswer": 1,
+              "explanation": "Em Python, a herança é indicada colocando o nome da superclasse entre parênteses após o nome da subclasse."
+            },
+            {
+              "questionId": "q2",
+              "question": "Qual função é usada para chamar um método da superclasse?",
+              "type": "multiple_choice",
+              "options": [
+                "parent()",
+                "base()",
+                "super()",
+                "ancestor()"
+              ],
+              "correctAnswer": 2,
+              "explanation": "A função super() permite acessar métodos e atributos da superclasse a partir da subclasse."
+            },
+            {
+              "questionId": "q3",
+              "question": "Em herança múltipla, se duas classes pai têm um método com o mesmo nome, qual é usado por padrão?",
+              "type": "multiple_choice",
+              "options": [
+                "O da última classe na lista",
+                "O da primeira classe na lista",
+                "Ocorre um erro",
+                "Ambos são executados"
+              ],
+              "correctAnswer": 1,
+              "explanation": "Python usa a ordem de resolução de métodos (MRO), onde a primeira classe na lista de herança tem prioridade."
+            },
+            {
+              "questionId": "q4",
+              "question": "O que significa 'sobrescrever' um método?",
+              "type": "multiple_choice",
+              "options": [
+                "Deletar o método da superclasse",
+                "Renomear o método na subclasse",
+                "Redefinir o método na subclasse com comportamento diferente",
+                "Copiar o método da superclasse"
+              ],
+              "correctAnswer": 2,
+              "explanation": "Sobrescrever significa criar na subclasse um método com o mesmo nome da superclasse, mas com implementação diferente."
+            },
+            {
+              "questionId": "q5",
+              "question": "Python suporta herança múltipla?",
+              "type": "multiple_choice",
+              "options": [
+                "Não, apenas herança simples",
+                "Sim, uma classe pode herdar de múltiplas classes",
+                "Apenas com interfaces",
+                "Apenas em versões anteriores ao Python 3"
+              ],
+              "correctAnswer": 1,
+              "explanation": "Python suporta herança múltipla, permitindo que uma classe herde de várias classes ao mesmo tempo."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "lessonId": "lesson-05-polimorfismo",
+      "title": "Polimorfismo em Python",
+      "order": 5,
+      "estimatedMinutes": 25,
+      "sections": [
+        {
+          "sectionId": "section-01-conceito-polimorfismo",
+          "type": "text",
+          "title": "Conceito de Polimorfismo",
+          "order": 1,
+          "durationMinutes": 5,
+          "content": "O polimorfismo é a capacidade de um objeto ser tratado como uma instância de qualquer uma de suas classes ancestrais. Em Python, isso é possível quando as classes ancestrais e descendentes possuem métodos com a mesma assinatura (nome e quantidade de parâmetros).\n\n```python\npessoa1 = Pessoa(\"Maria\", 30)\nfuncionario1 = Funcionario(\"João\", 40, 3000)\n\npessoa1.falar(\"Bom dia!\")      # Maria diz: Bom dia!\nfuncionario1.falar(\"Bom dia!\") # João diz: Bom dia! Estou trabalhando.\n```\n\nNeste exemplo, instanciamos um objeto da classe `Pessoa` e outro da classe `Funcionario`. Quando chamamos o método `falar` de cada objeto passando a mesma mensagem, os objetos se comportam de maneiras diferentes de acordo com sua classe específica.\n\nO polimorfismo torna o código mais genérico e flexível, permitindo que diferentes objetos respondam de forma apropriada à mesma chamada de método, baseado em sua implementação específica."
+        },
+        {
+          "sectionId": "section-02-colecoes-objetos",
+          "type": "text",
+          "title": "Coleções de Objetos e Polimorfismo",
+          "order": 2,
+          "durationMinutes": 5,
+          "content": "Em Python, é possível criar coleções de objetos utilizando listas, tuplas, dicionários e conjuntos. É muito comum uma lista conter objetos de tipos diferentes, mas que possuem um ancestral comum. Percorrer essa lista e invocar um método da classe ancestral é um exemplo clássico de polimorfismo.\n\n```python\npessoas = [\n    Pessoa(\"Maria\", 30),\n    Funcionario(\"João\", 40, 2000),\n    Pessoa(\"Pedro\", 25)\n]\n\nfor pessoa in pessoas:\n    print(pessoa.nome, pessoa.idade)\n    pessoa.falar(\"Bom dia!\")\n```\n\nObserve que o método `falar` está definido nas duas classes com comportamentos diferentes. Quando o método é chamado para objetos da classe `Pessoa`, ele imprime apenas a mensagem. Quando chamado para objetos da classe `Funcionario`, adiciona a informação \"Estou trabalhando!\". Temos vários objetos \"recebendo o mesmo comando\" (`falar`), porém cada objeto se comporta à sua maneira, de acordo com seu tipo."
+        },
+        {
+          "sectionId": "section-03-duck-typing",
+          "type": "text",
+          "title": "Duck Typing em Python",
+          "order": 3,
+          "durationMinutes": 5,
+          "content": "Python usa o conceito de *duck typing*: \"Se anda como um pato e faz quack como um pato, então é um pato\". Isso significa que o tipo de um objeto é menos importante do que os métodos e atributos que ele possui.\n\n```python\nclass Pato:\n    def fazer_som(self):\n        print(\"Quack!\")\n\nclass Pessoa:\n    def fazer_som(self):\n        print(\"Olá!\")\n\nclass Carro:\n    def fazer_som(self):\n        print(\"Vrum!\")\n\ndef emitir_som(objeto):\n    objeto.fazer_som()\n\n# Todos funcionam, independente da classe\nemitir_som(Pato())    # Quack!\nemitir_som(Pessoa())  # Olá!\nemitir_som(Carro())   # Vrum!\n```\n\nNeste exemplo, a função `emitir_som` não se importa com o tipo do objeto, apenas exige que ele tenha o método `fazer_som`. Isso permite grande flexibilidade e reutilização de código, pois diferentes classes podem ser usadas de forma intercambiável desde que implementem a interface esperada."
+        },
+        {
+          "sectionId": "section-04-exercise-polimorfismo",
+          "type": "exercise",
+          "title": "Exercício: Aplicando Polimorfismo",
+          "order": 4,
+          "durationMinutes": 8,
+          "problem": "Crie uma hierarquia de formas geométricas com uma classe base `Forma` e subclasses `Circulo`, `Retangulo` e `Triangulo`. Cada forma deve ter um método `area()` que retorna sua área. Crie uma função `calcular_area_total(formas)` que recebe uma lista de formas e retorna a soma de todas as áreas usando polimorfismo.",
+          "starterCode": "import math\n\nclass Forma:\n    def area(self):\n        # Método base (pode lançar NotImplementedError)\n        pass\n\nclass Circulo(Forma):\n    def __init__(self, raio):\n        # Inicialize o raio\n        pass\n    \n    def area(self):\n        # Retorne a área: pi * raio^2\n        pass\n\nclass Retangulo(Forma):\n    def __init__(self, largura, altura):\n        # Inicialize largura e altura\n        pass\n    \n    def area(self):\n        # Retorne a área: largura * altura\n        pass\n\nclass Triangulo(Forma):\n    def __init__(self, base, altura):\n        # Inicialize base e altura\n        pass\n    \n    def area(self):\n        # Retorne a área: (base * altura) / 2\n        pass\n\ndef calcular_area_total(formas):\n    # Some as áreas de todas as formas\n    pass\n\n# Teste\nformas = [\n    Circulo(5),\n    Retangulo(4, 3),\n    Triangulo(6, 4)\n]\nprint(f\"Área total: {calcular_area_total(formas):.2f}\")",
+          "testCases": [
+            {
+              "input": "Circulo(5).area()",
+              "expectedOutput": "78.54 (aproximadamente)"
+            },
+            {
+              "input": "Retangulo(4, 3).area()",
+              "expectedOutput": "12"
+            },
+            {
+              "input": "calcular_area_total([Circulo(1), Retangulo(2, 2)])",
+              "expectedOutput": "7.14 (aproximadamente)"
+            }
+          ],
+          "hints": [
+            "Use math.pi para o valor de pi no cálculo da área do círculo",
+            "A função calcular_area_total deve iterar pela lista e somar os resultados de area()",
+            "O polimorfismo permite chamar area() sem saber o tipo específico da forma"
+          ],
+          "solution": "import math\n\nclass Forma:\n    def area(self):\n        raise NotImplementedError(\"Subclasse deve implementar area()\")\n\nclass Circulo(Forma):\n    def __init__(self, raio):\n        self.raio = raio\n    \n    def area(self):\n        return math.pi * self.raio ** 2\n\nclass Retangulo(Forma):\n    def __init__(self, largura, altura):\n        self.largura = largura\n        self.altura = altura\n    \n    def area(self):\n        return self.largura * self.altura\n\nclass Triangulo(Forma):\n    def __init__(self, base, altura):\n        self.base = base\n        self.altura = altura\n    \n    def area(self):\n        return (self.base * self.altura) / 2\n\ndef calcular_area_total(formas):\n    total = 0\n    for forma in formas:\n        total += forma.area()\n    return total\n\n# Teste\nformas = [\n    Circulo(5),\n    Retangulo(4, 3),\n    Triangulo(6, 4)\n]\nprint(f\"Área total: {calcular_area_total(formas):.2f}\")"
+        },
+        {
+          "sectionId": "section-05-quiz-polimorfismo",
+          "type": "quiz",
+          "title": "Quiz: Polimorfismo em Python",
+          "order": 5,
+          "durationMinutes": 4,
+          "questions": [
+            {
+              "questionId": "q1",
+              "question": "O que é polimorfismo em POO?",
+              "type": "multiple_choice",
+              "options": [
+                "A capacidade de uma classe herdar de outra",
+                "A capacidade de um objeto se comportar de diferentes formas",
+                "A capacidade de esconder dados internos",
+                "A capacidade de criar múltiplas instâncias"
+              ],
+              "correctAnswer": 1,
+              "explanation": "Polimorfismo permite que objetos de diferentes classes respondam de formas diferentes à mesma chamada de método."
+            },
+            {
+              "questionId": "q2",
+              "question": "O que é 'duck typing' em Python?",
+              "type": "multiple_choice",
+              "options": [
+                "Um tipo especial de classe",
+                "Um método de conversão de tipos",
+                "O conceito de que o tipo importa menos que os métodos disponíveis",
+                "Uma técnica de otimização"
+              ],
+              "correctAnswer": 2,
+              "explanation": "Duck typing significa que se um objeto tem os métodos/atributos esperados, ele pode ser usado independente de seu tipo."
+            },
+            {
+              "questionId": "q3",
+              "question": "Qual é a vantagem de usar polimorfismo com coleções de objetos?",
+              "type": "multiple_choice",
+              "options": [
+                "Aumenta a segurança do código",
+                "Permite tratar objetos diferentes de forma uniforme",
+                "Melhora a performance do programa",
+                "Reduz o uso de memória"
+              ],
+              "correctAnswer": 1,
+              "explanation": "O polimorfismo permite iterar por uma coleção de objetos diferentes e chamar o mesmo método em todos, cada um respondendo apropriadamente."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "lessonId": "lesson-06-atributos-metodos-classe",
+      "title": "Atributos e Métodos de Classe",
+      "order": 6,
+      "estimatedMinutes": 30,
+      "sections": [
+        {
+          "sectionId": "section-01-atributos-classe",
+          "type": "text",
+          "title": "Atributos de Classe vs Atributos de Instância",
+          "order": 1,
+          "durationMinutes": 5,
+          "content": "Em Python, é possível definir atributos e métodos que pertencem à classe em si, em vez de pertencerem a cada objeto da classe. Esses são chamados de **atributos e métodos de classe**. Eles são úteis quando desejamos dados e comportamentos relacionados à classe como um todo.\n\n```python\nclass Pessoa:\n    contador = 0  # Atributo de classe\n    \n    def __init__(self, nome, idade):\n        self.nome = nome        # Atributo de instância\n        self.idade = idade      # Atributo de instância\n        Pessoa.contador += 1    # Incrementa o contador da classe\n\np1 = Pessoa(\"Maria\", 30)\np2 = Pessoa(\"João\", 40)\nprint(Pessoa.contador)  # 2\n```\n\nO atributo `contador` pertence à classe `Pessoa`, não a cada instância individual. Quando criamos novos objetos, o contador é incrementado e o valor é compartilhado entre todas as instâncias."
+        },
+        {
+          "sectionId": "section-02-classmethod",
+          "type": "text",
+          "title": "Métodos de Classe (@classmethod)",
+          "order": 2,
+          "durationMinutes": 6,
+          "content": "Para definir um **método de classe**, utilizamos o decorador `@classmethod` e o termo `cls` como primeiro parâmetro (em vez de `self`). Métodos de classe têm acesso à classe, mas não a uma instância específica.\n\n```python\nclass Pessoa:\n    contador = 0\n    \n    def __init__(self, nome, idade):\n        self.nome = nome\n        self.idade = idade\n        Pessoa.contador += 1\n\n    @classmethod\n    def contar(cls):\n        print(f\"Foram criados {cls.contador} objetos da classe {cls.__name__}.\")\n    \n    @classmethod\n    def criar_a_partir_nascimento(cls, nome, ano_nascimento):\n        from datetime import date\n        idade = date.today().year - ano_nascimento\n        return cls(nome, idade)  # Cria nova instância\n\n# Usando método factory\npessoa = Pessoa.criar_a_partir_nascimento(\"Carlos\", 2000)\nPessoa.contar()  # Foram criados 1 objetos da classe Pessoa.\n```\n\nMétodos de classe são frequentemente usados como **métodos factory** - formas alternativas de criar objetos."
+        },
+        {
+          "sectionId": "section-03-staticmethod",
+          "type": "text",
+          "title": "Métodos Estáticos (@staticmethod)",
+          "order": 3,
+          "durationMinutes": 5,
+          "content": "**Métodos estáticos** não recebem automaticamente nem a instância (`self`) nem a classe (`cls`) como parâmetro. São como funções normais agrupadas dentro da classe por organização lógica.\n\n```python\nclass Pessoa:\n    def __init__(self, nome, idade):\n        self.nome = nome\n        self.idade = idade\n\n    @staticmethod\n    def eh_maior_de_idade(idade):\n        return idade >= 18\n\n    def mostrar_dados(self):\n        status = \"maior\" if Pessoa.eh_maior_de_idade(self.idade) else \"menor\"\n        print(f\"{self.nome} tem {self.idade} anos e é {status} de idade.\")\n\n# Usando método estático diretamente da classe\nprint(Pessoa.eh_maior_de_idade(16))  # False\nprint(Pessoa.eh_maior_de_idade(21))  # True\n```\n\n**Quando usar cada tipo:**\n- `@classmethod`: Métodos factory, acessar atributos de classe\n- `@staticmethod`: Funções utilitárias relacionadas à classe que não precisam de acesso à classe ou instância\n- Métodos de instância (com `self`): Quando precisa acessar/modificar atributos da instância"
+        },
+        {
+          "sectionId": "section-04-exercise-class-methods",
+          "type": "exercise",
+          "title": "Exercício: Métodos de Classe e Estáticos",
+          "order": 4,
+          "durationMinutes": 10,
+          "problem": "Crie uma classe `Produto` com: atributo de classe `total_produtos` (contador), método estático `validar_preco(preco)` que retorna True se preco > 0, método de classe `criar_de_csv(linha_csv)` que cria um produto a partir de uma string 'nome,preco'. O construtor deve incrementar o contador e validar o preço.",
+          "starterCode": "class Produto:\n    total_produtos = 0\n    \n    def __init__(self, nome, preco):\n        # Valide o preço e inicialize os atributos\n        # Incremente o contador\n        pass\n    \n    @staticmethod\n    def validar_preco(preco):\n        # Retorne True se preco > 0\n        pass\n    \n    @classmethod\n    def criar_de_csv(cls, linha_csv):\n        # Parse a linha CSV e crie um novo produto\n        # Formato: \"nome,preco\"\n        pass\n    \n    @classmethod\n    def total_criados(cls):\n        # Retorne o total de produtos criados\n        pass\n\n# Teste\np1 = Produto(\"Notebook\", 2500)\np2 = Produto.criar_de_csv(\"Mouse,45.90\")\nprint(Produto.total_criados())  # 2\nprint(Produto.validar_preco(-10))  # False",
+          "testCases": [
+            {
+              "input": "Produto.validar_preco(100)",
+              "expectedOutput": "True"
+            },
+            {
+              "input": "Produto.validar_preco(-5)",
+              "expectedOutput": "False"
+            },
+            {
+              "input": "Produto.criar_de_csv('Teclado,89.90').nome",
+              "expectedOutput": "Teclado"
+            }
+          ],
+          "hints": [
+            "Use cls(nome, preco) dentro do classmethod para criar uma nova instância",
+            "Use split(',') para separar os valores da string CSV",
+            "Converta o preço para float após extrair da string"
+          ],
+          "solution": "class Produto:\n    total_produtos = 0\n    \n    def __init__(self, nome, preco):\n        if not Produto.validar_preco(preco):\n            raise ValueError(\"Preço deve ser positivo\")\n        self.nome = nome\n        self.preco = preco\n        Produto.total_produtos += 1\n    \n    @staticmethod\n    def validar_preco(preco):\n        return preco > 0\n    \n    @classmethod\n    def criar_de_csv(cls, linha_csv):\n        nome, preco = linha_csv.split(',')\n        return cls(nome, float(preco))\n    \n    @classmethod\n    def total_criados(cls):\n        return cls.total_produtos\n\n# Teste\np1 = Produto(\"Notebook\", 2500)\np2 = Produto.criar_de_csv(\"Mouse,45.90\")\nprint(Produto.total_criados())  # 2\nprint(Produto.validar_preco(-10))  # False"
+        },
+        {
+          "sectionId": "section-05-quiz-class-methods",
+          "type": "quiz",
+          "title": "Quiz: Atributos e Métodos de Classe",
+          "order": 5,
+          "durationMinutes": 4,
+          "questions": [
+            {
+              "questionId": "q1",
+              "question": "Qual é a diferença entre um atributo de instância e um atributo de classe?",
+              "type": "multiple_choice",
+              "options": [
+                "Não há diferença",
+                "Atributo de classe é compartilhado entre todas as instâncias",
+                "Atributo de instância é acessível apenas dentro da classe",
+                "Atributo de classe só pode ser lido, não modificado"
+              ],
+              "correctAnswer": 1,
+              "explanation": "Atributos de classe pertencem à classe e são compartilhados por todas as instâncias, enquanto atributos de instância são únicos para cada objeto."
+            },
+            {
+              "questionId": "q2",
+              "question": "Qual decorador é usado para definir um método de classe?",
+              "type": "multiple_choice",
+              "options": [
+                "@static",
+                "@classmethod",
+                "@method",
+                "@class"
+              ],
+              "correctAnswer": 1,
+              "explanation": "O decorador @classmethod é usado para definir métodos que recebem a classe (cls) como primeiro parâmetro."
+            },
+            {
+              "questionId": "q3",
+              "question": "Qual é uma diferença entre @classmethod e @staticmethod?",
+              "type": "multiple_choice",
+              "options": [
+                "@staticmethod recebe self automaticamente",
+                "@classmethod recebe cls automaticamente, @staticmethod não recebe nenhum parâmetro especial",
+                "Não há diferença",
+                "@staticmethod só pode ser usado em classes abstratas"
+              ],
+              "correctAnswer": 1,
+              "explanation": "@classmethod recebe a classe (cls) como primeiro parâmetro, enquanto @staticmethod não recebe nenhum parâmetro automático."
+            },
+            {
+              "questionId": "q4",
+              "question": "Quando é recomendado usar @staticmethod?",
+              "type": "multiple_choice",
+              "options": [
+                "Quando precisa acessar atributos de instância",
+                "Quando precisa criar novas instâncias",
+                "Quando a função é utilitária e não precisa de acesso à classe ou instância",
+                "Quando precisa modificar atributos de classe"
+              ],
+              "correctAnswer": 2,
+              "explanation": "@staticmethod é ideal para funções utilitárias relacionadas à classe que não precisam acessar dados da classe ou instância."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "lessonId": "lesson-07-propriedades",
+      "title": "Propriedades em Python",
+      "order": 7,
+      "estimatedMinutes": 25,
+      "sections": [
+        {
+          "sectionId": "section-01-conceito-propriedades",
+          "type": "text",
+          "title": "O que são Propriedades",
+          "order": 1,
+          "durationMinutes": 5,
+          "content": "Propriedades permitem controlar o acesso aos atributos de uma classe de forma mais orgânica, definindo regras sobre como os valores são lidos e modificados. Isso permite adicionar lógica para validação de dados durante a leitura e modificação de atributos.\n\nAs propriedades em Python são implementadas utilizando **decoradores**. Os decoradores mais comuns são `@property` (para leitura) e `@atributo.setter` (para modificação).\n\n```python\nclass Circulo:\n    def __init__(self, raio):\n        self._raio = raio  # Atributo \"protegido\"\n\n    @property\n    def raio(self):\n        return self._raio\n\n    @raio.setter\n    def raio(self, valor):\n        if valor < 0:\n            raise ValueError(\"O raio não pode ser negativo.\")\n        self._raio = valor\n```\n\nNo exemplo, o decorador `@property` define a função `raio` como uma propriedade de leitura. O decorador `@raio.setter` define a função como modificador da propriedade, permitindo validação antes da atribuição."
+        },
+        {
+          "sectionId": "section-02-usando-propriedades",
+          "type": "text",
+          "title": "Acessando e Modificando Propriedades",
+          "order": 2,
+          "durationMinutes": 4,
+          "content": "Uma vez que uma propriedade seja definida, sempre que um valor for atribuído a essa propriedade, o método `setter` será usado. Por outro lado, sempre que a propriedade for lida, o método decorado com `@property` será usado.\n\n```python\nbola_futebol = Circulo(0.3)\nbola_futebol.raio = 0.35  # Chama o setter (valida e atribui)\nprint(bola_futebol.raio)  # Chama o getter (retorna o valor)\n\n# Tentativa de atribuir valor inválido\ntry:\n    bola_futebol.raio = -1  # Lança ValueError\nexcept ValueError as e:\n    print(e)  # O raio não pode ser negativo.\n```\n\nCom as propriedades, você pode controlar a leitura e a escrita nos atributos de suas classes e garantir a integridade dos dados. Trata-se de uma forma de encapsulamento que visa proteger os atributos para que eles não armazenem valores que não façam sentido no contexto do problema."
+        },
+        {
+          "sectionId": "section-03-propriedades-calculadas",
+          "type": "text",
+          "title": "Propriedades Calculadas (Somente Leitura)",
+          "order": 3,
+          "durationMinutes": 4,
+          "content": "Propriedades também podem ser usadas para criar atributos calculados, que não armazenam um valor diretamente, mas o calculam quando acessados. Basta definir apenas o `@property` sem o `setter`.\n\n```python\nimport math\n\nclass Circulo:\n    def __init__(self, raio):\n        self._raio = raio\n\n    @property\n    def raio(self):\n        return self._raio\n\n    @raio.setter\n    def raio(self, valor):\n        if valor < 0:\n            raise ValueError(\"O raio não pode ser negativo.\")\n        self._raio = valor\n\n    @property\n    def area(self):  # Propriedade calculada (somente leitura)\n        return math.pi * self._raio ** 2\n\n    @property\n    def perimetro(self):  # Propriedade calculada (somente leitura)\n        return 2 * math.pi * self._raio\n\nc = Circulo(5)\nprint(c.area)       # 78.53981633974483\nprint(c.perimetro)  # 31.41592653589793\n```\n\nAs propriedades `area` e `perimetro` são calculadas dinamicamente a partir do raio, garantindo que sempre reflitam o valor atual."
+        },
+        {
+          "sectionId": "section-04-exercise-propriedades",
+          "type": "exercise",
+          "title": "Exercício: Implementando Propriedades",
+          "order": 4,
+          "durationMinutes": 8,
+          "problem": "Crie uma classe `Temperatura` que armazena um valor em Celsius. Implemente propriedades para: `celsius` (leitura/escrita com validação: >= -273.15), `fahrenheit` (leitura/escrita, convertendo de/para Celsius), e `kelvin` (somente leitura). Fórmulas: F = C * 9/5 + 32, K = C + 273.15",
+          "starterCode": "class Temperatura:\n    def __init__(self, celsius):\n        # Inicialize usando a propriedade para validar\n        pass\n    \n    @property\n    def celsius(self):\n        # Retorne o valor em Celsius\n        pass\n    \n    @celsius.setter\n    def celsius(self, valor):\n        # Valide (>= -273.15) e atribua\n        pass\n    \n    @property\n    def fahrenheit(self):\n        # Converta Celsius para Fahrenheit\n        pass\n    \n    @fahrenheit.setter\n    def fahrenheit(self, valor):\n        # Converta Fahrenheit para Celsius e atribua\n        pass\n    \n    @property\n    def kelvin(self):\n        # Converta Celsius para Kelvin (somente leitura)\n        pass\n\n# Teste\nt = Temperatura(25)\nprint(f\"Celsius: {t.celsius}\")      # 25\nprint(f\"Fahrenheit: {t.fahrenheit}\") # 77.0\nprint(f\"Kelvin: {t.kelvin}\")        # 298.15\n\nt.fahrenheit = 32\nprint(f\"Celsius: {t.celsius}\")      # 0.0",
+          "testCases": [
+            {
+              "input": "Temperatura(100).fahrenheit",
+              "expectedOutput": "212.0"
+            },
+            {
+              "input": "Temperatura(0).kelvin",
+              "expectedOutput": "273.15"
+            },
+            {
+              "input": "t = Temperatura(0); t.fahrenheit = 212; t.celsius",
+              "expectedOutput": "100.0"
+            }
+          ],
+          "hints": [
+            "Use self.celsius = celsius no __init__ para aproveitar a validação",
+            "Para converter F para C: (F - 32) * 5/9",
+            "O zero absoluto é -273.15 Celsius, valores abaixo disso são fisicamente impossíveis"
+          ],
+          "solution": "class Temperatura:\n    def __init__(self, celsius):\n        self.celsius = celsius  # Usa o setter para validar\n    \n    @property\n    def celsius(self):\n        return self._celsius\n    \n    @celsius.setter\n    def celsius(self, valor):\n        if valor < -273.15:\n            raise ValueError(\"Temperatura abaixo do zero absoluto\")\n        self._celsius = valor\n    \n    @property\n    def fahrenheit(self):\n        return self._celsius * 9/5 + 32\n    \n    @fahrenheit.setter\n    def fahrenheit(self, valor):\n        self.celsius = (valor - 32) * 5/9\n    \n    @property\n    def kelvin(self):\n        return self._celsius + 273.15\n\n# Teste\nt = Temperatura(25)\nprint(f\"Celsius: {t.celsius}\")      # 25\nprint(f\"Fahrenheit: {t.fahrenheit}\") # 77.0\nprint(f\"Kelvin: {t.kelvin}\")        # 298.15\n\nt.fahrenheit = 32\nprint(f\"Celsius: {t.celsius}\")      # 0.0"
+        },
+        {
+          "sectionId": "section-05-quiz-propriedades",
+          "type": "quiz",
+          "title": "Quiz: Propriedades em Python",
+          "order": 5,
+          "durationMinutes": 4,
+          "questions": [
+            {
+              "questionId": "q1",
+              "question": "Qual decorador é usado para criar uma propriedade de leitura em Python?",
+              "type": "multiple_choice",
+              "options": [
+                "@getter",
+                "@property",
+                "@read",
+                "@attr"
+              ],
+              "correctAnswer": 1,
+              "explanation": "O decorador @property é usado para definir um método como uma propriedade de leitura."
+            },
+            {
+              "questionId": "q2",
+              "question": "Se uma propriedade chamada 'nome' precisa de um setter, qual decorador é usado?",
+              "type": "multiple_choice",
+              "options": [
+                "@setter.nome",
+                "@nome.setter",
+                "@property.setter",
+                "@set_nome"
+              ],
+              "correctAnswer": 1,
+              "explanation": "O setter de uma propriedade usa o decorador @nome_da_propriedade.setter."
+            },
+            {
+              "questionId": "q3",
+              "question": "Qual é a principal vantagem de usar propriedades?",
+              "type": "multiple_choice",
+              "options": [
+                "Melhorar a performance do código",
+                "Permitir validação e lógica ao acessar/modificar atributos",
+                "Reduzir o tamanho do código",
+                "Permitir herança múltipla"
+              ],
+              "correctAnswer": 1,
+              "explanation": "Propriedades permitem adicionar validação e lógica customizada ao acessar ou modificar atributos, mantendo a sintaxe simples."
+            },
+            {
+              "questionId": "q4",
+              "question": "O que acontece se você tentar atribuir um valor a uma propriedade que não tem setter?",
+              "type": "multiple_choice",
+              "options": [
+                "O valor é atribuído normalmente",
+                "Um AttributeError é lançado",
+                "O valor é ignorado silenciosamente",
+                "O programa trava"
+              ],
+              "correctAnswer": 1,
+              "explanation": "Tentar atribuir um valor a uma propriedade somente leitura (sem setter) resulta em um AttributeError."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "lessonId": "lesson-08-tipos-enumerados",
+      "title": "Tipos Enumerados (Enum)",
+      "order": 8,
+      "estimatedMinutes": 20,
+      "sections": [
+        {
+          "sectionId": "section-01-conceito-enum",
+          "type": "text",
+          "title": "O que são Tipos Enumerados",
+          "order": 1,
+          "durationMinutes": 4,
+          "content": "Os tipos enumerados, também conhecidos como *enums*, permitem a definição de conjuntos nomeados de constantes. Eles são especialmente valiosos para melhorar a legibilidade e a manutenção do código, pois permitem usar nomes simbólicos ao invés de valores literais.\n\nEm Python, tipos enumerados são implementados pelo módulo `enum`. A criação de um tipo enumerado é feita através da subclasse `Enum`.\n\n```python\nfrom enum import Enum\n\nclass Cor(Enum):\n    VERMELHO = 1\n    VERDE = 2\n    AZUL = 3\n\ncor_favorita = Cor.AZUL\nprint(cor_favorita)       # Cor.AZUL\nprint(cor_favorita.name)  # AZUL\nprint(cor_favorita.value) # 3\n```\n\nCada membro do tipo enumerado é uma constante única e imutável. O acesso aos membros é feito pelo nome, e cada membro tem as propriedades `name` (nome) e `value` (valor associado)."
+        },
+        {
+          "sectionId": "section-02-usos-enum",
+          "type": "text",
+          "title": "Casos de Uso para Enums",
+          "order": 2,
+          "durationMinutes": 4,
+          "content": "Tipos enumerados são úteis para representar um conjunto fixo de constantes de forma clara e concisa. Exemplos comuns incluem:\n\n- Dias da semana\n- Direções (Norte, Sul, Leste, Oeste)\n- Estados de uma máquina ou processo\n- Níveis de prioridade\n- Status de pedidos\n\n```python\nfrom enum import Enum\n\nclass DiaSemana(Enum):\n    SEGUNDA = 1\n    TERCA = 2\n    QUARTA = 3\n    QUINTA = 4\n    SEXTA = 5\n    SABADO = 6\n    DOMINGO = 7\n\nclass StatusPedido(Enum):\n    PENDENTE = \"pendente\"\n    PROCESSANDO = \"processando\"\n    ENVIADO = \"enviado\"\n    ENTREGUE = \"entregue\"\n    CANCELADO = \"cancelado\"\n\npedido_status = StatusPedido.PROCESSANDO\nprint(f\"Status: {pedido_status.value}\")  # Status: processando\n```\n\nEnums ajudam a prevenir erros que podem ocorrer ao usar valores literais diretamente no código, proporcionando maior segurança e facilidade na manutenção."
+        },
+        {
+          "sectionId": "section-03-comparacao-enum",
+          "type": "text",
+          "title": "Comparando e Iterando Enums",
+          "order": 3,
+          "durationMinutes": 4,
+          "content": "Enums podem ser comparados usando `==` ou `is`, e você pode iterar sobre todos os membros de um enum.\n\n```python\nfrom enum import Enum\n\nclass Prioridade(Enum):\n    BAIXA = 1\n    MEDIA = 2\n    ALTA = 3\n    CRITICA = 4\n\n# Comparação\ntarefa_prioridade = Prioridade.ALTA\nif tarefa_prioridade == Prioridade.CRITICA:\n    print(\"Tarefa urgente!\")\nelif tarefa_prioridade == Prioridade.ALTA:\n    print(\"Tarefa importante\")\n\n# Iteração\nprint(\"Todos os níveis de prioridade:\")\nfor p in Prioridade:\n    print(f\"  {p.name}: {p.value}\")\n\n# Acesso por valor\nprioridade = Prioridade(2)  # Retorna Prioridade.MEDIA\nprint(prioridade)  # Prioridade.MEDIA\n\n# Acesso por nome\nprioridade = Prioridade['ALTA']  # Retorna Prioridade.ALTA\nprint(prioridade)  # Prioridade.ALTA\n```\n\nEnums são imutáveis, o que significa que você não pode modificar seus valores após a definição, garantindo consistência no código."
+        },
+        {
+          "sectionId": "section-04-exercise-enum",
+          "type": "exercise",
+          "title": "Exercício: Usando Enums",
+          "order": 4,
+          "durationMinutes": 6,
+          "problem": "Crie um enum `EstadoPedido` com estados: NOVO, CONFIRMADO, EM_PREPARO, ENVIADO, ENTREGUE, CANCELADO. Crie uma classe `Pedido` que use esse enum para gerenciar o estado. Implemente um método `avancar_estado()` que move o pedido para o próximo estado (exceto se for CANCELADO ou ENTREGUE).",
+          "starterCode": "from enum import Enum\n\nclass EstadoPedido(Enum):\n    # Defina os estados\n    pass\n\nclass Pedido:\n    def __init__(self, numero):\n        self.numero = numero\n        self.estado = EstadoPedido.NOVO\n    \n    def avancar_estado(self):\n        # Avance para o próximo estado\n        # Não avance se for CANCELADO ou ENTREGUE\n        pass\n    \n    def cancelar(self):\n        # Mude o estado para CANCELADO\n        pass\n    \n    def __str__(self):\n        return f\"Pedido {self.numero}: {self.estado.name}\"\n\n# Teste\np = Pedido(\"001\")\nprint(p)           # Pedido 001: NOVO\np.avancar_estado()\nprint(p)           # Pedido 001: CONFIRMADO\np.avancar_estado()\nprint(p)           # Pedido 001: EM_PREPARO",
+          "testCases": [
+            {
+              "input": "Pedido('001').estado",
+              "expectedOutput": "EstadoPedido.NOVO"
+            },
+            {
+              "input": "p = Pedido('001'); p.avancar_estado(); p.estado.name",
+              "expectedOutput": "CONFIRMADO"
+            },
+            {
+              "input": "p = Pedido('001'); p.cancelar(); p.estado",
+              "expectedOutput": "EstadoPedido.CANCELADO"
+            }
+          ],
+          "hints": [
+            "Use valores numéricos sequenciais para facilitar a progressão de estados",
+            "Você pode obter o próximo estado usando EstadoPedido(self.estado.value + 1)",
+            "Verifique se o estado atual permite avanço antes de tentar avançar"
+          ],
+          "solution": "from enum import Enum\n\nclass EstadoPedido(Enum):\n    NOVO = 1\n    CONFIRMADO = 2\n    EM_PREPARO = 3\n    ENVIADO = 4\n    ENTREGUE = 5\n    CANCELADO = 6\n\nclass Pedido:\n    def __init__(self, numero):\n        self.numero = numero\n        self.estado = EstadoPedido.NOVO\n    \n    def avancar_estado(self):\n        if self.estado in (EstadoPedido.CANCELADO, EstadoPedido.ENTREGUE):\n            print(\"Não é possível avançar este pedido.\")\n            return\n        if self.estado == EstadoPedido.ENVIADO:\n            self.estado = EstadoPedido.ENTREGUE\n        else:\n            self.estado = EstadoPedido(self.estado.value + 1)\n    \n    def cancelar(self):\n        if self.estado != EstadoPedido.ENTREGUE:\n            self.estado = EstadoPedido.CANCELADO\n    \n    def __str__(self):\n        return f\"Pedido {self.numero}: {self.estado.name}\"\n\n# Teste\np = Pedido(\"001\")\nprint(p)           # Pedido 001: NOVO\np.avancar_estado()\nprint(p)           # Pedido 001: CONFIRMADO\np.avancar_estado()\nprint(p)           # Pedido 001: EM_PREPARO"
+        },
+        {
+          "sectionId": "section-05-quiz-enum",
+          "type": "quiz",
+          "title": "Quiz: Tipos Enumerados",
+          "order": 5,
+          "durationMinutes": 4,
+          "questions": [
+            {
+              "questionId": "q1",
+              "question": "Qual módulo é usado para criar tipos enumerados em Python?",
+              "type": "multiple_choice",
+              "options": [
+                "enumeration",
+                "enum",
+                "enums",
+                "enumerate"
+              ],
+              "correctAnswer": 1,
+              "explanation": "O módulo 'enum' fornece a classe Enum para criar tipos enumerados em Python."
+            },
+            {
+              "questionId": "q2",
+              "question": "Como acessar o nome de um membro enum?",
+              "type": "multiple_choice",
+              "options": [
+                "membro.nome",
+                "membro.name",
+                "membro.get_name()",
+                "nome(membro)"
+              ],
+              "correctAnswer": 1,
+              "explanation": "A propriedade .name retorna o nome do membro enum como string."
+            },
+            {
+              "questionId": "q3",
+              "question": "Qual é uma vantagem de usar Enums em vez de constantes simples?",
+              "type": "multiple_choice",
+              "options": [
+                "Maior velocidade de execução",
+                "Menor uso de memória",
+                "Segurança de tipo e prevenção de erros",
+                "Compatibilidade com mais versões do Python"
+              ],
+              "correctAnswer": 2,
+              "explanation": "Enums proporcionam segurança de tipo e previnem erros ao usar nomes simbólicos em vez de valores literais."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "lessonId": "lesson-09-estudos-caso",
+      "title": "Estudos de Caso: Sistema Bancário e Jogo de RPG",
+      "order": 9,
+      "estimatedMinutes": 40,
+      "sections": [
+        {
+          "sectionId": "section-01-sistema-bancario",
+          "type": "text",
+          "title": "Estudo de Caso: Sistema Bancário",
+          "order": 1,
+          "durationMinutes": 7,
+          "content": "Vamos implementar um sistema bancário simplificado onde clientes podem realizar transações a partir de suas contas. O sistema terá duas classes: `Cliente` (com nome e CPF) e `Conta` (com número, titular, saldo e operações).\n\n**Classe Cliente:**\n```python\nclass Cliente:\n    def __init__(self, nome: str, cpf: str):\n        self.nome = nome\n        self.cpf = cpf\n```\n\n**Classe Conta:**\n```python\nfrom Cliente import Cliente\n\nclass Conta:\n    def __init__(self, numero: str, titular: Cliente, saldo_inicial: float = 0):\n        self.numero = numero\n        self.titular = titular\n        self.__saldo = saldo_inicial\n\n    def sacar(self, valor: float):\n        if self.__saldo < valor:\n            raise ValueError(\"Saldo insuficiente.\")\n        self.__saldo -= valor\n\n    def depositar(self, valor: float):\n        self.__saldo += valor\n\n    def transferir(self, valor: float, conta_destino: \"Conta\"):\n        self.sacar(valor)\n        conta_destino.depositar(valor)\n\n    def obter_saldo(self):\n        return self.__saldo\n```\n\nObserve o uso de encapsulamento (`__saldo`), validação de regras de negócio no saque, e composição (Conta tem um Cliente)."
+        },
+        {
+          "sectionId": "section-02-usando-sistema-bancario",
+          "type": "text",
+          "title": "Usando o Sistema Bancário",
+          "order": 2,
+          "durationMinutes": 5,
+          "content": "Agora vamos usar as classes para simular operações bancárias:\n\n```python\nfrom Cliente import Cliente\nfrom Conta import Conta\n\n# Criando clientes\ncliente1 = Cliente(\"João\", \"123.456.789-00\")\ncliente2 = Cliente(\"Maria\", \"987.654.321-00\")\n\n# Criando contas\nconta1 = Conta(\"1001\", cliente1, 1000)  # Saldo inicial: 1000\nconta2 = Conta(\"1002\", cliente2)        # Saldo inicial: 0\n\n# Realizando transferência\nconta1.transferir(300, conta2)\n\n# Verificando saldos\nprint(f\"Saldo de {conta1.titular.nome}: {conta1.obter_saldo()}\")  # 700\nprint(f\"Saldo de {conta2.titular.nome}: {conta2.obter_saldo()}\")  # 300\n```\n\nA operação de transferência demonstra como métodos podem interagir: `transferir` chama `sacar` na conta origem e `depositar` na conta destino. Se o saque falhar por saldo insuficiente, a exceção é lançada e o depósito não ocorre."
+        },
+        {
+          "sectionId": "section-03-jogo-rpg",
+          "type": "text",
+          "title": "Estudo de Caso: Jogo de RPG",
+          "order": 3,
+          "durationMinutes": 7,
+          "content": "Vamos criar um jogo de RPG com diferentes tipos de personagens, cada um com seu tipo de ataque.\n\n**Classe Base Personagem:**\n```python\nclass Personagem:\n    def __init__(self, nome: str, vida: int, ataque: int, defesa: int):\n        self.nome = nome\n        self.vida = vida\n        self.ataque = ataque\n        self.defesa = defesa\n\n    def atacar(self, personagem: \"Personagem\"):\n        dano = self.ataque - personagem.defesa\n        if dano < 0:\n            dano = 0\n        personagem.vida -= dano\n        return dano\n\n    def esta_vivo(self):\n        return self.vida > 0\n```\n\n**Subclasses Especializadas:**\n```python\nclass Mago(Personagem):\n    def __init__(self, nome: str):\n        super().__init__(nome, 80, 10, 3)\n\n    def atacar(self, personagem: Personagem):\n        dano = super().atacar(personagem)\n        print(f\"{self.nome} lançou uma magia em {personagem.nome} e causou dano de {dano} pontos.\")\n\nclass Arqueiro(Personagem):\n    def __init__(self, nome: str):\n        super().__init__(nome, 70, 10, 4)\n\n    def atacar(self, personagem: Personagem):\n        dano = super().atacar(personagem)\n        print(f\"{self.nome} deu uma flechada em {personagem.nome} e causou dano de {dano} pontos.\")\n```"
+        },
+        {
+          "sectionId": "section-04-batalha-rpg",
+          "type": "text",
+          "title": "Simulando uma Batalha",
+          "order": 4,
+          "durationMinutes": 6,
+          "content": "A lógica principal do jogo usa polimorfismo para simular batalhas:\n\n```python\nimport random\nfrom Arqueiro import Arqueiro\nfrom Mago import Mago\n\narqueiro = Arqueiro(\"Robin Hood\")\nmago = Mago(\"Merlin\")\npersonagens = [arqueiro, mago]\n\nwhile True:\n    atacante = random.choice(personagens)\n    atacado = random.choice(personagens)\n    \n    if atacante != atacado:\n        atacante.atacar(atacado)\n    else:\n        continue\n    \n    # Verifica quantos estão vivos\n    qtde_vivos = sum(1 for p in personagens if p.esta_vivo())\n    \n    if qtde_vivos == 1:\n        break\n    elif qtde_vivos == 0:\n        print(\"Todos morreram.\")\n        break\n\n# Declara o vencedor\nfor p in personagens:\n    if p.esta_vivo():\n        print(f\"O vencedor foi {p.nome} com {p.vida} pontos de vida.\")\n        break\n```\n\nEste exemplo demonstra herança (Mago/Arqueiro herdam de Personagem), polimorfismo (cada tipo de personagem ataca de forma diferente), e coleções de objetos polimórficos."
+        },
+        {
+          "sectionId": "section-05-exercise-estudo-caso",
+          "type": "exercise",
+          "title": "Exercício: Expandindo o Sistema",
+          "order": 5,
+          "durationMinutes": 10,
+          "problem": "Expanda o sistema bancário adicionando uma classe `ContaPoupanca` que herda de `Conta` e tem um atributo `taxa_juros` (percentual mensal). Implemente um método `aplicar_rendimento(meses)` que calcula e adiciona ao saldo o rendimento de juros compostos por X meses. Fórmula: saldo_final = saldo * (1 + taxa)^meses",
+          "starterCode": "class Cliente:\n    def __init__(self, nome: str, cpf: str):\n        self.nome = nome\n        self.cpf = cpf\n\nclass Conta:\n    def __init__(self, numero: str, titular: Cliente, saldo_inicial: float = 0):\n        self.numero = numero\n        self.titular = titular\n        self._saldo = saldo_inicial\n\n    def depositar(self, valor: float):\n        self._saldo += valor\n\n    def sacar(self, valor: float):\n        if self._saldo < valor:\n            raise ValueError(\"Saldo insuficiente.\")\n        self._saldo -= valor\n\n    def obter_saldo(self):\n        return self._saldo\n\nclass ContaPoupanca(Conta):\n    def __init__(self, numero: str, titular: Cliente, saldo_inicial: float = 0, taxa_juros: float = 0.005):\n        # Chame o construtor da classe pai e inicialize taxa_juros\n        pass\n    \n    def aplicar_rendimento(self, meses: int):\n        # Calcule e aplique juros compostos\n        pass\n\n# Teste\ncliente = Cliente(\"Ana\", \"111.222.333-44\")\npoupanca = ContaPoupanca(\"2001\", cliente, 1000, 0.01)  # 1% ao mês\nprint(f\"Saldo inicial: {poupanca.obter_saldo():.2f}\")   # 1000.00\npoupanca.aplicar_rendimento(12)\nprint(f\"Saldo após 12 meses: {poupanca.obter_saldo():.2f}\")  # ~1126.83",
+          "testCases": [
+            {
+              "input": "ContaPoupanca('001', Cliente('X', '000'), 1000, 0.01).obter_saldo()",
+              "expectedOutput": "1000"
+            },
+            {
+              "input": "p = ContaPoupanca('001', Cliente('X', '000'), 1000, 0.05); p.aplicar_rendimento(1); p.obter_saldo()",
+              "expectedOutput": "1050.0"
+            },
+            {
+              "input": "p = ContaPoupanca('001', Cliente('X', '000'), 100, 0.10); p.aplicar_rendimento(2); round(p.obter_saldo(), 2)",
+              "expectedOutput": "121.0"
+            }
+          ],
+          "hints": [
+            "Use super().__init__() para inicializar os atributos da classe pai",
+            "Juros compostos: saldo_final = saldo_inicial * (1 + taxa) ** meses",
+            "O rendimento é a diferença entre o saldo final e o saldo inicial"
+          ],
+          "solution": "class Cliente:\n    def __init__(self, nome: str, cpf: str):\n        self.nome = nome\n        self.cpf = cpf\n\nclass Conta:\n    def __init__(self, numero: str, titular: Cliente, saldo_inicial: float = 0):\n        self.numero = numero\n        self.titular = titular\n        self._saldo = saldo_inicial\n\n    def depositar(self, valor: float):\n        self._saldo += valor\n\n    def sacar(self, valor: float):\n        if self._saldo < valor:\n            raise ValueError(\"Saldo insuficiente.\")\n        self._saldo -= valor\n\n    def obter_saldo(self):\n        return self._saldo\n\nclass ContaPoupanca(Conta):\n    def __init__(self, numero: str, titular: Cliente, saldo_inicial: float = 0, taxa_juros: float = 0.005):\n        super().__init__(numero, titular, saldo_inicial)\n        self.taxa_juros = taxa_juros\n    \n    def aplicar_rendimento(self, meses: int):\n        saldo_final = self._saldo * (1 + self.taxa_juros) ** meses\n        rendimento = saldo_final - self._saldo\n        self._saldo = saldo_final\n        return rendimento\n\n# Teste\ncliente = Cliente(\"Ana\", \"111.222.333-44\")\npoupanca = ContaPoupanca(\"2001\", cliente, 1000, 0.01)\nprint(f\"Saldo inicial: {poupanca.obter_saldo():.2f}\")\npoupanca.aplicar_rendimento(12)\nprint(f\"Saldo após 12 meses: {poupanca.obter_saldo():.2f}\")"
+        },
+        {
+          "sectionId": "section-06-quiz-estudos-caso",
+          "type": "quiz",
+          "title": "Quiz: Estudos de Caso",
+          "order": 6,
+          "durationMinutes": 5,
+          "questions": [
+            {
+              "questionId": "q1",
+              "question": "No sistema bancário, por que o método `transferir` chama `sacar` antes de `depositar`?",
+              "type": "multiple_choice",
+              "options": [
+                "Por convenção de nomenclatura",
+                "Para garantir que há saldo suficiente antes de depositar na conta destino",
+                "Para melhorar a performance",
+                "Não há motivo específico"
+              ],
+              "correctAnswer": 1,
+              "explanation": "Chamar sacar primeiro garante que a transferência só ocorre se houver saldo suficiente, evitando criar dinheiro do nada."
+            },
+            {
+              "questionId": "q2",
+              "question": "No jogo de RPG, qual conceito de POO permite que diferentes personagens tenham ataques diferentes?",
+              "type": "multiple_choice",
+              "options": [
+                "Encapsulamento",
+                "Abstração",
+                "Polimorfismo",
+                "Composição"
+              ],
+              "correctAnswer": 2,
+              "explanation": "O polimorfismo permite que cada subclasse (Mago, Arqueiro) sobrescreva o método atacar com comportamento específico."
+            },
+            {
+              "questionId": "q3",
+              "question": "Qual padrão de relacionamento existe entre Conta e Cliente no sistema bancário?",
+              "type": "multiple_choice",
+              "options": [
+                "Herança",
+                "Composição",
+                "Polimorfismo",
+                "Agregação"
+              ],
+              "correctAnswer": 1,
+              "explanation": "Conta tem um Cliente como atributo (titular), caracterizando composição/agregação - um objeto contém referência a outro."
+            },
+            {
+              "questionId": "q4",
+              "question": "Por que as subclasses do RPG usam super().__init__() no construtor?",
+              "type": "multiple_choice",
+              "options": [
+                "É obrigatório em Python",
+                "Para inicializar os atributos definidos na classe pai",
+                "Para melhorar a performance",
+                "Para permitir herança múltipla"
+              ],
+              "correctAnswer": 1,
+              "explanation": "super().__init__() chama o construtor da classe pai para inicializar os atributos herdados (nome, vida, ataque, defesa)."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

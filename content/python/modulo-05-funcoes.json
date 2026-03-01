@@ -1,0 +1,1242 @@
+{
+  "module": {
+    "id": "mod_05_funcoes",
+    "title": "Funções",
+    "description": "Este módulo aborda as funções em Python, um recurso extremamente importante para a criação de programas mais organizados, compreensíveis, testáveis e fáceis de manter.",
+    "order": 5,
+    "estimatedMinutes": 180
+  },
+  "lessons": [
+    {
+      "id": "les_05_01",
+      "title": "Introdução a Funções",
+      "slug": "introducao-funcoes",
+      "description": "Aprenda o conceito de funções, como criá-las e chamá-las em Python.",
+      "type": "text",
+      "order": 1,
+      "estimatedMinutes": 25,
+      "isFree": true,
+      "isPublished": true,
+      "sections": [
+        {
+          "id": "sec_05_01_01",
+          "title": "O que são funções",
+          "contentType": "text",
+          "order": 1,
+          "estimatedMinutes": 4,
+          "content": {
+            "objective": "Ao final, você entenderá o que são funções e por que são importantes na programação.",
+            "body": "Uma função é um bloco de código nomeado que pode ser chamado várias vezes em diferentes partes do programa para realizar alguma tarefa específica. Trata-se de um recurso fundamental para organizar e reutilizar códigos, tornando o programa mais fácil de ser mantido.\n\nAs funções definidas pelo programador, se criadas e usadas com critério, tornam o código:\n- **Menos redundante**: evita repetição de código\n- **Mais limpo**: organiza a lógica em blocos bem definidos\n- **Testável**: facilita a criação de testes unitários\n- **Compreensível**: divide problemas complexos em partes menores\n\nPara criar uma função em Python, usamos o termo `def`, seguido pelo nome da função e pelos parâmetros (quando houver). Em seguida, definimos as instruções que a função deve executar e, opcionalmente, o valor que a função deve retornar ao término de sua execução.",
+            "codeExample": {
+              "description": "Criando e chamando uma função simples",
+              "code": "def mostrar_saudacao(nome):\n    print(f\"Olá, {nome}!\")\n\nmostrar_saudacao(\"João\")  # Saída: \"Olá, João!\"\nmostrar_saudacao(\"Maria\")  # Saída: \"Olá, Maria!\""
+            },
+            "summary": [
+              "Funções são blocos de código nomeados e reutilizáveis",
+              "Use `def` para definir uma função",
+              "Funções podem ter parâmetros e retornar valores",
+              "Funções tornam o código mais organizado e testável"
+            ],
+            "miniCheck": "Crie uma função chamada `mostrar_boas_vindas` que receba um nome e imprima 'Bem-vindo(a), [nome]!'"
+          }
+        },
+        {
+          "id": "sec_05_01_02",
+          "title": "Parâmetros e Argumentos",
+          "contentType": "text",
+          "order": 2,
+          "estimatedMinutes": 5,
+          "content": {
+            "objective": "Ao final, você saberá a diferença entre parâmetros e argumentos, e como usá-los corretamente.",
+            "body": "Muitos programadores usam os termos **parâmetro** e **argumento** sem distinção, mas eles têm significados diferentes:\n\n**Parâmetro** é o termo que se usa para expressar as entradas **na definição da função**. Eles possuem um nome, uma posição, podem possuir um valor padrão e uma anotação de tipo.\n\n**Argumento**, por outro lado, é o termo usado para o valor (ou valores) que uma função recebe **quando é chamada**. É como se o parâmetro fosse uma variável e o argumento fosse o valor passado para essa variável.\n\n### Argumentos Posicionais\n\nOs argumentos posicionais são os valores passados na chamada da função obedecendo a ordem dos parâmetros na definição.\n\n### Argumentos Nomeados\n\nOs argumentos nomeados permitem que os argumentos sejam passados em qualquer ordem, desde que sejam precedidos pelo nome do parâmetro.",
+            "codeExample": {
+              "description": "Argumentos posicionais e nomeados",
+              "code": "def somar(a, b):\n    soma = a + b\n    print(f\"{a} + {b} = {soma}\")\n\nsomar(3, 5)  # Posicional: a=3, b=5\n\ndef mostrar_saudacao(nome, sobrenome):\n    print(f\"Olá, {nome} {sobrenome}!\")\n\nmostrar_saudacao(sobrenome=\"Silva\", nome=\"João\")  # Nomeado"
+            },
+            "summary": [
+              "Parâmetro: variável na definição da função",
+              "Argumento: valor passado na chamada da função",
+              "Argumentos posicionais seguem a ordem dos parâmetros",
+              "Argumentos nomeados podem ser passados em qualquer ordem"
+            ],
+            "miniCheck": "Na função `somar(a, b)`, se chamarmos `somar(10, 5)`, qual valor será atribuído a `a` e qual será atribuído a `b`?"
+          }
+        },
+        {
+          "id": "sec_05_01_03",
+          "title": "Parâmetros Opcionais",
+          "contentType": "text",
+          "order": 3,
+          "estimatedMinutes": 5,
+          "content": {
+            "objective": "Ao final, você saberá como definir parâmetros com valores padrão e combinar diferentes tipos de argumentos.",
+            "body": "Os parâmetros opcionais são aqueles que possuem valores especificados na definição da função. Assim, caso nenhum argumento seja passado para esse parâmetro durante a chamada, o valor padrão é usado.\n\nEsse recurso é muito útil quando você quer que uma função tenha um comportamento padrão, mas permita personalização quando necessário.\n\nVocê também pode combinar argumentos posicionais e nomeados na mesma chamada de função. A regra é que os argumentos posicionais devem vir antes dos nomeados.\n\n### Dica importante\n\nUsar a estratégia correta na hora de criar suas funções pode simplificar consideravelmente o uso da função ao longo do programa, aumentando as possibilidades de reuso e de escrita de código limpo e organizado.",
+            "codeExample": {
+              "description": "Parâmetros opcionais e combinação de argumentos",
+              "code": "def elevar(base, expoente=2):\n    return base ** expoente\n\nprint(elevar(3))      # Saída: 9 (usa expoente padrão 2)\nprint(elevar(3, 3))   # Saída: 27 (usa expoente 3)\n\ndef criar_historia(nome, animal, comida=\"macarrão\", lugar=\"praia\"):\n    print(f\"{nome} foi à {lugar} com seu {animal} comer {comida}\")\n\ncriar_historia(\"João\", \"cachorro\", lugar=\"cachoeira\")\ncriar_historia(\"Pedro\", \"papagaio\", \"churrasco\")"
+            },
+            "summary": [
+              "Parâmetros opcionais têm valores padrão definidos com `=`",
+              "Se nenhum argumento for passado, o valor padrão é usado",
+              "Argumentos posicionais devem vir antes dos nomeados",
+              "Parâmetros opcionais aumentam a flexibilidade das funções"
+            ],
+            "miniCheck": "Crie uma função `cumprimentar(nome, saudacao=\"Olá\")` e chame-a de duas formas: uma usando o valor padrão e outra passando uma saudação diferente."
+          }
+        },
+        {
+          "id": "sec_05_01_04",
+          "title": "Exercício: Funções Básicas",
+          "contentType": "exercise",
+          "order": 4,
+          "estimatedMinutes": 8,
+          "content": {
+            "objective": "Praticar a criação de funções com parâmetros posicionais, nomeados e opcionais.",
+            "problem": "Crie uma função chamada `calcular_preco_final` que receba três parâmetros:\n- `preco_base` (obrigatório): o preço original do produto\n- `desconto` (opcional, padrão 0): percentual de desconto (0 a 100)\n- `taxa_entrega` (opcional, padrão 10): valor fixo da taxa de entrega\n\nA função deve retornar o preço final calculado como: `preco_base * (1 - desconto/100) + taxa_entrega`",
+            "starterCode": "def calcular_preco_final(preco_base, desconto=0, taxa_entrega=10):\n    # Implemente aqui\n    pass\n\n# Testes\nprint(calcular_preco_final(100))  # Esperado: 110\nprint(calcular_preco_final(100, 10))  # Esperado: 100\nprint(calcular_preco_final(100, desconto=20, taxa_entrega=15))  # Esperado: 95",
+            "testCases": [
+              {
+                "input": "calcular_preco_final(100)",
+                "expected": "110",
+                "description": "Preço sem desconto e com taxa padrão"
+              },
+              {
+                "input": "calcular_preco_final(100, 10)",
+                "expected": "100",
+                "description": "Preço com 10% de desconto"
+              },
+              {
+                "input": "calcular_preco_final(200, desconto=50, taxa_entrega=0)",
+                "expected": "100",
+                "description": "Preço com 50% de desconto e sem taxa"
+              }
+            ],
+            "hints": [
+              "Lembre-se de que desconto é um percentual, então divida por 100",
+              "Use a fórmula: preco_base * (1 - desconto/100) + taxa_entrega",
+              "Não se esqueça de usar return para retornar o valor"
+            ],
+            "solution": "def calcular_preco_final(preco_base, desconto=0, taxa_entrega=10):\n    preco_com_desconto = preco_base * (1 - desconto/100)\n    return preco_com_desconto + taxa_entrega"
+          }
+        },
+        {
+          "id": "sec_05_01_05",
+          "title": "Quiz: Fundamentos de Funções",
+          "contentType": "quiz",
+          "order": 5,
+          "estimatedMinutes": 3,
+          "content": {
+            "objective": "Validar seu entendimento sobre a criação e chamada de funções.",
+            "passingScore": 70,
+            "questions": [
+              {
+                "id": "q1",
+                "type": "multiple_choice",
+                "question": "Qual palavra-chave é usada para definir uma função em Python?",
+                "options": [
+                  "function",
+                  "def",
+                  "func",
+                  "define"
+                ],
+                "correctAnswer": 1,
+                "explanation": "Em Python, usamos a palavra-chave `def` (abreviação de define) para definir funções."
+              },
+              {
+                "id": "q2",
+                "type": "multiple_choice",
+                "question": "Qual é a diferença entre parâmetro e argumento?",
+                "options": [
+                  "São a mesma coisa",
+                  "Parâmetro é o valor passado, argumento é a variável",
+                  "Parâmetro é a variável na definição, argumento é o valor passado na chamada",
+                  "Parâmetro é obrigatório, argumento é opcional"
+                ],
+                "correctAnswer": 2,
+                "explanation": "Parâmetro é a variável declarada na definição da função, enquanto argumento é o valor passado quando a função é chamada."
+              },
+              {
+                "id": "q3",
+                "type": "multiple_choice",
+                "question": "O que acontece se você chamar uma função com parâmetro opcional sem passar argumento para ele?",
+                "options": [
+                  "Gera um erro",
+                  "O parâmetro fica como None",
+                  "O valor padrão definido é usado",
+                  "A função não executa"
+                ],
+                "correctAnswer": 2,
+                "explanation": "Quando um parâmetro opcional não recebe argumento, o valor padrão definido na função é utilizado."
+              },
+              {
+                "id": "q4",
+                "type": "code_output",
+                "question": "Qual será a saída do código abaixo?\n\n```python\ndef saudar(nome, msg=\"Oi\"):\n    print(f\"{msg}, {nome}!\")\n\nsaudar(\"Ana\")\n```",
+                "options": [
+                  "Oi, Ana!",
+                  "Ana, Oi!",
+                  "Erro: falta argumento",
+                  "None"
+                ],
+                "correctAnswer": 0,
+                "explanation": "Como apenas 'Ana' foi passado, o parâmetro `msg` usa seu valor padrão 'Oi', resultando em 'Oi, Ana!'."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "les_05_02",
+      "title": "Parâmetros Variáveis (*args e **kwargs)",
+      "slug": "parametros-variaveis",
+      "description": "Aprenda a criar funções que aceitam um número variável de argumentos.",
+      "type": "text",
+      "order": 2,
+      "estimatedMinutes": 25,
+      "isFree": false,
+      "isPublished": true,
+      "sections": [
+        {
+          "id": "sec_05_02_01",
+          "title": "O Parâmetro *args",
+          "contentType": "text",
+          "order": 1,
+          "estimatedMinutes": 5,
+          "content": {
+            "objective": "Ao final, você saberá usar *args para aceitar um número variável de argumentos posicionais.",
+            "body": "O prefixo `*` (asterisco) antes de um nome de parâmetro indica que a função pode receber um número variável de argumentos posicionais. Por convenção, esse parâmetro é chamado de `args` (abreviação de arguments), mas você pode usar qualquer nome. O importante é o asterisco.\n\nDentro da função, `args` se comporta como uma **tupla** contendo todos os argumentos posicionais extras que foram passados. Isso significa que você pode iterar sobre eles com um laço `for`.\n\nVocê também pode combinar parâmetros normais com `*args`. Nesse caso, os parâmetros normais devem vir primeiro.",
+            "codeExample": {
+              "description": "Função com número variável de argumentos posicionais",
+              "code": "def somar_numeros(*args):\n    \"\"\"Soma todos os números passados como argumentos.\"\"\"\n    total = 0\n    for numero in args:\n        total += numero\n    return total\n\nprint(somar_numeros(1, 2, 3))           # 6\nprint(somar_numeros(10, 20))            # 30\nprint(somar_numeros(1, 2, 3, 4, 5, 6))  # 21\n\ndef exibir_carrinho(nome_cliente, *produtos):\n    print(f\"Carrinho de {nome_cliente}:\")\n    for produto in produtos:\n        print(f\"  - {produto}\")\n\nexibir_carrinho(\"João\", \"Notebook\", \"Mouse\", \"Teclado\")"
+            },
+            "summary": [
+              "*args permite receber um número variável de argumentos posicionais",
+              "Dentro da função, args é uma tupla",
+              "Parâmetros normais devem vir antes de *args",
+              "O nome args é convenção, o importante é o asterisco"
+            ],
+            "miniCheck": "Crie uma função `multiplicar_todos(*args)` que retorne o produto de todos os números passados."
+          }
+        },
+        {
+          "id": "sec_05_02_02",
+          "title": "O Parâmetro **kwargs",
+          "contentType": "text",
+          "order": 2,
+          "estimatedMinutes": 5,
+          "content": {
+            "objective": "Ao final, você saberá usar **kwargs para aceitar um número variável de argumentos nomeados.",
+            "body": "Além de `*args`, o Python oferece `**kwargs` (com dois asteriscos) para aceitar um número variável de argumentos nomeados. O nome `kwargs` vem de keyword arguments (argumentos com palavra-chave), mas você pode usar qualquer nome após os dois asteriscos.\n\nDentro da função, `kwargs` se comporta como um **dicionário** contendo todos os argumentos nomeados extras que foram passados, onde as chaves são os nomes dos argumentos e os valores são os valores passados.\n\nPara percorrer os itens de kwargs, use o método `.items()` que retorna pares de chave e valor.",
+            "codeExample": {
+              "description": "Função com número variável de argumentos nomeados",
+              "code": "def exibir_informacoes(**kwargs):\n    \"\"\"Exibe informações passadas como argumentos nomeados.\"\"\"\n    for chave, valor in kwargs.items():\n        print(f\"{chave}: {valor}\")\n\nexibir_informacoes(nome=\"João\", idade=25, cidade=\"São Paulo\")\n# nome: João\n# idade: 25\n# cidade: São Paulo\n\nexibir_informacoes(produto=\"Notebook\", preco=3500, marca=\"Dell\")\n# produto: Notebook\n# preco: 3500\n# marca: Dell"
+            },
+            "summary": [
+              "**kwargs permite receber um número variável de argumentos nomeados",
+              "Dentro da função, kwargs é um dicionário",
+              "Use .items() para iterar sobre chaves e valores",
+              "O nome kwargs é convenção, o importante são os dois asteriscos"
+            ],
+            "miniCheck": "Crie uma função `criar_perfil(**kwargs)` que imprima todas as informações passadas no formato 'campo: valor'."
+          }
+        },
+        {
+          "id": "sec_05_02_03",
+          "title": "Combinando *args e **kwargs",
+          "contentType": "text",
+          "order": 3,
+          "estimatedMinutes": 5,
+          "content": {
+            "objective": "Ao final, você saberá combinar parâmetros normais, *args e **kwargs em uma mesma função.",
+            "body": "Você pode combinar parâmetros normais, `*args` e `**kwargs` na mesma função. A ordem deve ser sempre:\n\n1. Parâmetros normais (obrigatórios)\n2. Parâmetros com valor padrão (opcionais)\n3. `*args` (argumentos posicionais variáveis)\n4. `**kwargs` (argumentos nomeados variáveis)\n\nEssa combinação é especialmente útil quando você quer criar funções muito flexíveis ou quando precisa criar funções que repassam argumentos para outras funções.\n\n### Quando usar *args e **kwargs?\n\n- Quando você não sabe quantos argumentos a função receberá\n- Para criar funções genéricas que processam diferentes quantidades de dados\n- Para criar funções que repassam argumentos (como decoradores)\n- Para dar flexibilidade aos usuários da sua função\n\nUse esses recursos com moderação. Se você sempre souber quantos parâmetros sua função precisa, declare-os explicitamente.",
+            "codeExample": {
+              "description": "Combinando parâmetros normais, *args e **kwargs",
+              "code": "def criar_perfil(nome, *habilidades, **informacoes):\n    \"\"\"Cria um perfil com nome, habilidades e informações adicionais.\"\"\"\n    print(f\"Perfil de {nome}\")\n\n    if habilidades:\n        print(\"Habilidades:\")\n        for habilidade in habilidades:\n            print(f\"  - {habilidade}\")\n\n    if informacoes:\n        print(\"Informações adicionais:\")\n        for chave, valor in informacoes.items():\n            print(f\"  {chave}: {valor}\")\n\ncriar_perfil(\n    \"Ana\",\n    \"Python\", \"JavaScript\", \"SQL\",\n    idade=28,\n    cidade=\"Rio de Janeiro\",\n    experiencia=\"5 anos\"\n)"
+            },
+            "summary": [
+              "Ordem: parâmetros normais, *args, **kwargs",
+              "Use para criar funções flexíveis e genéricas",
+              "Útil para funções que repassam argumentos",
+              "Use com moderação - prefira parâmetros explícitos quando possível"
+            ],
+            "miniCheck": "Qual seria a ordem correta dos parâmetros: `def funcao(a, *args, b=10, **kwargs)` ou `def funcao(a, b=10, *args, **kwargs)`?"
+          }
+        },
+        {
+          "id": "sec_05_02_04",
+          "title": "Exercício: Calculadora Flexível",
+          "contentType": "exercise",
+          "order": 4,
+          "estimatedMinutes": 8,
+          "content": {
+            "objective": "Praticar o uso de *args e **kwargs para criar funções flexíveis.",
+            "problem": "Crie uma função chamada `calcular` que:\n- Receba uma operação como primeiro parâmetro (string: 'soma', 'media', 'maximo', 'minimo')\n- Receba um número variável de valores numéricos usando *args\n- Opcionalmente receba `arredondar=True` via **kwargs para arredondar o resultado\n\nA função deve retornar o resultado da operação. Se nenhum número for passado, retorne 0.",
+            "starterCode": "def calcular(operacao, *args, **kwargs):\n    # Implemente aqui\n    pass\n\n# Testes\nprint(calcular('soma', 1, 2, 3, 4, 5))  # 15\nprint(calcular('media', 10, 20, 30))  # 20.0\nprint(calcular('maximo', 5, 2, 8, 1))  # 8\nprint(calcular('media', 1, 2, 3, arredondar=True))  # 2",
+            "testCases": [
+              {
+                "input": "calcular('soma', 1, 2, 3, 4, 5)",
+                "expected": "15",
+                "description": "Soma de vários números"
+              },
+              {
+                "input": "calcular('media', 10, 20, 30)",
+                "expected": "20.0",
+                "description": "Média aritmética"
+              },
+              {
+                "input": "calcular('maximo', 5, 2, 8, 1)",
+                "expected": "8",
+                "description": "Valor máximo"
+              },
+              {
+                "input": "calcular('soma')",
+                "expected": "0",
+                "description": "Sem números retorna 0"
+              }
+            ],
+            "hints": [
+              "Use if/elif para verificar qual operação foi solicitada",
+              "Para a média, divida a soma pelo tamanho de args",
+              "Use as funções max() e min() do Python para máximo e mínimo",
+              "Verifique se args está vazio antes de calcular"
+            ],
+            "solution": "def calcular(operacao, *args, **kwargs):\n    if not args:\n        return 0\n    \n    resultado = 0\n    if operacao == 'soma':\n        resultado = sum(args)\n    elif operacao == 'media':\n        resultado = sum(args) / len(args)\n    elif operacao == 'maximo':\n        resultado = max(args)\n    elif operacao == 'minimo':\n        resultado = min(args)\n    \n    if kwargs.get('arredondar', False):\n        resultado = round(resultado)\n    \n    return resultado"
+          }
+        },
+        {
+          "id": "sec_05_02_05",
+          "title": "Quiz: Parâmetros Variáveis",
+          "contentType": "quiz",
+          "order": 5,
+          "estimatedMinutes": 3,
+          "content": {
+            "objective": "Validar seu entendimento sobre *args e **kwargs.",
+            "passingScore": 70,
+            "questions": [
+              {
+                "id": "q1",
+                "type": "multiple_choice",
+                "question": "Qual é o tipo de dados de *args dentro de uma função?",
+                "options": [
+                  "Lista",
+                  "Tupla",
+                  "Dicionário",
+                  "Conjunto"
+                ],
+                "correctAnswer": 1,
+                "explanation": "Dentro da função, *args é uma tupla contendo todos os argumentos posicionais extras."
+              },
+              {
+                "id": "q2",
+                "type": "multiple_choice",
+                "question": "Qual é o tipo de dados de **kwargs dentro de uma função?",
+                "options": [
+                  "Lista",
+                  "Tupla",
+                  "Dicionário",
+                  "Conjunto"
+                ],
+                "correctAnswer": 2,
+                "explanation": "Dentro da função, **kwargs é um dicionário onde as chaves são os nomes dos argumentos."
+              },
+              {
+                "id": "q3",
+                "type": "multiple_choice",
+                "question": "Qual é a ordem correta dos parâmetros em uma função?",
+                "options": [
+                  "*args, parâmetros normais, **kwargs",
+                  "parâmetros normais, **kwargs, *args",
+                  "parâmetros normais, *args, **kwargs",
+                  "**kwargs, *args, parâmetros normais"
+                ],
+                "correctAnswer": 2,
+                "explanation": "A ordem correta é: parâmetros normais, *args, **kwargs."
+              },
+              {
+                "id": "q4",
+                "type": "code_output",
+                "question": "Qual será a saída do código abaixo?\n\n```python\ndef teste(*args):\n    print(len(args))\n\nteste(1, 2, 3, 4)\n```",
+                "options": [
+                  "4",
+                  "(1, 2, 3, 4)",
+                  "10",
+                  "Erro"
+                ],
+                "correctAnswer": 0,
+                "explanation": "args é uma tupla com 4 elementos, então len(args) retorna 4."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "les_05_03",
+      "title": "Retorno de Valores",
+      "slug": "retorno-valores",
+      "description": "Aprenda como retornar valores simples e múltiplos de funções.",
+      "type": "text",
+      "order": 3,
+      "estimatedMinutes": 25,
+      "isFree": false,
+      "isPublished": true,
+      "sections": [
+        {
+          "id": "sec_05_03_01",
+          "title": "Retorno Simples com return",
+          "contentType": "text",
+          "order": 1,
+          "estimatedMinutes": 5,
+          "content": {
+            "objective": "Ao final, você saberá como usar a instrução return para retornar valores de funções.",
+            "body": "Uma função em Python pode retornar um ou mais valores para o código que a chamou. Isso é útil porque permite que a função processe dados e os envie de volta para o código chamador, que pode usar esse valor para outras operações.\n\nPara retornar um valor, usamos a instrução `return`. Essa instrução indica ao Python que a função deve sair do bloco e retornar um determinado valor.\n\n### O que acontece sem return?\n\nSe uma função não tem `return` ou se você atribui a uma variável uma função que não retorna valor, a variável receberá `None` (que significa 'nada' ou 'vazio').\n\n### Cuidado com os parênteses!\n\nUm erro comum entre iniciantes é esquecer os parênteses ao chamar uma função. Sem os parênteses, você está apenas referenciando a função, não executando-a.",
+            "codeExample": {
+              "description": "Retorno simples e funções sem retorno",
+              "code": "def somar(a, b):\n    resultado = a + b\n    return resultado\n\nprint(somar(2, 3))  # Saída: 5\n\n# Função sem return explícito\nf1 = print(\"Teste\")\nprint(f1)  # Saída: None\n\n# Esquecendo os parênteses\ndef obter_url_base():\n    return \"http://maroquio.com/\"\n\nub = obter_url_base  # Sem parênteses - referência à função\nprint(ub)  # <function obter_url_base at 0x...>\n\nub = obter_url_base()  # Com parênteses - executa a função\nprint(ub)  # http://maroquio.com/"
+            },
+            "summary": [
+              "Use return para retornar valores de funções",
+              "Funções sem return retornam None",
+              "Não esqueça os parênteses ao chamar funções",
+              "Sem parênteses, você referencia a função, não a executa"
+            ],
+            "miniCheck": "O que acontece se você tentar usar o valor de uma função que só imprime algo (sem return)?"
+          }
+        },
+        {
+          "id": "sec_05_03_02",
+          "title": "Retorno de Múltiplos Valores",
+          "contentType": "text",
+          "order": 2,
+          "estimatedMinutes": 5,
+          "content": {
+            "objective": "Ao final, você saberá como retornar e capturar múltiplos valores de uma função.",
+            "body": "Uma função também pode retornar múltiplos valores através de uma tupla, lista, dicionário ou outro objeto multi-valorado. A forma mais comum é usando tupla, separando os valores por vírgula no `return`.\n\nQuando uma função retorna múltiplos valores como tupla, você pode:\n1. **Desempacotar** todos os valores em variáveis separadas\n2. **Capturar** toda a tupla em uma única variável\n3. **Descartar** valores usando `_` (underscore)\n\nO desempacotamento é muito útil quando você sabe exatamente quantos valores a função retorna e quer usá-los separadamente.",
+            "codeExample": {
+              "description": "Retorno e captura de múltiplos valores",
+              "code": "def calcular_operacoes(a, b):\n    soma = a + b\n    subtracao = a - b\n    multiplicacao = a * b\n    divisao = a / b\n    return soma, subtracao, multiplicacao, divisao\n\n# Desempacotando todos os valores\ns1, s2, s3, s4 = calcular_operacoes(6, 2)\nprint(s1, s2, s3, s4)  # 8 4 12 3.0\n\n# Descartando alguns valores com _\nsoma, subtracao, _, _ = calcular_operacoes(6, 2)\nprint(soma, subtracao)  # 8 4\n\n# Capturando como tupla\nresultado = calcular_operacoes(5, 2)\nprint(resultado)  # (7, 3, 10, 2.5)\nprint(resultado[2])  # 10 (multiplicação)"
+            },
+            "summary": [
+              "Retorne múltiplos valores separando-os por vírgula",
+              "Os valores retornados formam uma tupla",
+              "Use desempacotamento para capturar em variáveis separadas",
+              "Use _ para descartar valores que não precisa"
+            ],
+            "miniCheck": "Se uma função retorna `return a, b, c`, como você capturaria apenas o primeiro e o terceiro valor?"
+          }
+        },
+        {
+          "id": "sec_05_03_03",
+          "title": "Tipificação de Parâmetros e Retorno",
+          "contentType": "text",
+          "order": 3,
+          "estimatedMinutes": 6,
+          "content": {
+            "objective": "Ao final, você saberá como adicionar anotações de tipo para melhorar a clareza do código.",
+            "body": "Embora Python seja dinamicamente tipado, especificar o tipo esperado para parâmetros e retorno pode ajudar a evitar erros e aumentar a clareza do código.\n\nPara adicionar anotações de tipo:\n- **Parâmetros**: coloque `:` após o nome, seguido do tipo (ex: `nome: str`)\n- **Retorno**: coloque `->` após os parênteses, seguido do tipo (ex: `-> str`)\n\n### Importante\n\nAs anotações de tipo **não forçam** o Python a rejeitar valores incorretos. Elas servem como documentação e permitem que ferramentas como `mypy` detectem erros antes da execução.\n\n### Módulo typing\n\nPara tipos mais complexos, use o módulo `typing`:\n- `Optional[str]`: pode ser str ou None\n- `Union[int, str]`: pode ser int ou str\n- `List[int]`: lista de inteiros\n- `Dict[str, int]`: dicionário com chaves str e valores int",
+            "codeExample": {
+              "description": "Anotações de tipo em funções",
+              "code": "def cumprimentar(nome: str) -> str:\n    return f\"Olá, {nome}.\"\n\nfrom typing import Optional, List, Dict\n\ndef buscar_usuario(id: int) -> Optional[str]:\n    usuarios = {1: \"João\", 2: \"Maria\"}\n    return usuarios.get(id)  # Retorna None se não existir\n\ndef processar_valor(valor: int | str) -> str:\n    return str(valor)\n\ndef buscar_produtos(categorias: List[str]) -> Dict[str, float]:\n    return {\"Notebook\": 3500.0, \"Mouse\": 50.0}\n\n# Verificação estática com mypy\n# pip install mypy\n# mypy seu_arquivo.py"
+            },
+            "summary": [
+              "Use : para anotar tipos de parâmetros",
+              "Use -> para anotar tipo de retorno",
+              "Anotações são documentação, não forçam verificação",
+              "Use typing para tipos complexos (Optional, List, Dict)"
+            ],
+            "miniCheck": "Escreva a assinatura de uma função que recebe uma lista de números inteiros e retorna a soma como inteiro."
+          }
+        },
+        {
+          "id": "sec_05_03_04",
+          "title": "Exercício: Função com Múltiplos Retornos",
+          "contentType": "exercise",
+          "order": 4,
+          "estimatedMinutes": 8,
+          "content": {
+            "objective": "Praticar o retorno de múltiplos valores e anotações de tipo.",
+            "problem": "Crie uma função chamada `analisar_lista` que receba uma lista de números e retorne uma tupla com:\n1. O menor valor\n2. O maior valor\n3. A soma de todos os valores\n4. A média dos valores\n\nAdicione anotações de tipo apropriadas. Se a lista estiver vazia, retorne (0, 0, 0, 0.0).",
+            "starterCode": "from typing import List, Tuple\n\ndef analisar_lista(numeros: List[float]) -> Tuple[float, float, float, float]:\n    # Implemente aqui\n    pass\n\n# Testes\nminimo, maximo, soma, media = analisar_lista([1, 2, 3, 4, 5])\nprint(f\"Min: {minimo}, Max: {maximo}, Soma: {soma}, Média: {media}\")\n# Esperado: Min: 1, Max: 5, Soma: 15, Média: 3.0\n\nprint(analisar_lista([]))  # Esperado: (0, 0, 0, 0.0)",
+            "testCases": [
+              {
+                "input": "analisar_lista([1, 2, 3, 4, 5])",
+                "expected": "(1, 5, 15, 3.0)",
+                "description": "Lista com 5 números"
+              },
+              {
+                "input": "analisar_lista([10])",
+                "expected": "(10, 10, 10, 10.0)",
+                "description": "Lista com um único número"
+              },
+              {
+                "input": "analisar_lista([])",
+                "expected": "(0, 0, 0, 0.0)",
+                "description": "Lista vazia"
+              }
+            ],
+            "hints": [
+              "Verifique se a lista está vazia antes de calcular",
+              "Use min(), max() e sum() do Python",
+              "Para a média, divida a soma pelo tamanho da lista",
+              "Retorne os valores separados por vírgula"
+            ],
+            "solution": "from typing import List, Tuple\n\ndef analisar_lista(numeros: List[float]) -> Tuple[float, float, float, float]:\n    if not numeros:\n        return (0, 0, 0, 0.0)\n    \n    minimo = min(numeros)\n    maximo = max(numeros)\n    soma = sum(numeros)\n    media = soma / len(numeros)\n    \n    return minimo, maximo, soma, media"
+          }
+        },
+        {
+          "id": "sec_05_03_05",
+          "title": "Quiz: Retorno de Funções",
+          "contentType": "quiz",
+          "order": 5,
+          "estimatedMinutes": 3,
+          "content": {
+            "objective": "Validar seu entendimento sobre retorno de valores em funções.",
+            "passingScore": 70,
+            "questions": [
+              {
+                "id": "q1",
+                "type": "multiple_choice",
+                "question": "O que uma função retorna se não tiver a instrução return?",
+                "options": [
+                  "0",
+                  "Uma string vazia",
+                  "None",
+                  "Erro"
+                ],
+                "correctAnswer": 2,
+                "explanation": "Funções sem return explícito retornam None automaticamente."
+              },
+              {
+                "id": "q2",
+                "type": "multiple_choice",
+                "question": "Qual é o tipo do valor retornado por `return a, b, c`?",
+                "options": [
+                  "Lista",
+                  "Tupla",
+                  "Dicionário",
+                  "Três valores separados"
+                ],
+                "correctAnswer": 1,
+                "explanation": "Valores separados por vírgula no return formam uma tupla."
+              },
+              {
+                "id": "q3",
+                "type": "multiple_choice",
+                "question": "Como descartar o segundo valor ao desempacotar `a, b, c = funcao()`?",
+                "options": [
+                  "a, , c = funcao()",
+                  "a, None, c = funcao()",
+                  "a, _, c = funcao()",
+                  "a, c = funcao()"
+                ],
+                "correctAnswer": 2,
+                "explanation": "Use _ (underscore) para descartar valores que você não precisa."
+              },
+              {
+                "id": "q4",
+                "type": "code_output",
+                "question": "Qual será o valor de `x`?\n\n```python\ndef teste():\n    return 1, 2, 3\n\nx = teste()\n```",
+                "options": [
+                  "1",
+                  "3",
+                  "(1, 2, 3)",
+                  "Erro"
+                ],
+                "correctAnswer": 2,
+                "explanation": "Sem desempacotamento, x recebe a tupla completa (1, 2, 3)."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "les_05_04",
+      "title": "Escopo de Variáveis",
+      "slug": "escopo-variaveis",
+      "description": "Entenda como funciona o escopo de variáveis locais e globais em funções.",
+      "type": "text",
+      "order": 4,
+      "estimatedMinutes": 20,
+      "isFree": false,
+      "isPublished": true,
+      "sections": [
+        {
+          "id": "sec_05_04_01",
+          "title": "Escopo Local",
+          "contentType": "text",
+          "order": 1,
+          "estimatedMinutes": 4,
+          "content": {
+            "objective": "Ao final, você entenderá o que são variáveis locais e seu escopo.",
+            "body": "O **escopo** de uma variável corresponde à parte do programa em que tal variável pode ser usada. Quando uma variável é definida dentro de uma função, ela é considerada uma **variável local** e seu escopo é limitado ao corpo da função.\n\nIsso significa que:\n- A variável só pode ser usada dentro da função em que foi definida\n- A variável é criada quando a função é chamada\n- A variável é destruída quando a função termina\n- Tentar acessar a variável fora da função gera um erro `NameError`\n\nEsse comportamento é importante para manter o código organizado e evitar conflitos de nomes entre diferentes partes do programa.",
+            "codeExample": {
+              "description": "Escopo local de variáveis",
+              "code": "def somar(a, b):\n    resultado = a + b  # variável local\n    return resultado\n\nprint(somar(2, 3))  # Saída: 5\nprint(resultado)    # NameError: name 'resultado' is not defined"
+            },
+            "summary": [
+              "Variáveis locais existem apenas dentro da função",
+              "São criadas na chamada e destruídas ao terminar",
+              "Acessar fora da função gera NameError",
+              "Escopo local evita conflitos de nomes"
+            ],
+            "miniCheck": "Por que a variável `resultado` do exemplo não pode ser acessada fora da função?"
+          }
+        },
+        {
+          "id": "sec_05_04_02",
+          "title": "Escopo Global",
+          "contentType": "text",
+          "order": 2,
+          "estimatedMinutes": 5,
+          "content": {
+            "objective": "Ao final, você saberá como usar variáveis globais e a palavra-chave global.",
+            "body": "Quando uma variável é definida fora de uma função, ela é considerada uma **variável global** e pode ser acessada em qualquer parte do programa.\n\nPorém, para **modificar** uma variável global dentro de uma função, você precisa usar a palavra-chave `global` antes do nome da variável. Sem essa declaração, o Python criaria uma nova variável local com o mesmo nome.\n\n### Cuidado!\n\nEmbora variáveis globais possam ser convenientes, é uma boa prática evitar seu uso, pois elas:\n- Tornam o código mais difícil de entender\n- Dificultam a depuração\n- Podem causar efeitos colaterais inesperados\n- Tornam as funções menos reutilizáveis\n\nPrefira passar valores como parâmetros e retornar resultados.",
+            "codeExample": {
+              "description": "Variáveis globais e a palavra-chave global",
+              "code": "resultado = 10  # variável global\n\ndef processar1(valor):\n    global resultado  # declara que usaremos a global\n    resultado = resultado + valor\n\ndef processar2(valor):\n    global resultado\n    resultado = resultado * valor\n\nprocessar1(5)  # resultado = 10 + 5 = 15\nprocessar2(2)  # resultado = 15 * 2 = 30\nprint(resultado)  # 30\n\n# Sem global, cria variável local\ncontador = 0\n\ndef incrementar():\n    contador = 1  # cria variável LOCAL, não modifica a global\n    print(f\"Local: {contador}\")\n\nincrementar()  # Local: 1\nprint(f\"Global: {contador}\")  # Global: 0"
+            },
+            "summary": [
+              "Variáveis globais são definidas fora de funções",
+              "Use 'global' para modificar uma global dentro de função",
+              "Sem 'global', Python cria uma variável local",
+              "Evite variáveis globais - prefira parâmetros e retornos"
+            ],
+            "miniCheck": "O que acontece se você tentar modificar uma variável global dentro de uma função sem usar a palavra-chave `global`?"
+          }
+        },
+        {
+          "id": "sec_05_04_03",
+          "title": "Exercício: Escopo de Variáveis",
+          "contentType": "exercise",
+          "order": 3,
+          "estimatedMinutes": 7,
+          "content": {
+            "objective": "Praticar o entendimento de escopo local e global.",
+            "problem": "Analise o código abaixo e determine o que será impresso em cada `print`. Depois, reescreva o código de forma a evitar o uso de variáveis globais, passando valores como parâmetros e retornando resultados.",
+            "starterCode": "# Código original com global\ntotal = 0\n\ndef adicionar(valor):\n    global total\n    total = total + valor\n\ndef multiplicar(valor):\n    global total\n    total = total * valor\n\nadicionar(10)\nmultiplicar(3)\nadicionar(5)\nprint(total)  # Qual é o valor?\n\n# Reescreva SEM usar global:\ndef adicionar_v2(total, valor):\n    # Implemente aqui\n    pass\n\ndef multiplicar_v2(total, valor):\n    # Implemente aqui\n    pass\n\n# Teste da nova versão\ntotal_v2 = 0\ntotal_v2 = adicionar_v2(total_v2, 10)\ntotal_v2 = multiplicar_v2(total_v2, 3)\ntotal_v2 = adicionar_v2(total_v2, 5)\nprint(total_v2)  # Deve ser igual ao total",
+            "testCases": [
+              {
+                "input": "total original",
+                "expected": "35",
+                "description": "(10 * 3) + 5 = 35"
+              },
+              {
+                "input": "adicionar_v2(0, 10)",
+                "expected": "10",
+                "description": "Função retorna valor atualizado"
+              },
+              {
+                "input": "multiplicar_v2(10, 3)",
+                "expected": "30",
+                "description": "Função retorna valor multiplicado"
+              }
+            ],
+            "hints": [
+              "O total original será: 0 + 10 = 10, depois 10 * 3 = 30, depois 30 + 5 = 35",
+              "Nas versões sem global, receba o total atual como parâmetro",
+              "Retorne o novo total calculado",
+              "O chamador deve atualizar sua variável com o retorno"
+            ],
+            "solution": "def adicionar_v2(total, valor):\n    return total + valor\n\ndef multiplicar_v2(total, valor):\n    return total * valor\n\ntotal_v2 = 0\ntotal_v2 = adicionar_v2(total_v2, 10)  # 10\ntotal_v2 = multiplicar_v2(total_v2, 3)  # 30\ntotal_v2 = adicionar_v2(total_v2, 5)    # 35"
+          }
+        },
+        {
+          "id": "sec_05_04_04",
+          "title": "Quiz: Escopo de Variáveis",
+          "contentType": "quiz",
+          "order": 4,
+          "estimatedMinutes": 3,
+          "content": {
+            "objective": "Validar seu entendimento sobre escopo de variáveis.",
+            "passingScore": 70,
+            "questions": [
+              {
+                "id": "q1",
+                "type": "multiple_choice",
+                "question": "Qual erro ocorre ao tentar acessar uma variável local fora da função?",
+                "options": [
+                  "SyntaxError",
+                  "TypeError",
+                  "NameError",
+                  "ValueError"
+                ],
+                "correctAnswer": 2,
+                "explanation": "NameError indica que o nome (variável) não foi definido no escopo atual."
+              },
+              {
+                "id": "q2",
+                "type": "multiple_choice",
+                "question": "Para que serve a palavra-chave 'global'?",
+                "options": [
+                  "Criar uma nova variável global",
+                  "Permitir modificar uma variável global dentro de uma função",
+                  "Impedir que uma variável seja modificada",
+                  "Exportar uma variável para outro arquivo"
+                ],
+                "correctAnswer": 1,
+                "explanation": "A palavra-chave global permite que uma função modifique uma variável definida fora dela."
+              },
+              {
+                "id": "q3",
+                "type": "code_output",
+                "question": "Qual será a saída?\n\n```python\nx = 5\ndef teste():\n    x = 10\n    print(x)\nteste()\nprint(x)\n```",
+                "options": [
+                  "10 e 10",
+                  "10 e 5",
+                  "5 e 10",
+                  "5 e 5"
+                ],
+                "correctAnswer": 1,
+                "explanation": "Dentro da função, x=10 cria uma variável local. A global x=5 permanece inalterada."
+              },
+              {
+                "id": "q4",
+                "type": "multiple_choice",
+                "question": "Por que devemos evitar variáveis globais?",
+                "options": [
+                  "Elas são mais lentas",
+                  "Python não suporta bem variáveis globais",
+                  "Tornam o código difícil de entender e depurar",
+                  "Ocupam mais memória"
+                ],
+                "correctAnswer": 2,
+                "explanation": "Variáveis globais criam dependências ocultas e efeitos colaterais, dificultando a manutenção."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "les_05_05",
+      "title": "Funções Lambda",
+      "slug": "funcoes-lambda",
+      "description": "Aprenda a criar funções anônimas pequenas e temporárias.",
+      "type": "text",
+      "order": 5,
+      "estimatedMinutes": 20,
+      "isFree": false,
+      "isPublished": true,
+      "sections": [
+        {
+          "id": "sec_05_05_01",
+          "title": "O que são Funções Lambda",
+          "contentType": "text",
+          "order": 1,
+          "estimatedMinutes": 5,
+          "content": {
+            "objective": "Ao final, você saberá o que são funções lambda e quando usá-las.",
+            "body": "As **funções lambda** também são conhecidas como **funções anônimas** e estão presentes em praticamente todas as linguagens de programação modernas. Elas são funções pequenas e temporárias definidas ao longo do código para realizarem operações simples, geralmente resolvidas com uma única linha.\n\n### Sintaxe\n\n```python\nlambda parâmetros: expressão\n```\n\n- Inicia com a palavra-chave `lambda`\n- Seguida pelos parâmetros (separados por vírgula)\n- Dois pontos `:` para finalizar a lista de parâmetros\n- Uma expressão que retorna o resultado (sem `return` explícito)\n\n### Características\n\n- São limitadas a uma única expressão\n- Retornam automaticamente o resultado da expressão\n- Podem ser atribuídas a variáveis para uso posterior\n- São muito usadas com funções de ordem superior",
+            "codeExample": {
+              "description": "Funções lambda básicas",
+              "code": "# Lambda que calcula o dobro\ndobrar = lambda x: x * 2\nprint(dobrar(5))  # 10\n\n# Lambda com múltiplos parâmetros\ncalcular_media = lambda nota1, peso1, nota2, peso2: \\\n    (nota1 * peso1 + nota2 * peso2) / (peso1 + peso2)\n\nprint(calcular_media(8, 3, 9, 2))  # 8.4\n\n# Comparação com função normal\ndef dobrar_normal(x):\n    return x * 2\n\n# Ambas fazem a mesma coisa:\nprint(dobrar(5))        # 10\nprint(dobrar_normal(5)) # 10"
+            },
+            "summary": [
+              "Lambdas são funções anônimas de uma linha",
+              "Sintaxe: lambda parâmetros: expressão",
+              "Retornam automaticamente o resultado da expressão",
+              "Úteis para operações simples e temporárias"
+            ],
+            "miniCheck": "Reescreva a função `def quadrado(x): return x ** 2` como uma função lambda."
+          }
+        },
+        {
+          "id": "sec_05_05_02",
+          "title": "Funções de Ordem Superior",
+          "contentType": "text",
+          "order": 2,
+          "estimatedMinutes": 6,
+          "content": {
+            "objective": "Ao final, você entenderá funções de ordem superior e como usá-las com lambdas.",
+            "body": "**Funções de ordem superior** são funções que recebem outras funções como argumentos e/ou retornam funções como resultado. Esse recurso é muito poderoso porque permite generalizar operações.\n\nEssa é uma das principais utilidades das funções lambda: podem ser passadas como argumentos para funções de ordem superior de forma concisa.\n\n### Exemplo Prático\n\nImagine uma função que aplica uma operação qualquer a cada elemento de uma lista. A operação é passada como parâmetro, permitindo reutilizar a lógica para diferentes transformações.\n\n### Tipando Funções como Parâmetros\n\nUse `Callable` do módulo `typing` para indicar que um parâmetro é uma função:\n- `Callable[[int], int]`: função que recebe int e retorna int\n- `Callable[[str, str], bool]`: função que recebe duas strings e retorna bool",
+            "codeExample": {
+              "description": "Funções de ordem superior com lambdas",
+              "code": "from typing import Callable, List\n\ndef aplicar_operacao(lista: List[int], \n                     operacao: Callable[[int], int]) -> List[int]:\n    lista_processada = []\n    for elemento in lista:\n        elemento_processado = operacao(elemento)\n        lista_processada.append(elemento_processado)\n    return lista_processada\n\nnumeros = [1, 2, 3, 4, 5]\n\n# Usando função normal\ndef dobrar(x: int) -> int:\n    return x * 2\n\nresultado1 = aplicar_operacao(numeros, dobrar)\nprint(resultado1)  # [2, 4, 6, 8, 10]\n\n# Usando lambdas - mais conciso!\nresultado2 = aplicar_operacao(numeros, lambda x: x * 2)\nresultado3 = aplicar_operacao(resultado2, lambda x: x ** 2)\nresultado4 = aplicar_operacao(resultado3, lambda x: x + 3)\nprint(resultado4)  # [7, 19, 39, 67, 103]"
+            },
+            "summary": [
+              "Funções de ordem superior recebem/retornam funções",
+              "Lambdas são ideais para passar como argumentos",
+              "Permitem criar código genérico e reutilizável",
+              "Use Callable para tipar parâmetros que são funções"
+            ],
+            "miniCheck": "Crie uma chamada para `aplicar_operacao` que triplique todos os números da lista."
+          }
+        },
+        {
+          "id": "sec_05_05_03",
+          "title": "Exercício: Lambdas e Ordem Superior",
+          "contentType": "exercise",
+          "order": 3,
+          "estimatedMinutes": 7,
+          "content": {
+            "objective": "Praticar o uso de lambdas com funções de ordem superior.",
+            "problem": "Você é um sommelier e tem uma lista de vinhos com nome e preço. Crie:\n\n1. Uma função `filtrar` que recebe uma lista de dicionários e uma função de filtro, retornando apenas os itens que satisfazem a condição.\n\n2. Use uma lambda para filtrar vinhos que custam mais de R$ 50.\n\n3. Use outra lambda para filtrar vinhos que custam menos de R$ 100.",
+            "starterCode": "from typing import List, Dict, Callable\n\nvinhos = [\n    {\"nome\": \"Malbec Reserve\", \"preco\": 89.90},\n    {\"nome\": \"Cabernet Basic\", \"preco\": 35.00},\n    {\"nome\": \"Pinot Noir Premium\", \"preco\": 150.00},\n    {\"nome\": \"Merlot Classic\", \"preco\": 55.00},\n    {\"nome\": \"Chardonnay\", \"preco\": 42.00}\n]\n\ndef filtrar(itens: List[Dict], condicao: Callable[[Dict], bool]) -> List[Dict]:\n    # Implemente aqui\n    pass\n\n# Vinhos acima de R$ 50\nvinhos_premium = filtrar(vinhos, lambda v: v[\"preco\"] > 50)\nprint(\"Premium (>R$50):\", [v[\"nome\"] for v in vinhos_premium])\n\n# Vinhos abaixo de R$ 100\nvinhos_acessiveis = filtrar(vinhos, lambda v: v[\"preco\"] < 100)\nprint(\"Acessíveis (<R$100):\", [v[\"nome\"] for v in vinhos_acessiveis])",
+            "testCases": [
+              {
+                "input": "filtrar(vinhos, lambda v: v['preco'] > 50)",
+                "expected": "3 vinhos (Malbec, Pinot, Merlot)",
+                "description": "Filtrar vinhos acima de R$50"
+              },
+              {
+                "input": "filtrar(vinhos, lambda v: v['preco'] < 100)",
+                "expected": "4 vinhos (todos exceto Pinot)",
+                "description": "Filtrar vinhos abaixo de R$100"
+              },
+              {
+                "input": "filtrar(vinhos, lambda v: 'Noir' in v['nome'])",
+                "expected": "1 vinho (Pinot Noir)",
+                "description": "Filtrar por nome"
+              }
+            ],
+            "hints": [
+              "Use um laço for para percorrer os itens",
+              "Chame condicao(item) para verificar se o item satisfaz",
+              "Adicione a uma lista de resultados se a condição retornar True",
+              "Retorne a lista de resultados"
+            ],
+            "solution": "def filtrar(itens: List[Dict], condicao: Callable[[Dict], bool]) -> List[Dict]:\n    resultado = []\n    for item in itens:\n        if condicao(item):\n            resultado.append(item)\n    return resultado\n\n# Alternativa com list comprehension:\n# def filtrar(itens, condicao):\n#     return [item for item in itens if condicao(item)]"
+          }
+        },
+        {
+          "id": "sec_05_05_04",
+          "title": "Quiz: Funções Lambda",
+          "contentType": "quiz",
+          "order": 4,
+          "estimatedMinutes": 3,
+          "content": {
+            "objective": "Validar seu entendimento sobre funções lambda e de ordem superior.",
+            "passingScore": 70,
+            "questions": [
+              {
+                "id": "q1",
+                "type": "multiple_choice",
+                "question": "Qual é a sintaxe correta de uma função lambda?",
+                "options": [
+                  "lambda: x => x * 2",
+                  "lambda x: x * 2",
+                  "def lambda(x): x * 2",
+                  "x => x * 2"
+                ],
+                "correctAnswer": 1,
+                "explanation": "A sintaxe correta é: lambda parâmetros: expressão"
+              },
+              {
+                "id": "q2",
+                "type": "multiple_choice",
+                "question": "O que é uma função de ordem superior?",
+                "options": [
+                  "Uma função que retorna números maiores",
+                  "Uma função mais importante no código",
+                  "Uma função que recebe ou retorna outras funções",
+                  "Uma função com muitos parâmetros"
+                ],
+                "correctAnswer": 2,
+                "explanation": "Funções de ordem superior trabalham com outras funções como dados."
+              },
+              {
+                "id": "q3",
+                "type": "code_output",
+                "question": "Qual será a saída?\n\n```python\nf = lambda x, y: x + y\nprint(f(3, 4))\n```",
+                "options": [
+                  "7",
+                  "34",
+                  "x + y",
+                  "Erro"
+                ],
+                "correctAnswer": 0,
+                "explanation": "A lambda soma os dois parâmetros: 3 + 4 = 7"
+              },
+              {
+                "id": "q4",
+                "type": "multiple_choice",
+                "question": "Quando NÃO usar funções lambda?",
+                "options": [
+                  "Para operações simples de uma linha",
+                  "Como argumento para funções de ordem superior",
+                  "Para lógica complexa com múltiplas linhas",
+                  "Para cálculos matemáticos simples"
+                ],
+                "correctAnswer": 2,
+                "explanation": "Lambdas são limitadas a uma expressão. Para lógica complexa, use funções normais."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "les_05_06",
+      "title": "Decoradores",
+      "slug": "decoradores",
+      "description": "Aprenda a modificar o comportamento de funções usando decoradores.",
+      "type": "text",
+      "order": 6,
+      "estimatedMinutes": 25,
+      "isFree": false,
+      "isPublished": true,
+      "sections": [
+        {
+          "id": "sec_05_06_01",
+          "title": "Conceito de Decoradores",
+          "contentType": "text",
+          "order": 1,
+          "estimatedMinutes": 5,
+          "content": {
+            "objective": "Ao final, você entenderá o que são decoradores e como funcionam.",
+            "body": "**Decoradores** são um dos recursos mais poderosos e elegantes do Python. Eles permitem que você modifique ou estenda o comportamento de funções sem alterar seu código interno.\n\nNa prática, um decorador é uma função que:\n1. Recebe outra função como parâmetro\n2. Adiciona alguma funcionalidade a ela\n3. Retorna uma versão modificada dessa função\n\nSe você já usou frameworks web como FastAPI, Flask ou Django, certamente viu decoradores em ação. Eles são amplamente utilizados para adicionar funcionalidades de forma limpa e reutilizável.\n\n### Pré-requisito\n\nPara entender decoradores, é importante saber que em Python **funções são objetos de primeira classe**, ou seja:\n- Podem ser passadas como argumentos\n- Podem ser retornadas por outras funções\n- Podem ser atribuídas a variáveis",
+            "codeExample": {
+              "description": "Decorador básico aplicado manualmente",
+              "code": "def meu_decorador(funcao):\n    \"\"\"Decorador que imprime mensagens antes e depois.\"\"\"\n    def funcao_modificada():\n        print(\"Antes de executar a função\")\n        funcao()\n        print(\"Depois de executar a função\")\n    return funcao_modificada\n\ndef dizer_ola():\n    print(\"Olá!\")\n\n# Aplicando o decorador manualmente\ndizer_ola = meu_decorador(dizer_ola)\ndizer_ola()\n# Saída:\n# Antes de executar a função\n# Olá!\n# Depois de executar a função"
+            },
+            "summary": [
+              "Decoradores modificam funções sem alterar seu código",
+              "Recebem uma função, adicionam funcionalidade, retornam versão modificada",
+              "Funções em Python são objetos de primeira classe",
+              "Muito usados em frameworks web como FastAPI e Flask"
+            ],
+            "miniCheck": "No exemplo, por que a função `dizer_ola` precisa ser reatribuída após passar pelo decorador?"
+          }
+        },
+        {
+          "id": "sec_05_06_02",
+          "title": "Sintaxe com @",
+          "contentType": "text",
+          "order": 2,
+          "estimatedMinutes": 5,
+          "content": {
+            "objective": "Ao final, você saberá usar a sintaxe @ para aplicar decoradores.",
+            "body": "Aplicar decoradores manualmente pode ser trabalhoso. Por isso, Python oferece uma sintaxe especial usando o símbolo `@`, que torna o código mais limpo e legível.\n\nColocar `@nome_do_decorador` antes da definição de uma função é equivalente a fazer `funcao = decorador(funcao)` logo após defini-la.\n\n### Decoradores com Parâmetros\n\nO decorador básico só funciona com funções sem parâmetros. Para criar decoradores que funcionem com qualquer função, usamos `*args` e `**kwargs` na função interna.\n\nIsso permite que o decorador repasse todos os argumentos para a função original, independente de quantos sejam.",
+            "codeExample": {
+              "description": "Sintaxe @ e decoradores genéricos",
+              "code": "def meu_decorador(funcao):\n    def funcao_modificada(*args, **kwargs):\n        print(f\"Chamando {funcao.__name__}\")\n        resultado = funcao(*args, **kwargs)\n        print(f\"Retornou: {resultado}\")\n        return resultado\n    return funcao_modificada\n\n@meu_decorador\ndef somar(a, b):\n    return a + b\n\n@meu_decorador\ndef saudar(nome, cumprimento=\"Olá\"):\n    return f\"{cumprimento}, {nome}!\"\n\nprint(somar(5, 3))\n# Chamando somar\n# Retornou: 8\n# 8\n\nprint(saudar(\"Maria\", cumprimento=\"Bom dia\"))\n# Chamando saudar\n# Retornou: Bom dia, Maria!\n# Bom dia, Maria!"
+            },
+            "summary": [
+              "@decorador é equivalente a funcao = decorador(funcao)",
+              "Sintaxe mais limpa e legível",
+              "Use *args e **kwargs para decoradores genéricos",
+              "O decorador deve retornar o resultado da função original"
+            ],
+            "miniCheck": "Qual é a vantagem de usar *args e **kwargs no decorador?"
+          }
+        },
+        {
+          "id": "sec_05_06_03",
+          "title": "Exemplo Prático: Cronômetro",
+          "contentType": "text",
+          "order": 3,
+          "estimatedMinutes": 5,
+          "content": {
+            "objective": "Ao final, você saberá criar um decorador útil para medir tempo de execução.",
+            "body": "Um dos usos mais comuns de decoradores é medir o tempo de execução de funções. Isso é muito útil para:\n- Identificar gargalos de performance\n- Monitorar funções em produção\n- Comparar diferentes implementações\n\n### Outros usos comuns de decoradores\n\n- **Logging**: registrar chamadas de funções\n- **Validação**: verificar parâmetros antes de executar\n- **Cache/Memoização**: armazenar resultados para reutilizar\n- **Autenticação**: verificar permissões de acesso\n- **Retry**: tentar novamente em caso de falha\n\nDecoradores são um tópico avançado. O importante agora é saber que existem e reconhecê-los em código. Com prática, eles se tornarão naturais.",
+            "codeExample": {
+              "description": "Decorador para medir tempo de execução",
+              "code": "import time\n\ndef cronometrar(funcao):\n    \"\"\"Decorador que mede o tempo de execução.\"\"\"\n    def funcao_cronometrada(*args, **kwargs):\n        inicio = time.time()\n        resultado = funcao(*args, **kwargs)\n        fim = time.time()\n        tempo = fim - inicio\n        print(f\"{funcao.__name__} levou {tempo:.4f} segundos\")\n        return resultado\n    return funcao_cronometrada\n\n@cronometrar\ndef processar_dados(n):\n    \"\"\"Simula processamento de dados.\"\"\"\n    total = 0\n    for i in range(n):\n        total += i ** 2\n    return total\n\nresultado = processar_dados(1000000)\n# processar_dados levou 0.0823 segundos\nprint(f\"Resultado: {resultado}\")"
+            },
+            "summary": [
+              "Decorador cronometrar mede tempo de execução",
+              "Usa time.time() para capturar início e fim",
+              "Útil para identificar gargalos de performance",
+              "Decoradores têm muitas aplicações: logging, cache, auth, etc."
+            ],
+            "miniCheck": "Como você modificaria o decorador para salvar os tempos em um arquivo de log?"
+          }
+        },
+        {
+          "id": "sec_05_06_04",
+          "title": "Exercício: Criando um Decorador",
+          "contentType": "exercise",
+          "order": 4,
+          "estimatedMinutes": 8,
+          "content": {
+            "objective": "Praticar a criação de decoradores personalizados.",
+            "problem": "Crie um decorador chamado `validar_positivos` que:\n1. Verifica se todos os argumentos numéricos passados para a função são positivos\n2. Se algum for negativo ou zero, levanta um ValueError com a mensagem 'Todos os valores devem ser positivos'\n3. Caso contrário, executa a função normalmente\n\nDica: Use *args para acessar os argumentos posicionais.",
+            "starterCode": "def validar_positivos(funcao):\n    def funcao_validada(*args, **kwargs):\n        # Implemente a validação aqui\n        pass\n    return funcao_validada\n\n@validar_positivos\ndef calcular_raiz(x):\n    return x ** 0.5\n\n@validar_positivos\ndef dividir(a, b):\n    return a / b\n\n# Testes\nprint(calcular_raiz(16))  # 4.0\nprint(dividir(10, 2))      # 5.0\n\ntry:\n    print(calcular_raiz(-4))  # Deve levantar ValueError\nexcept ValueError as e:\n    print(f\"Erro: {e}\")",
+            "testCases": [
+              {
+                "input": "calcular_raiz(16)",
+                "expected": "4.0",
+                "description": "Valor positivo funciona normalmente"
+              },
+              {
+                "input": "dividir(10, 2)",
+                "expected": "5.0",
+                "description": "Dois valores positivos funcionam"
+              },
+              {
+                "input": "calcular_raiz(-4)",
+                "expected": "ValueError",
+                "description": "Valor negativo levanta erro"
+              }
+            ],
+            "hints": [
+              "Use um laço for para verificar cada valor em args",
+              "Verifique se o valor é um número (int ou float) antes de comparar",
+              "Use isinstance(valor, (int, float)) para verificar se é número",
+              "Use raise ValueError(...) para levantar a exceção"
+            ],
+            "solution": "def validar_positivos(funcao):\n    def funcao_validada(*args, **kwargs):\n        for valor in args:\n            if isinstance(valor, (int, float)) and valor <= 0:\n                raise ValueError('Todos os valores devem ser positivos')\n        for valor in kwargs.values():\n            if isinstance(valor, (int, float)) and valor <= 0:\n                raise ValueError('Todos os valores devem ser positivos')\n        return funcao(*args, **kwargs)\n    return funcao_validada"
+          }
+        },
+        {
+          "id": "sec_05_06_05",
+          "title": "Quiz: Decoradores",
+          "contentType": "quiz",
+          "order": 5,
+          "estimatedMinutes": 3,
+          "content": {
+            "objective": "Validar seu entendimento sobre decoradores.",
+            "passingScore": 70,
+            "questions": [
+              {
+                "id": "q1",
+                "type": "multiple_choice",
+                "question": "O que `@meu_decorador` antes de uma função faz?",
+                "options": [
+                  "Comenta a função",
+                  "Equivale a funcao = meu_decorador(funcao)",
+                  "Exporta a função",
+                  "Deleta a função original"
+                ],
+                "correctAnswer": 1,
+                "explanation": "@decorador é uma sintaxe que aplica o decorador à função automaticamente."
+              },
+              {
+                "id": "q2",
+                "type": "multiple_choice",
+                "question": "Por que usamos *args e **kwargs em decoradores?",
+                "options": [
+                  "Para criar novas variáveis",
+                  "Para o decorador funcionar com qualquer função",
+                  "Para melhorar a performance",
+                  "É obrigatório em Python"
+                ],
+                "correctAnswer": 1,
+                "explanation": "*args e **kwargs permitem que o decorador repasse todos os argumentos para a função original."
+              },
+              {
+                "id": "q3",
+                "type": "multiple_choice",
+                "question": "Qual NÃO é um uso comum de decoradores?",
+                "options": [
+                  "Medir tempo de execução",
+                  "Fazer cache de resultados",
+                  "Definir variáveis globais",
+                  "Validar parâmetros"
+                ],
+                "correctAnswer": 2,
+                "explanation": "Decoradores modificam funções, não são usados para definir variáveis globais."
+              },
+              {
+                "id": "q4",
+                "type": "code_output",
+                "question": "Qual será a saída?\n\n```python\ndef dec(f):\n    def wrapper():\n        print(\"A\")\n        f()\n        print(\"B\")\n    return wrapper\n\n@dec\ndef ola():\n    print(\"Olá\")\n\nola()\n```",
+                "options": [
+                  "A, Olá, B",
+                  "Olá",
+                  "A, B, Olá",
+                  "B, Olá, A"
+                ],
+                "correctAnswer": 0,
+                "explanation": "O wrapper imprime 'A', chama a função original (que imprime 'Olá'), depois imprime 'B'."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "les_05_07",
+      "title": "Recursão",
+      "slug": "recursao",
+      "description": "Aprenda a técnica de recursão onde funções chamam a si mesmas.",
+      "type": "text",
+      "order": 7,
+      "estimatedMinutes": 25,
+      "isFree": false,
+      "isPublished": true,
+      "sections": [
+        {
+          "id": "sec_05_07_01",
+          "title": "Conceito de Recursão",
+          "contentType": "text",
+          "order": 1,
+          "estimatedMinutes": 5,
+          "content": {
+            "objective": "Ao final, você entenderá o conceito de recursão e suas partes essenciais.",
+            "body": "**Recursão** é uma técnica de programação onde uma função chama a si mesma para resolver um problema. Problemas que podem ser divididos em subproblemas menores e similares são candidatos ideais para soluções recursivas.\n\n### Partes Essenciais\n\nUma função recursiva tem duas partes essenciais:\n\n1. **Caso base**: A condição que para a recursão. Sem um caso base, a função chamaria a si mesma infinitamente.\n\n2. **Caso recursivo**: A parte onde a função chama a si mesma com um problema menor, progredindo em direção ao caso base.\n\n### Como funciona\n\nQuando uma função recursiva é chamada:\n1. Ela verifica se atingiu o caso base\n2. Se sim, retorna o resultado diretamente\n3. Se não, faz a chamada recursiva com um problema menor\n4. O resultado vai sendo construído conforme as chamadas retornam",
+            "codeExample": {
+              "description": "Fatorial com recursão",
+              "code": "def fatorial(n):\n    \"\"\"\n    Calcula o fatorial de n usando recursão.\n    Fatorial de n = n * (n-1) * (n-2) * ... * 1\n    \"\"\"\n    # Caso base: fatorial de 0 ou 1 é 1\n    if n <= 1:\n        return 1\n    # Caso recursivo: n * fatorial(n-1)\n    else:\n        return n * fatorial(n - 1)\n\nprint(fatorial(5))  # 120\nprint(fatorial(3))  # 6\nprint(fatorial(0))  # 1\n\n# fatorial(5) = 5 * fatorial(4)\n#             = 5 * 4 * fatorial(3)\n#             = 5 * 4 * 3 * fatorial(2)\n#             = 5 * 4 * 3 * 2 * fatorial(1)\n#             = 5 * 4 * 3 * 2 * 1\n#             = 120"
+            },
+            "summary": [
+              "Recursão: função que chama a si mesma",
+              "Caso base: condição de parada (essencial!)",
+              "Caso recursivo: chamada com problema menor",
+              "Ideal para problemas divisíveis em subproblemas similares"
+            ],
+            "miniCheck": "O que aconteceria se uma função recursiva não tivesse caso base?"
+          }
+        },
+        {
+          "id": "sec_05_07_02",
+          "title": "Sequência de Fibonacci",
+          "contentType": "text",
+          "order": 2,
+          "estimatedMinutes": 5,
+          "content": {
+            "objective": "Ao final, você saberá implementar a sequência de Fibonacci usando recursão.",
+            "body": "A **sequência de Fibonacci** é outro exemplo clássico de recursão. Nessa sequência, cada número é a soma dos dois números anteriores: 0, 1, 1, 2, 3, 5, 8, 13, 21...\n\nA definição matemática é naturalmente recursiva:\n- fibonacci(0) = 0\n- fibonacci(1) = 1\n- fibonacci(n) = fibonacci(n-1) + fibonacci(n-2)\n\n### Observação Importante\n\nEssa implementação recursiva simples é **ineficiente** para valores grandes de n, pois recalcula os mesmos valores várias vezes. Para uso em produção, considere:\n- Memoização (cache de resultados)\n- Solução iterativa\n- Decorador @lru_cache do Python",
+            "codeExample": {
+              "description": "Fibonacci recursivo",
+              "code": "def fibonacci(n):\n    \"\"\"\n    Retorna o n-ésimo número da sequência de Fibonacci.\n    \"\"\"\n    # Casos base\n    if n == 0:\n        return 0\n    elif n == 1:\n        return 1\n    # Caso recursivo\n    else:\n        return fibonacci(n - 1) + fibonacci(n - 2)\n\nprint(fibonacci(6))   # 8\nprint(fibonacci(10))  # 55\n\n# Mostrando a sequência\nfor i in range(10):\n    print(fibonacci(i), end=\" \")\n# 0 1 1 2 3 5 8 13 21 34"
+            },
+            "summary": [
+              "Fibonacci: cada número é soma dos dois anteriores",
+              "Tem dois casos base: n=0 retorna 0, n=1 retorna 1",
+              "Implementação recursiva simples é ineficiente",
+              "Use memoização ou iteração para melhor performance"
+            ],
+            "miniCheck": "Quantas chamadas recursivas são feitas para calcular fibonacci(5)?"
+          }
+        },
+        {
+          "id": "sec_05_07_03",
+          "title": "Recursão vs Iteração",
+          "contentType": "text",
+          "order": 3,
+          "estimatedMinutes": 5,
+          "content": {
+            "objective": "Ao final, você saberá quando usar recursão e quando preferir iteração.",
+            "body": "Muitos problemas podem ser resolvidos tanto com recursão quanto com iteração (laços). Cada abordagem tem vantagens e desvantagens.\n\n### Quando usar recursão?\n\n- Problema naturalmente se divide em subproblemas similares (árvores, grafos)\n- Solução recursiva é mais clara e fácil de entender\n- Problemas de backtracking (retrocesso) ou busca em profundidade\n\n### Quando evitar recursão?\n\n- Solução iterativa é mais eficiente\n- Risco de estourar a pilha de chamadas (recursões muito profundas)\n- Performance é crítica\n\n### Cuidados com Recursão\n\nPython tem limite de profundidade (~1000 chamadas). Sempre verifique:\n- Caso base está correto e será alcançado\n- Cada chamada progride em direção ao caso base\n- Problema não requer profundidade maior que o limite",
+            "codeExample": {
+              "description": "Comparando recursão e iteração",
+              "code": "# Fatorial recursivo\ndef fatorial_recursivo(n):\n    if n <= 1:\n        return 1\n    return n * fatorial_recursivo(n - 1)\n\n# Fatorial iterativo\ndef fatorial_iterativo(n):\n    resultado = 1\n    for i in range(2, n + 1):\n        resultado *= i\n    return resultado\n\nprint(fatorial_recursivo(5))  # 120\nprint(fatorial_iterativo(5))  # 120\n\n# Soma de lista - recursivo vs iterativo\ndef soma_recursiva(lista):\n    if not lista:\n        return 0\n    return lista[0] + soma_recursiva(lista[1:])\n\ndef soma_iterativa(lista):\n    total = 0\n    for num in lista:\n        total += num\n    return total\n\nnumeros = [1, 2, 3, 4, 5]\nprint(soma_recursiva(numeros))  # 15\nprint(soma_iterativa(numeros))  # 15"
+            },
+            "summary": [
+              "Recursão: elegante para problemas divisíveis",
+              "Iteração: geralmente mais eficiente em memória",
+              "Python tem limite de ~1000 chamadas recursivas",
+              "Escolha baseado na clareza e eficiência necessárias"
+            ],
+            "miniCheck": "Qual abordagem você usaria para percorrer uma estrutura de pastas (diretórios dentro de diretórios)?"
+          }
+        },
+        {
+          "id": "sec_05_07_04",
+          "title": "Exercício: Função Recursiva",
+          "contentType": "exercise",
+          "order": 4,
+          "estimatedMinutes": 8,
+          "content": {
+            "objective": "Praticar a criação de funções recursivas.",
+            "problem": "Crie uma função recursiva chamada `contagem_regressiva` que:\n1. Receba um número inteiro n como parâmetro\n2. Imprima todos os números de n até 0\n3. Ao final, imprima 'Contagem regressiva finalizada!'\n\nEm seguida, crie outra função recursiva chamada `soma_digitos` que:\n1. Receba um número inteiro positivo\n2. Retorne a soma de todos os seus dígitos\n\nExemplo: soma_digitos(123) retorna 6 (1+2+3)",
+            "starterCode": "def contagem_regressiva(n):\n    # Implemente aqui\n    pass\n\ndef soma_digitos(n):\n    # Implemente aqui\n    pass\n\n# Testes\ncontagem_regressiva(5)\n# Esperado: 5, 4, 3, 2, 1, 0, Contagem regressiva finalizada!\n\nprint(soma_digitos(123))   # 6\nprint(soma_digitos(9999))  # 36\nprint(soma_digitos(5))     # 5",
+            "testCases": [
+              {
+                "input": "soma_digitos(123)",
+                "expected": "6",
+                "description": "1 + 2 + 3 = 6"
+              },
+              {
+                "input": "soma_digitos(9999)",
+                "expected": "36",
+                "description": "9 + 9 + 9 + 9 = 36"
+              },
+              {
+                "input": "soma_digitos(5)",
+                "expected": "5",
+                "description": "Número de um dígito"
+              }
+            ],
+            "hints": [
+              "Para contagem_regressiva: caso base é quando n < 0",
+              "Para soma_digitos: caso base é quando n < 10 (um dígito)",
+              "Use n % 10 para obter o último dígito",
+              "Use n // 10 para remover o último dígito"
+            ],
+            "solution": "def contagem_regressiva(n):\n    if n < 0:\n        print('Contagem regressiva finalizada!')\n        return\n    print(n)\n    contagem_regressiva(n - 1)\n\ndef soma_digitos(n):\n    # Caso base: número de um dígito\n    if n < 10:\n        return n\n    # Caso recursivo: último dígito + soma do resto\n    return (n % 10) + soma_digitos(n // 10)"
+          }
+        },
+        {
+          "id": "sec_05_07_05",
+          "title": "Quiz: Recursão",
+          "contentType": "quiz",
+          "order": 5,
+          "estimatedMinutes": 3,
+          "content": {
+            "objective": "Validar seu entendimento sobre recursão.",
+            "passingScore": 70,
+            "questions": [
+              {
+                "id": "q1",
+                "type": "multiple_choice",
+                "question": "Quais são as duas partes essenciais de uma função recursiva?",
+                "options": [
+                  "Entrada e saída",
+                  "Caso base e caso recursivo",
+                  "Parâmetros e retorno",
+                  "Início e fim"
+                ],
+                "correctAnswer": 1,
+                "explanation": "O caso base para a recursão e o caso recursivo chama a função com problema menor."
+              },
+              {
+                "id": "q2",
+                "type": "multiple_choice",
+                "question": "O que acontece se uma função recursiva não tiver caso base?",
+                "options": [
+                  "Retorna None",
+                  "Funciona normalmente",
+                  "Recursão infinita (RecursionError)",
+                  "Retorna 0"
+                ],
+                "correctAnswer": 2,
+                "explanation": "Sem caso base, a função chama a si mesma infinitamente até estourar o limite."
+              },
+              {
+                "id": "q3",
+                "type": "code_output",
+                "question": "Qual é o resultado de fatorial(4)?\n\n```python\ndef fatorial(n):\n    if n <= 1:\n        return 1\n    return n * fatorial(n - 1)\n```",
+                "options": [
+                  "4",
+                  "10",
+                  "24",
+                  "120"
+                ],
+                "correctAnswer": 2,
+                "explanation": "4! = 4 * 3 * 2 * 1 = 24"
+              },
+              {
+                "id": "q4",
+                "type": "multiple_choice",
+                "question": "Quando recursão é preferível à iteração?",
+                "options": [
+                  "Sempre, pois é mais rápida",
+                  "Quando o problema se divide naturalmente em subproblemas similares",
+                  "Quando precisa de alta performance",
+                  "Quando o limite de memória é importante"
+                ],
+                "correctAnswer": 1,
+                "explanation": "Recursão é elegante para problemas com estrutura recursiva natural, como árvores e grafos."
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "version": "1.0",
+    "language": "pt-BR",
+    "sourceBook": "Python Essencial: Para Programadores",
+    "sourceChapter": "05-funcoes.tex",
+    "author": "Ricardo Maroquio",
+    "createdAt": "2026-01-23",
+    "totalLessons": 7,
+    "totalSections": 34,
+    "totalEstimatedMinutes": 165
+  }
+}

@@ -1,0 +1,798 @@
+{
+  "module": {
+    "title": "Tratamento de Exceções",
+    "description": "Neste módulo, você aprenderá a lidar com erros inesperados que ocorrem durante a execução de programas Python. Dominar o tratamento de exceções é essencial para criar programas robustos que não falham abruptamente quando algo dá errado.",
+    "order": 9
+  },
+  "lessons": [
+    {
+      "title": "Tratando Exceções com try/except",
+      "slug": "tratando-excecoes-try-except",
+      "description": "Aprenda a usar blocos try/except para capturar e tratar erros em Python, incluindo o tratamento de múltiplas exceções e o uso da cláusula else.",
+      "duration": 1500,
+      "type": "interactive",
+      "order": 1,
+      "sections": [
+        {
+          "title": "O que são Exceções",
+          "description": "Introdução ao conceito de exceções em Python",
+          "contentType": "text",
+          "order": 1,
+          "content": {
+            "body": "## O que são Exceções\n\nExceções são erros inesperados que ocorrem durante a execução de um programa. Esses erros interrompem o fluxo normal de execução e podem ser causados por diferentes fatores, como entradas inválidas do usuário, falhas na conexão de rede, erros de digitação, entre outros.\n\nQuando ocorre uma exceção, o Python gera uma mensagem de erro que descreve o problema ocorrido. Essas mensagens de erro são chamadas de **traceback** (rastreamento de pilha) e fornecem informações úteis para depurar o código.\n\nTratar exceções em Python significa lidar com essas situações de erro de forma apropriada, evitando que o programa pare de funcionar inesperadamente. Um tratamento adequado de exceções pode ajudar a manter o programa em execução, mesmo que ocorram erros, permitindo que o usuário possa entender o que aconteceu para aprender a evitar o problema.\n\nAo lidar com exceções, é importante identificar o tipo de exceção que ocorreu e tratar cada tipo de erro de forma apropriada. Por exemplo, se uma exceção de divisão por zero ocorrer, o programa deve tratar essa exceção de forma diferente de uma exceção de falha de conexão de rede.\n\nAlém disso, é importante usar o tratamento de exceções de forma criteriosa, evitando capturar exceções genéricas que possam ocultar informações importantes sobre o erro ocorrido.",
+            "estimatedMinutes": 3
+          }
+        },
+        {
+          "title": "Blocos try/except",
+          "description": "Como usar blocos try/except para capturar exceções",
+          "contentType": "text",
+          "order": 2,
+          "content": {
+            "body": "## Blocos try/except\n\nUma das formas mais comuns de lidar com exceções em Python é usando os blocos `try/except`. Um bloco `try/except` permite que o programa tente executar um trecho de código e, se uma exceção ocorrer, o programa poderá tratá-la de forma apropriada, sem interromper a execução.\n\n### Exemplo básico\n\n```python\ntry:\n    x = 1 / 0\nexcept ZeroDivisionError:\n    print(\"Erro: divisão por zero!\")\n```\n\nNeste exemplo, o bloco `try` tenta executar uma divisão por zero, o que causaria uma exceção `ZeroDivisionError`. O bloco `except` captura essa exceção e exibe uma mensagem de erro.\n\n### Tratando arquivo não encontrado\n\n```python\ntry:\n    with open(\"arquivo.txt\", \"r\") as arquivo:\n        conteudo = arquivo.read()\nexcept FileNotFoundError:\n    print(\"Erro: arquivo não encontrado!\")\n```\n\nNeste exemplo, se o arquivo não existir, uma exceção `FileNotFoundError` será lançada e o bloco `except` captura essa exceção para exibir uma mensagem amigável.\n\nCada tipo de exceção é representado por uma classe. A exceção de divisão por zero é representada pela classe `ZeroDivisionError`, enquanto a exceção de arquivo não encontrado é `FileNotFoundError`.",
+            "estimatedMinutes": 4
+          }
+        },
+        {
+          "title": "Tratando Múltiplas Exceções",
+          "description": "Como tratar diferentes tipos de exceções no mesmo bloco",
+          "contentType": "text",
+          "order": 3,
+          "content": {
+            "body": "## Tratando Múltiplas Exceções\n\nEm algumas situações, é necessário lidar com diferentes tipos de exceções. Neste caso, é possível utilizar vários blocos `except` para capturar esses diferentes tipos.\n\n### Exemplo com múltiplas exceções\n\n```python\ntry:\n    x = int(input(\"Digite um número inteiro: \"))\n    resultado = 10 / x\nexcept ZeroDivisionError:\n    print(\"Erro: divisão por zero!\")\nexcept ValueError:\n    print(\"Erro: valor inválido!\")\n```\n\nNeste exemplo, o bloco `try` tenta ler um número inteiro do usuário e fazer uma divisão por esse número. Se o usuário digitar zero, uma exceção `ZeroDivisionError` será lançada. Se o usuário digitar um valor não numérico, uma exceção `ValueError` será lançada. Cada bloco `except` captura a exceção correspondente.\n\n### A classe ancestral Exception\n\nA classe ancestral de todas as classes de exceção é a classe `Exception`. Se um bloco `except Exception` for o primeiro tratador de um bloco `try`, qualquer exceção será sempre tratada por ele, o que acarreta na perda da especificidade do tratamento.\n\n**Importante:** Sempre capture exceções específicas primeiro e deixe `except Exception` por último, apenas se necessário, para capturar exceções imprevistas.\n\nÉ importante sempre exibir mensagens de erro claras, informativas e específicas, pois isso ajuda o usuário a entender o que aconteceu.",
+            "estimatedMinutes": 4
+          }
+        },
+        {
+          "title": "A Cláusula else em try/except",
+          "description": "Como usar a cláusula else para executar código apenas quando não há exceções",
+          "contentType": "text",
+          "order": 4,
+          "content": {
+            "body": "## A Cláusula else em try/except\n\nAlém dos blocos `try` e `except`, Python oferece a cláusula `else`, que pode ser usada em conjunto com blocos de tratamento de exceções. O bloco `else` contém código que será executado apenas se nenhuma exceção for lançada no bloco `try`.\n\n### Exemplo básico\n\n```python\ntry:\n    numero = int(input(\"Digite um número: \"))\n    resultado = 100 / numero\nexcept ValueError:\n    print(\"Erro: você deve digitar um número válido!\")\nexcept ZeroDivisionError:\n    print(\"Erro: não é possível dividir por zero!\")\nelse:\n    print(f\"A divisão foi bem-sucedida! Resultado: {resultado}\")\n```\n\n### Por que usar else?\n\nA diferença principal entre colocar código no bloco `else` em vez de colocá-lo no final do bloco `try` é que o código no `else` só é executado se o bloco `try` for completamente bem-sucedido. Se você colocar esse código dentro do bloco `try`, qualquer exceção que ele gere também será capturada pelos blocos `except`, o que pode não ser o comportamento desejado.\n\n### Exemplo prático com banco de dados\n\n```python\ntry:\n    conexao = sqlite3.connect(\"meu_banco.db\")\n    cursor = conexao.cursor()\n    cursor.execute(\"INSERT INTO usuarios (nome) VALUES (?)\", (\"João\",))\nexcept sqlite3.Error as erro:\n    print(f\"Erro no banco de dados: {erro}\")\n    conexao.rollback()\nelse:\n    print(\"Operações realizadas com sucesso!\")\n    conexao.commit()\n```\n\n**Ordem das cláusulas:** `try`, `except` (um ou mais), `else` (opcional) e `finally` (opcional).",
+            "estimatedMinutes": 5
+          }
+        },
+        {
+          "title": "Exercício: Calculadora Segura",
+          "description": "Implemente uma calculadora com tratamento de exceções",
+          "contentType": "exercise",
+          "order": 5,
+          "content": {
+            "problem": "Crie uma função chamada `calculadora_segura(a, b, operacao)` que recebe dois números e uma string representando a operação ('+', '-', '*', '/'). A função deve:\n\n1. Retornar o resultado da operação matemática\n2. Tratar a exceção `ZeroDivisionError` quando houver divisão por zero, retornando a mensagem \"Erro: divisão por zero\"\n3. Tratar a exceção `ValueError` para operações inválidas, retornando \"Erro: operação inválida\"\n4. Usar a cláusula `else` para retornar o resultado apenas quando a operação for bem-sucedida\n\nExemplos:\n- `calculadora_segura(10, 2, '+')` deve retornar `12`\n- `calculadora_segura(10, 0, '/')` deve retornar `\"Erro: divisão por zero\"`\n- `calculadora_segura(10, 2, '%')` deve retornar `\"Erro: operação inválida\"`",
+            "starterCode": "def calculadora_segura(a, b, operacao):\n    # Implemente sua solução aqui\n    pass\n\n# Testes\nprint(calculadora_segura(10, 2, '+'))   # 12\nprint(calculadora_segura(10, 2, '-'))   # 8\nprint(calculadora_segura(10, 2, '*'))   # 20\nprint(calculadora_segura(10, 2, '/'))   # 5.0\nprint(calculadora_segura(10, 0, '/'))   # Erro: divisão por zero\nprint(calculadora_segura(10, 2, '%'))   # Erro: operação inválida",
+            "testCases": [
+              {
+                "input": "calculadora_segura(10, 2, '+')",
+                "expectedOutput": "12",
+                "description": "Soma de dois números"
+              },
+              {
+                "input": "calculadora_segura(10, 2, '-')",
+                "expectedOutput": "8",
+                "description": "Subtração de dois números"
+              },
+              {
+                "input": "calculadora_segura(10, 2, '*')",
+                "expectedOutput": "20",
+                "description": "Multiplicação de dois números"
+              },
+              {
+                "input": "calculadora_segura(10, 2, '/')",
+                "expectedOutput": "5.0",
+                "description": "Divisão de dois números"
+              },
+              {
+                "input": "calculadora_segura(10, 0, '/')",
+                "expectedOutput": "Erro: divisão por zero",
+                "description": "Divisão por zero"
+              },
+              {
+                "input": "calculadora_segura(10, 2, '%')",
+                "expectedOutput": "Erro: operação inválida",
+                "description": "Operação inválida"
+              }
+            ],
+            "hints": [
+              "Use um dicionário para mapear operações aos seus resultados",
+              "Lance uma exceção ValueError se a operação não estiver no dicionário",
+              "Use try/except/else para estruturar o código corretamente"
+            ],
+            "solution": "def calculadora_segura(a, b, operacao):\n    try:\n        operacoes = {\n            '+': a + b,\n            '-': a - b,\n            '*': a * b,\n            '/': a / b\n        }\n        if operacao not in operacoes:\n            raise ValueError(\"Operação inválida\")\n        resultado = operacoes[operacao]\n    except ZeroDivisionError:\n        return \"Erro: divisão por zero\"\n    except ValueError:\n        return \"Erro: operação inválida\"\n    else:\n        return resultado"
+          }
+        },
+        {
+          "title": "Quiz: Tratamento de Exceções",
+          "description": "Teste seus conhecimentos sobre try/except",
+          "contentType": "quiz",
+          "order": 6,
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "type": "multiple_choice",
+                "question": "Qual exceção é lançada quando tentamos converter uma string não numérica para int?",
+                "options": [
+                  "TypeError",
+                  "ValueError",
+                  "ZeroDivisionError",
+                  "RuntimeError"
+                ],
+                "correctAnswer": 1,
+                "explanation": "A exceção ValueError é lançada quando uma função recebe um argumento do tipo correto mas com valor inadequado, como int('abc')."
+              },
+              {
+                "id": "q2",
+                "type": "multiple_choice",
+                "question": "Quando o bloco else em um try/except é executado?",
+                "options": [
+                  "Sempre, independente de exceções",
+                  "Apenas quando uma exceção ocorre",
+                  "Apenas quando nenhuma exceção ocorre",
+                  "Antes do bloco try"
+                ],
+                "correctAnswer": 2,
+                "explanation": "O bloco else é executado apenas quando nenhuma exceção é lançada no bloco try, permitindo separar o código de sucesso do código que pode gerar exceções."
+              },
+              {
+                "id": "q3",
+                "type": "multiple_choice",
+                "question": "Qual é a classe ancestral de todas as exceções comuns em Python?",
+                "options": [
+                  "BaseException",
+                  "Exception",
+                  "Error",
+                  "StandardError"
+                ],
+                "correctAnswer": 1,
+                "explanation": "A classe Exception é a ancestral de todas as exceções comuns. BaseException é a raiz absoluta, mas inclui SystemExit e KeyboardInterrupt que normalmente não devem ser capturadas."
+              },
+              {
+                "id": "q4",
+                "type": "multiple_choice",
+                "question": "Qual é a ordem correta das cláusulas em um bloco de tratamento de exceções?",
+                "options": [
+                  "try, else, except, finally",
+                  "try, finally, except, else",
+                  "try, except, else, finally",
+                  "try, except, finally, else"
+                ],
+                "correctAnswer": 2,
+                "explanation": "A ordem correta é: try (código que pode gerar exceções), except (tratadores de exceções), else (código de sucesso), finally (código de limpeza)."
+              },
+              {
+                "id": "q5",
+                "type": "multiple_choice",
+                "question": "Por que devemos evitar colocar except Exception como primeiro tratador?",
+                "options": [
+                  "Causa erro de sintaxe",
+                  "Torna o código mais lento",
+                  "Captura todas as exceções, impedindo tratamento específico",
+                  "Não é possível usar except Exception"
+                ],
+                "correctAnswer": 2,
+                "explanation": "Se except Exception for o primeiro tratador, ele capturará todas as exceções antes dos tratadores específicos, impedindo um tratamento adequado para cada tipo de erro."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "title": "Hierarquia de Exceções",
+      "slug": "hierarquia-de-excecoes",
+      "description": "Compreenda a estrutura hierárquica das exceções em Python e aprenda a capturar grupos de exceções relacionadas.",
+      "duration": 1200,
+      "type": "interactive",
+      "order": 2,
+      "sections": [
+        {
+          "title": "Estrutura da Hierarquia",
+          "description": "Entenda como as exceções são organizadas em Python",
+          "contentType": "text",
+          "order": 1,
+          "content": {
+            "body": "## A Estrutura da Hierarquia de Exceções\n\nPython possui uma hierarquia bem definida de exceções, onde todas as exceções herdam da classe base `BaseException`. Compreender essa hierarquia é fundamental para tratar exceções de forma adequada e específica em seus programas.\n\n### Classes Principais\n\nNo topo da hierarquia está a classe `BaseException`, que é a classe ancestral de todas as exceções em Python. Dela derivam três classes principais:\n\n- **SystemExit**: Quando o programa é encerrado com `sys.exit()`\n- **KeyboardInterrupt**: Quando o usuário pressiona Ctrl+C\n- **Exception**: Classe base para exceções comuns\n\n**Importante:** Você deve capturar exceções da classe `Exception` ou suas subclasses, mas **nunca** deve capturar `BaseException` diretamente, pois isso impediria o usuário de encerrar seu programa com Ctrl+C.\n\n### Hierarquia Resumida\n\n```\nBaseException\n +-- SystemExit\n +-- KeyboardInterrupt\n +-- Exception\n       +-- ArithmeticError (ZeroDivisionError, OverflowError)\n       +-- LookupError (IndexError, KeyError)\n       +-- OSError (FileNotFoundError, PermissionError)\n       +-- ValueError\n       +-- TypeError\n       +-- AttributeError\n       +-- ImportError (ModuleNotFoundError)\n```\n\nVocê pode verificar a herança usando `issubclass`:\n\n```python\nprint(issubclass(ZeroDivisionError, ArithmeticError))  # True\nprint(issubclass(FileNotFoundError, OSError))  # True\n```",
+            "estimatedMinutes": 4
+          }
+        },
+        {
+          "title": "Capturando Exceções por Categoria",
+          "description": "Aprenda a capturar grupos de exceções relacionadas",
+          "contentType": "text",
+          "order": 2,
+          "content": {
+            "body": "## Capturando Exceções por Categoria\n\nUma das grandes vantagens de entender a hierarquia é poder capturar grupos de exceções relacionadas. Quando você captura uma exceção ancestral, automaticamente está capturando todas as suas subclasses.\n\n### Exemplo prático\n\n```python\ndef processar_operacao(dados, indice, divisor):\n    try:\n        # Pode gerar IndexError se índice for inválido\n        valor = dados[indice]\n        # Pode gerar ZeroDivisionError se divisor for zero\n        resultado = valor / divisor\n        return resultado\n\n    except ArithmeticError as e:\n        # Captura ZeroDivisionError, OverflowError, etc.\n        print(f\"Erro aritmético: {e}\")\n        return None\n\n    except LookupError as e:\n        # Captura IndexError, KeyError, etc.\n        print(f\"Erro de busca: {e}\")\n        return None\n\n# Testando diferentes erros\nnumeros = [10, 20, 30]\n\nprocessar_operacao(numeros, 5, 2)  # IndexError\n# Saída: Erro de busca: list index out of range\n\nprocessar_operacao(numeros, 1, 0)  # ZeroDivisionError\n# Saída: Erro aritmético: division by zero\n```\n\nNeste exemplo, capturamos `ArithmeticError` para lidar com todos os erros aritméticos e `LookupError` para lidar com todos os erros de busca. Isso torna o código mais conciso e organizado.",
+            "estimatedMinutes": 4
+          }
+        },
+        {
+          "title": "Ordem de Captura de Exceções",
+          "description": "A importância de capturar exceções específicas primeiro",
+          "contentType": "text",
+          "order": 3,
+          "content": {
+            "body": "## Ordem de Captura de Exceções\n\nÉ uma boa prática capturar primeiro as exceções mais específicas e depois as mais genéricas. Python testa os blocos `except` na ordem em que aparecem, e o primeiro que corresponder será executado.\n\n### Exemplo correto\n\n```python\ndef ler_configuracao(arquivo, chave):\n    try:\n        with open(arquivo, 'r') as f:\n            import json\n            config = json.load(f)\n            return config[chave]\n\n    except FileNotFoundError:\n        print(f\"Arquivo {arquivo} não encontrado.\")\n        return None\n\n    except KeyError:\n        print(f\"Configuração '{chave}' não encontrada.\")\n        return None\n\n    except OSError as e:\n        print(f\"Erro ao acessar arquivo: {e}\")\n        return None\n\n    except Exception as e:\n        print(f\"Erro inesperado: {e}\")\n        return None\n```\n\n### Erro comum - ordem incorreta\n\n```python\n# NÃO FAÇA ISSO!\ndef operacao_errada():\n    try:\n        x = 1 / 0\n    except Exception:\n        print(\"Erro genérico\")  # Sempre executa este\n    except ZeroDivisionError:\n        print(\"Divisão por zero\")  # NUNCA será alcançado!\n```\n\nNo exemplo incorreto, `ZeroDivisionError` nunca será executado porque `Exception` (sua classe ancestral) vem primeiro e já captura essa exceção.",
+            "estimatedMinutes": 4
+          }
+        },
+        {
+          "title": "Exercício: Validador com Hierarquia",
+          "description": "Crie um validador que usa a hierarquia de exceções",
+          "contentType": "exercise",
+          "order": 4,
+          "content": {
+            "problem": "Crie uma função chamada `buscar_elemento(lista, indice, chave=None)` que:\n\n1. Recebe uma lista, um índice e opcionalmente uma chave (para dicionários dentro da lista)\n2. Tenta acessar o elemento no índice especificado\n3. Se o elemento for um dicionário e uma chave for fornecida, tenta acessar essa chave\n4. Trata `LookupError` (que captura tanto `IndexError` quanto `KeyError`)\n5. Retorna o valor encontrado ou uma mensagem de erro apropriada\n\nExemplos:\n- `buscar_elemento([1, 2, 3], 1)` deve retornar `2`\n- `buscar_elemento([1, 2, 3], 10)` deve retornar `\"Erro: índice fora do intervalo\"`\n- `buscar_elemento([{'a': 1}], 0, 'a')` deve retornar `1`\n- `buscar_elemento([{'a': 1}], 0, 'b')` deve retornar `\"Erro: chave não encontrada\"`",
+            "starterCode": "def buscar_elemento(lista, indice, chave=None):\n    # Implemente sua solução aqui\n    pass\n\n# Testes\nprint(buscar_elemento([1, 2, 3], 1))  # 2\nprint(buscar_elemento([1, 2, 3], 10))  # Erro: índice fora do intervalo\nprint(buscar_elemento([{'a': 1}], 0, 'a'))  # 1\nprint(buscar_elemento([{'a': 1}], 0, 'b'))  # Erro: chave não encontrada",
+            "testCases": [
+              {
+                "input": "buscar_elemento([1, 2, 3], 1)",
+                "expectedOutput": "2",
+                "description": "Acesso válido à lista"
+              },
+              {
+                "input": "buscar_elemento([1, 2, 3], 10)",
+                "expectedOutput": "Erro: índice fora do intervalo",
+                "description": "Índice inválido"
+              },
+              {
+                "input": "buscar_elemento([{'a': 1}], 0, 'a')",
+                "expectedOutput": "1",
+                "description": "Acesso válido à chave de dicionário"
+              },
+              {
+                "input": "buscar_elemento([{'a': 1}], 0, 'b')",
+                "expectedOutput": "Erro: chave não encontrada",
+                "description": "Chave inexistente"
+              }
+            ],
+            "hints": [
+              "Use isinstance para verificar se o erro é IndexError ou KeyError",
+              "LookupError captura ambos IndexError e KeyError",
+              "Você pode verificar o tipo de erro dentro do except"
+            ],
+            "solution": "def buscar_elemento(lista, indice, chave=None):\n    try:\n        elemento = lista[indice]\n        if chave is not None:\n            return elemento[chave]\n        return elemento\n    except IndexError:\n        return \"Erro: índice fora do intervalo\"\n    except KeyError:\n        return \"Erro: chave não encontrada\""
+          }
+        },
+        {
+          "title": "Quiz: Hierarquia de Exceções",
+          "description": "Teste seus conhecimentos sobre a hierarquia de exceções",
+          "contentType": "quiz",
+          "order": 5,
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "type": "multiple_choice",
+                "question": "Qual exceção captura tanto IndexError quanto KeyError?",
+                "options": [
+                  "ValueError",
+                  "LookupError",
+                  "TypeError",
+                  "Exception"
+                ],
+                "correctAnswer": 1,
+                "explanation": "LookupError é a classe ancestral de IndexError e KeyError, usada para erros de busca em coleções."
+              },
+              {
+                "id": "q2",
+                "type": "multiple_choice",
+                "question": "Por que não devemos capturar BaseException?",
+                "options": [
+                  "Causa erro de sintaxe",
+                  "É muito lento",
+                  "Impede o usuário de encerrar o programa com Ctrl+C",
+                  "Não existe essa classe"
+                ],
+                "correctAnswer": 2,
+                "explanation": "BaseException inclui SystemExit e KeyboardInterrupt. Capturá-la impediria o usuário de encerrar o programa normalmente."
+              },
+              {
+                "id": "q3",
+                "type": "multiple_choice",
+                "question": "Qual exceção é a ancestral de ZeroDivisionError?",
+                "options": [
+                  "ValueError",
+                  "ArithmeticError",
+                  "TypeError",
+                  "RuntimeError"
+                ],
+                "correctAnswer": 1,
+                "explanation": "ArithmeticError é a classe ancestral de ZeroDivisionError, OverflowError e FloatingPointError."
+              },
+              {
+                "id": "q4",
+                "type": "multiple_choice",
+                "question": "FileNotFoundError é uma subclasse de qual exceção?",
+                "options": [
+                  "ValueError",
+                  "IOError",
+                  "OSError",
+                  "RuntimeError"
+                ],
+                "correctAnswer": 2,
+                "explanation": "FileNotFoundError herda de OSError, que representa erros relacionados ao sistema operacional."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "title": "Protegendo Recursos com finally",
+      "slug": "protegendo-recursos-finally",
+      "description": "Aprenda a usar o bloco finally para garantir a liberação de recursos independentemente de exceções.",
+      "duration": 900,
+      "type": "interactive",
+      "order": 3,
+      "sections": [
+        {
+          "title": "O Bloco finally",
+          "description": "Como usar finally para garantir a execução de código de limpeza",
+          "contentType": "text",
+          "order": 1,
+          "content": {
+            "body": "## O Bloco finally\n\nEm Python, é possível utilizar o bloco `finally` em conjunto com o bloco `try/except` para garantir a execução de um determinado trecho de código, independentemente de ocorrer uma exceção ou não. Isso significa que o bloco `finally` é executado mesmo que uma exceção tenha sido lançada e não tenha sido capturada por um bloco `except`.\n\n### Exemplo básico\n\n```python\ntry:\n    arquivo = open(\"arquivo.txt\", \"r\")\n    conteudo = arquivo.read()\n    # processar o conteúdo...\nexcept FileNotFoundError:\n    print(\"Erro: arquivo não encontrado!\")\nfinally:\n    arquivo.close()\n```\n\nNeste exemplo, o bloco `finally` garante que o arquivo seja fechado após sua utilização, independentemente de ocorrer ou não uma exceção.\n\n### Quando usar finally?\n\nO bloco `finally` é especialmente útil para:\n\n- **Fechar arquivos**: Garantir que arquivos abertos sejam fechados\n- **Liberar conexões**: Fechar conexões de banco de dados ou rede\n- **Limpar recursos temporários**: Remover arquivos temporários\n- **Restaurar estado**: Desfazer configurações temporárias\n\n**Nota importante:** O uso da estrutura `with` para abrir arquivos já garante o fechamento ao final do bloco, dispensando o uso do `finally` para liberação de recurso em muitos casos.",
+            "estimatedMinutes": 3
+          }
+        },
+        {
+          "title": "finally com Múltiplos Recursos",
+          "description": "Gerenciando múltiplos recursos com finally",
+          "contentType": "text",
+          "order": 2,
+          "content": {
+            "body": "## finally com Múltiplos Recursos\n\nQuando trabalhamos com múltiplos recursos, o bloco `finally` se torna ainda mais importante para garantir que todos sejam liberados corretamente.\n\n### Exemplo com conexão de banco de dados\n\n```python\nimport sqlite3\n\nconexao = None\ntry:\n    conexao = sqlite3.connect(\"banco.db\")\n    cursor = conexao.cursor()\n    cursor.execute(\"INSERT INTO usuarios (nome) VALUES (?)\", (\"João\",))\n    conexao.commit()\nexcept sqlite3.Error as erro:\n    print(f\"Erro no banco: {erro}\")\n    if conexao:\n        conexao.rollback()\nfinally:\n    if conexao:\n        conexao.close()\n        print(\"Conexão fechada.\")\n```\n\n### Exemplo com socket de rede\n\n```python\nimport socket\n\nsock = None\ntry:\n    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)\n    sock.connect(('localhost', 8080))\n    sock.send(b'Hello')\n    resposta = sock.recv(1024)\nexcept socket.error as e:\n    print(f\"Erro de rede: {e}\")\nfinally:\n    if sock:\n        sock.close()\n        print(\"Socket fechado.\")\n```\n\n**Importante:** O bloco `finally` é executado sempre que um bloco `try` é executado, inclusive em casos onde uma exceção não ocorre. Isso o torna ideal para código de limpeza que deve ser executado em qualquer situação.",
+            "estimatedMinutes": 4
+          }
+        },
+        {
+          "title": "Combinando try/except/else/finally",
+          "description": "A estrutura completa de tratamento de exceções",
+          "contentType": "text",
+          "order": 3,
+          "content": {
+            "body": "## Combinando try/except/else/finally\n\nA estrutura completa de tratamento de exceções em Python combina todos os blocos para um controle preciso do fluxo de execução.\n\n### Estrutura completa\n\n```python\ntry:\n    # Código que pode gerar exceções\n    arquivo = open(\"dados.txt\", \"r\")\n    dados = arquivo.read()\n\nexcept FileNotFoundError:\n    # Tratamento de erro específico\n    print(\"Arquivo não encontrado!\")\n    dados = None\n\nexcept Exception as e:\n    # Tratamento de erros inesperados\n    print(f\"Erro inesperado: {e}\")\n    dados = None\n\nelse:\n    # Executado apenas se não houver exceções\n    print(f\"Arquivo lido com sucesso: {len(dados)} caracteres\")\n    processar_dados(dados)\n\nfinally:\n    # Sempre executado (limpeza)\n    if 'arquivo' in locals() and not arquivo.closed:\n        arquivo.close()\n        print(\"Arquivo fechado.\")\n```\n\n### Ordem de execução\n\n1. **try**: Executa o código que pode gerar exceções\n2. **except**: Se houver exceção, executa o tratador correspondente\n3. **else**: Se não houver exceção, executa este bloco\n4. **finally**: Sempre executa, independente do resultado\n\nEssa estrutura permite um controle completo sobre o fluxo de execução e a garantia de que recursos serão liberados corretamente.",
+            "estimatedMinutes": 4
+          }
+        },
+        {
+          "title": "Exercício: Gerenciador de Arquivo Seguro",
+          "description": "Implemente uma função que lê e processa arquivos com tratamento completo",
+          "contentType": "exercise",
+          "order": 4,
+          "content": {
+            "problem": "Crie uma função chamada `ler_arquivo_seguro(nome_arquivo)` que:\n\n1. Tenta abrir e ler o conteúdo de um arquivo\n2. Trata `FileNotFoundError` retornando `\"Erro: arquivo não encontrado\"`\n3. Trata `PermissionError` retornando `\"Erro: permissão negada\"`\n4. Usa `else` para retornar o conteúdo apenas se a leitura for bem-sucedida\n5. Usa `finally` para garantir que o arquivo seja fechado (quando aplicável)\n6. Retorna o conteúdo do arquivo ou a mensagem de erro\n\nDica: Você pode simular os erros testando com nomes de arquivo que não existem.",
+            "starterCode": "def ler_arquivo_seguro(nome_arquivo):\n    arquivo = None\n    try:\n        # Implemente sua solução aqui\n        pass\n    except FileNotFoundError:\n        pass\n    except PermissionError:\n        pass\n    else:\n        pass\n    finally:\n        pass\n\n# Para testar, crie um arquivo teste.txt com algum conteúdo\n# print(ler_arquivo_seguro(\"teste.txt\"))\n# print(ler_arquivo_seguro(\"inexistente.txt\"))",
+            "testCases": [
+              {
+                "input": "ler_arquivo_seguro('inexistente.txt')",
+                "expectedOutput": "Erro: arquivo não encontrado",
+                "description": "Arquivo que não existe"
+              }
+            ],
+            "hints": [
+              "Declare a variável arquivo como None antes do try",
+              "No finally, verifique se arquivo não é None e se não está fechado",
+              "Use arquivo.closed para verificar se o arquivo está fechado"
+            ],
+            "solution": "def ler_arquivo_seguro(nome_arquivo):\n    arquivo = None\n    try:\n        arquivo = open(nome_arquivo, 'r')\n        conteudo = arquivo.read()\n    except FileNotFoundError:\n        return \"Erro: arquivo não encontrado\"\n    except PermissionError:\n        return \"Erro: permissão negada\"\n    else:\n        return conteudo\n    finally:\n        if arquivo is not None and not arquivo.closed:\n            arquivo.close()"
+          }
+        },
+        {
+          "title": "Quiz: O Bloco finally",
+          "description": "Teste seus conhecimentos sobre o bloco finally",
+          "contentType": "quiz",
+          "order": 5,
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "type": "multiple_choice",
+                "question": "Quando o bloco finally é executado?",
+                "options": [
+                  "Apenas quando ocorre uma exceção",
+                  "Apenas quando não ocorre exceção",
+                  "Sempre, independente de exceções",
+                  "Apenas quando o else não é executado"
+                ],
+                "correctAnswer": 2,
+                "explanation": "O bloco finally é sempre executado, seja após o try ter sucesso, seja após uma exceção ser tratada ou não."
+              },
+              {
+                "id": "q2",
+                "type": "multiple_choice",
+                "question": "Qual é a principal utilidade do bloco finally?",
+                "options": [
+                  "Tratar exceções específicas",
+                  "Executar código de limpeza e liberação de recursos",
+                  "Substituir o bloco except",
+                  "Ignorar exceções"
+                ],
+                "correctAnswer": 1,
+                "explanation": "O bloco finally é usado principalmente para código de limpeza, como fechar arquivos e conexões, garantindo que recursos sejam liberados."
+              },
+              {
+                "id": "q3",
+                "type": "multiple_choice",
+                "question": "Qual estrutura em Python pode substituir o finally para gerenciamento de arquivos?",
+                "options": [
+                  "if/else",
+                  "for/else",
+                  "with",
+                  "while"
+                ],
+                "correctAnswer": 2,
+                "explanation": "O statement with (context manager) garante automaticamente o fechamento de recursos como arquivos, dispensando o uso de finally para essa finalidade."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "title": "Exceções Personalizadas",
+      "slug": "excecoes-personalizadas",
+      "description": "Aprenda a criar suas próprias exceções para tratar erros específicos do seu programa.",
+      "duration": 1200,
+      "type": "interactive",
+      "order": 4,
+      "sections": [
+        {
+          "title": "Criando Exceções Personalizadas",
+          "description": "Como criar classes de exceção próprias",
+          "contentType": "text",
+          "order": 1,
+          "content": {
+            "body": "## Criando Exceções Personalizadas\n\nEm Python, é possível criar suas próprias exceções para lidar com erros específicos do seu programa. Para criar uma exceção personalizada, basta criar uma nova classe que herde da classe base `Exception` ou de uma de suas subclasses.\n\n### Exemplo básico\n\n```python\nclass ValorInvalido(Exception):\n    def __init__(self, parametro, valor):\n        self.parametro = parametro\n        self.valor = valor\n        self.mensagem = f\"O valor '{valor}' é inválido para o parâmetro '{parametro}'\"\n        super().__init__(self.mensagem)\n```\n\nNeste exemplo, a classe `ValorInvalido` herda da classe base `Exception` e define três atributos:\n\n- **parametro**: O nome do parâmetro que recebeu valor inválido\n- **valor**: O valor inválido que foi passado\n- **mensagem**: A mensagem de erro formatada\n\nO método `__init__` é chamado sempre que uma nova instância da classe é criada, e é nele que definimos a mensagem de erro a ser exibida quando a exceção for capturada.\n\n### Boas práticas\n\n- Defina uma mensagem de erro clara e informativa\n- Use um nome descritivo que reflita o tipo de erro\n- Inclua atributos que ajudem a identificar o problema\n- Sempre chame `super().__init__()` com a mensagem",
+            "estimatedMinutes": 4
+          }
+        },
+        {
+          "title": "Lançando e Capturando Exceções",
+          "description": "Como usar raise para lançar e except para capturar exceções",
+          "contentType": "text",
+          "order": 2,
+          "content": {
+            "body": "## Lançando e Capturando Exceções\n\nPara lançar uma exceção personalizada, use a palavra-chave `raise` seguida de uma instância da sua classe de exceção.\n\n### Lançando a exceção\n\n```python\ndef calcula_idade(ano_nascimento):\n    if ano_nascimento < 1900 or ano_nascimento > 2023:\n        raise ValorInvalido(\"ano_nascimento\", ano_nascimento)\n    else:\n        return 2023 - ano_nascimento\n```\n\nNeste exemplo, se o ano de nascimento for inválido, a função lança a exceção `ValorInvalido`, informando o nome do parâmetro e o valor inválido.\n\n### Capturando a exceção\n\n```python\ntry:\n    idade = calcula_idade(1880)\nexcept ValorInvalido as erro:\n    print(erro.mensagem)\n# Saída: O valor '1880' é inválido para o parâmetro 'ano_nascimento'\n```\n\nO bloco `except` captura a exceção `ValorInvalido`, armazena ela na variável `erro` e podemos acessar seus atributos para exibir informações detalhadas.\n\n### Alternativa: Imprimir diretamente\n\n```python\ntry:\n    idade = calcula_idade(1880)\nexcept ValorInvalido as erro:\n    print(erro)  # Também funciona!\n```\n\nIsso funciona porque passamos a mensagem para `super().__init__()`, que define a representação em string da exceção.",
+            "estimatedMinutes": 4
+          }
+        },
+        {
+          "title": "Hierarquia de Exceções Personalizadas",
+          "description": "Organizando exceções personalizadas em hierarquia",
+          "contentType": "text",
+          "order": 3,
+          "content": {
+            "body": "## Hierarquia de Exceções Personalizadas\n\nQuando você cria suas próprias exceções, também pode organizá-las em uma hierarquia. Isso facilita o tratamento de grupos de exceções relacionadas ao seu domínio de aplicação.\n\n### Exemplo de hierarquia\n\n```python\n# Exceção base para erros de validação\nclass ErroValidacao(Exception):\n    \"\"\"Classe base para erros de validação.\"\"\"\n    pass\n\n# Exceções específicas\nclass EmailInvalido(ErroValidacao):\n    def __init__(self, email):\n        self.email = email\n        super().__init__(f\"Email inválido: {email}\")\n\nclass IdadeInvalida(ErroValidacao):\n    def __init__(self, idade):\n        self.idade = idade\n        super().__init__(f\"Idade inválida: {idade}\")\n\nclass CPFInvalido(ErroValidacao):\n    def __init__(self, cpf):\n        self.cpf = cpf\n        super().__init__(f\"CPF inválido: {cpf}\")\n```\n\n### Usando a hierarquia\n\n```python\n# Capturando categoria de erros\ntry:\n    validar_cadastro(\"João\", \"joao.com\", 25, \"12345678901\")\nexcept ErroValidacao as e:\n    print(f\"Erro de validação: {e}\")\n\n# Tratamento específico\ntry:\n    validar_cadastro(\"Maria\", \"maria@email.com\", 200, \"123\")\nexcept EmailInvalido as e:\n    print(f\"Corrija o email: {e.email}\")\nexcept IdadeInvalida as e:\n    print(f\"Idade inválida: {e.idade}\")\nexcept CPFInvalido as e:\n    print(f\"CPF inválido: {e.cpf}\")\n```\n\nIsso permite tanto capturar todas as exceções de validação de uma vez quanto tratar cada tipo individualmente.",
+            "estimatedMinutes": 5
+          }
+        },
+        {
+          "title": "Exercício: Conta Bancária com Exceções",
+          "description": "Crie uma classe ContaBancaria com exceções personalizadas",
+          "contentType": "exercise",
+          "order": 4,
+          "content": {
+            "problem": "Crie uma classe `ContaBancaria` com os seguintes requisitos:\n\n1. Crie uma exceção personalizada `SaldoInsuficiente` que recebe o valor do saque e o saldo atual\n2. A classe `ContaBancaria` deve ter:\n   - Atributo `saldo` inicializado com 0\n   - Método `depositar(valor)` que adiciona ao saldo\n   - Método `sacar(valor)` que subtrai do saldo ou lança `SaldoInsuficiente`\n3. A exceção `SaldoInsuficiente` deve ter uma mensagem formatada\n\nExemplo de uso:\n```python\nconta = ContaBancaria()\nconta.depositar(100)\nprint(conta.saldo)  # 100\nconta.sacar(30)     # OK\nprint(conta.saldo)  # 70\nconta.sacar(100)    # Deve lançar SaldoInsuficiente\n```",
+            "starterCode": "class SaldoInsuficiente(Exception):\n    # Implemente a exceção personalizada\n    pass\n\nclass ContaBancaria:\n    def __init__(self):\n        # Inicialize o saldo\n        pass\n    \n    def depositar(self, valor):\n        # Implemente o depósito\n        pass\n    \n    def sacar(self, valor):\n        # Implemente o saque com tratamento de exceção\n        pass\n\n# Testes\nconta = ContaBancaria()\nconta.depositar(100)\nprint(f\"Saldo após depósito: {conta.saldo}\")\nconta.sacar(30)\nprint(f\"Saldo após saque: {conta.saldo}\")\n\ntry:\n    conta.sacar(100)\nexcept SaldoInsuficiente as e:\n    print(e)",
+            "testCases": [
+              {
+                "input": "conta = ContaBancaria(); conta.depositar(100); conta.saldo",
+                "expectedOutput": "100",
+                "description": "Depósito de 100"
+              },
+              {
+                "input": "conta = ContaBancaria(); conta.depositar(100); conta.sacar(30); conta.saldo",
+                "expectedOutput": "70",
+                "description": "Saque de 30 de saldo de 100"
+              }
+            ],
+            "hints": [
+              "SaldoInsuficiente deve herdar de Exception",
+              "Use super().__init__() para definir a mensagem",
+              "No método sacar, use raise para lançar a exceção"
+            ],
+            "solution": "class SaldoInsuficiente(Exception):\n    def __init__(self, valor_saque, saldo):\n        self.valor_saque = valor_saque\n        self.saldo = saldo\n        self.mensagem = f\"Saldo insuficiente. Tentou sacar {valor_saque}, mas o saldo é {saldo}\"\n        super().__init__(self.mensagem)\n\nclass ContaBancaria:\n    def __init__(self):\n        self.saldo = 0\n    \n    def depositar(self, valor):\n        self.saldo += valor\n    \n    def sacar(self, valor):\n        if valor > self.saldo:\n            raise SaldoInsuficiente(valor, self.saldo)\n        self.saldo -= valor"
+          }
+        },
+        {
+          "title": "Quiz: Exceções Personalizadas",
+          "description": "Teste seus conhecimentos sobre exceções personalizadas",
+          "contentType": "quiz",
+          "order": 5,
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "type": "multiple_choice",
+                "question": "De qual classe uma exceção personalizada deve herdar?",
+                "options": [
+                  "BaseException",
+                  "Exception",
+                  "Error",
+                  "Throwable"
+                ],
+                "correctAnswer": 1,
+                "explanation": "Exceções personalizadas devem herdar de Exception ou suas subclasses, nunca de BaseException diretamente."
+              },
+              {
+                "id": "q2",
+                "type": "multiple_choice",
+                "question": "Qual palavra-chave é usada para lançar uma exceção?",
+                "options": [
+                  "throw",
+                  "raise",
+                  "except",
+                  "error"
+                ],
+                "correctAnswer": 1,
+                "explanation": "Em Python, usamos raise para lançar exceções, diferente de outras linguagens que usam throw."
+              },
+              {
+                "id": "q3",
+                "type": "multiple_choice",
+                "question": "Por que chamar super().__init__(mensagem) em uma exceção personalizada?",
+                "options": [
+                  "É obrigatório ou dá erro",
+                  "Define a mensagem que será exibida quando a exceção for impressa",
+                  "Registra a exceção no sistema",
+                  "Não é necessário chamar"
+                ],
+                "correctAnswer": 1,
+                "explanation": "Chamar super().__init__(mensagem) define a representação em string da exceção, que é exibida quando você imprime a exceção."
+              },
+              {
+                "id": "q4",
+                "type": "multiple_choice",
+                "question": "Qual a vantagem de criar uma hierarquia de exceções personalizadas?",
+                "options": [
+                  "Deixa o código mais rápido",
+                  "É obrigatório em Python",
+                  "Permite capturar grupos de exceções relacionadas",
+                  "Evita o uso de try/except"
+                ],
+                "correctAnswer": 2,
+                "explanation": "Uma hierarquia permite capturar todas as exceções de uma categoria com um único except, ou tratar cada uma individualmente."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "title": "Encadeamento de Exceções",
+      "slug": "encadeamento-de-excecoes",
+      "description": "Aprenda a encadear exceções para manter o rastreamento de pilha e adicionar contexto aos erros.",
+      "duration": 900,
+      "type": "interactive",
+      "order": 5,
+      "sections": [
+        {
+          "title": "O que é Encadeamento de Exceções",
+          "description": "Entenda o conceito e a utilidade do encadeamento",
+          "contentType": "text",
+          "order": 1,
+          "content": {
+            "body": "## O que é Encadeamento de Exceções\n\nO encadeamento de exceções, também conhecido como **exception chaining** em inglês, é uma técnica em Python que permite capturar uma exceção e lançar uma nova exceção com informações adicionais, mantendo o rastreamento de pilha da exceção originalmente lançada.\n\n### Por que usar?\n\nEssa técnica é útil em situações onde uma exceção é lançada por uma biblioteca ou módulo que não possui informações suficientes para identificar o erro. Ao encadear a exceção, é possível adicionar informações ao rastreamento de pilha, facilitando a identificação e correção do erro.\n\n### Sintaxe básica\n\nEm Python, usamos a palavra-chave `from` para encadear exceções:\n\n```python\ntry:\n    arquivo = open(\"arquivo.txt\", \"r\")\n    conteudo = arquivo.read()\nexcept FileNotFoundError as erro:\n    raise ValueError(\"Erro ao ler arquivo\") from erro\n```\n\nNeste exemplo, se o arquivo não existir, uma exceção `FileNotFoundError` será lançada. O bloco `except` captura essa exceção e lança uma nova exceção `ValueError`, encadeando a exceção original.\n\n### Resultado no traceback\n\nO traceback mostrará ambas as exceções:\n\n```\nFileNotFoundError: [Errno 2] No such file or directory: 'arquivo.txt'\n\nThe above exception was the direct cause of the following exception:\n\nValueError: Erro ao ler arquivo\n```",
+            "estimatedMinutes": 4
+          }
+        },
+        {
+          "title": "Acessando a Exceção Original",
+          "description": "Como acessar informações da exceção encadeada",
+          "contentType": "text",
+          "order": 2,
+          "content": {
+            "body": "## Acessando a Exceção Original\n\nAo encadear exceções, a nova exceção mantém uma referência para a exceção original através do atributo `__cause__`. Isso permite acessar informações detalhadas sobre o erro original.\n\n### Usando __cause__\n\n```python\ntry:\n    processar_arquivo(\"dados.txt\")\nexcept ValueError as erro:\n    print(f\"Erro: {erro}\")\n    if erro.__cause__:\n        print(f\"Causa original: {erro.__cause__}\")\n```\n\n### Exemplo completo\n\n```python\ndef processar_arquivo(nome):\n    try:\n        with open(nome, 'r') as f:\n            return f.read()\n    except FileNotFoundError as e:\n        raise ValueError(f\"Não foi possível processar {nome}\") from e\n\n# Uso\ntry:\n    dados = processar_arquivo(\"inexistente.txt\")\nexcept ValueError as erro:\n    print(f\"Erro de processamento: {erro}\")\n    print(f\"Tipo da causa: {type(erro.__cause__).__name__}\")\n    print(f\"Detalhes: {erro.__cause__}\")\n```\n\n**Saída:**\n```\nErro de processamento: Não foi possível processar inexistente.txt\nTipo da causa: FileNotFoundError\nDetalhes: [Errno 2] No such file or directory: 'inexistente.txt'\n```\n\nIsso é especialmente útil para logs e debugging, pois preserva toda a cadeia de erros.",
+            "estimatedMinutes": 4
+          }
+        },
+        {
+          "title": "Encadeamento Implícito vs Explícito",
+          "description": "Diferenças entre os dois tipos de encadeamento",
+          "contentType": "text",
+          "order": 3,
+          "content": {
+            "body": "## Encadeamento Implícito vs Explícito\n\nPython suporta dois tipos de encadeamento de exceções: explícito (usando `from`) e implícito (que ocorre automaticamente).\n\n### Encadeamento Explícito (from)\n\nUsa `raise ... from ...` para indicar claramente a causa:\n\n```python\ntry:\n    valor = int(\"abc\")\nexcept ValueError as e:\n    raise RuntimeError(\"Falha na conversão\") from e\n```\n\nNo traceback aparece: **\"The above exception was the direct cause of the following exception\"**\n\n### Encadeamento Implícito\n\nOcorre quando você lança uma exceção dentro de um except:\n\n```python\ntry:\n    valor = int(\"abc\")\nexcept ValueError:\n    raise RuntimeError(\"Falha na conversão\")  # sem from\n```\n\nNo traceback aparece: **\"During handling of the above exception, another exception occurred\"**\n\nA exceção original é armazenada em `__context__` (não `__cause__`).\n\n### Suprimindo o encadeamento\n\nVocê pode suprimir o encadeamento usando `from None`:\n\n```python\ntry:\n    valor = int(\"abc\")\nexcept ValueError:\n    raise RuntimeError(\"Valor inválido\") from None\n```\n\nIsso oculta a exceção original do traceback, mostrando apenas a nova exceção. Use com cuidado, pois pode dificultar o debugging.",
+            "estimatedMinutes": 4
+          }
+        },
+        {
+          "title": "Exercício: Processador de Dados",
+          "description": "Implemente funções com encadeamento de exceções",
+          "contentType": "exercise",
+          "order": 4,
+          "content": {
+            "problem": "Crie uma função `processar_dados(texto)` que:\n\n1. Tenta converter o texto para um número inteiro\n2. Se falhar, lança uma exceção personalizada `DadoInvalido` encadeada com a exceção original\n3. A exceção `DadoInvalido` deve ter um atributo `dado_original` com o texto recebido\n\nCrie também uma função `executar(texto)` que:\n1. Chama `processar_dados(texto)`\n2. Captura `DadoInvalido` e retorna uma string com informações do erro e sua causa\n3. Se não houver erro, retorna o número processado\n\nExemplo:\n```python\nprint(executar(\"42\"))     # 42\nprint(executar(\"abc\"))    # \"Erro: dado 'abc' inválido. Causa: invalid literal...\"\n```",
+            "starterCode": "class DadoInvalido(Exception):\n    # Implemente a exceção\n    pass\n\ndef processar_dados(texto):\n    # Implemente com encadeamento\n    pass\n\ndef executar(texto):\n    # Implemente o tratamento\n    pass\n\n# Testes\nprint(executar(\"42\"))\nprint(executar(\"abc\"))\nprint(executar(\"3.14\"))",
+            "testCases": [
+              {
+                "input": "executar('42')",
+                "expectedOutput": "42",
+                "description": "Número válido"
+              },
+              {
+                "input": "'abc' in executar('abc')",
+                "expectedOutput": "True",
+                "description": "Texto inválido menciona o dado"
+              }
+            ],
+            "hints": [
+              "Use raise DadoInvalido(...) from e para encadear",
+              "Acesse erro.__cause__ para obter a exceção original",
+              "Use str(erro.__cause__) para a mensagem da causa"
+            ],
+            "solution": "class DadoInvalido(Exception):\n    def __init__(self, dado_original):\n        self.dado_original = dado_original\n        super().__init__(f\"Dado '{dado_original}' é inválido\")\n\ndef processar_dados(texto):\n    try:\n        return int(texto)\n    except ValueError as e:\n        raise DadoInvalido(texto) from e\n\ndef executar(texto):\n    try:\n        return processar_dados(texto)\n    except DadoInvalido as erro:\n        causa = str(erro.__cause__) if erro.__cause__ else \"desconhecida\"\n        return f\"Erro: dado '{erro.dado_original}' inválido. Causa: {causa}\""
+          }
+        },
+        {
+          "title": "Quiz: Encadeamento de Exceções",
+          "description": "Teste seus conhecimentos sobre encadeamento",
+          "contentType": "quiz",
+          "order": 5,
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "type": "multiple_choice",
+                "question": "Qual palavra-chave é usada para encadear exceções explicitamente?",
+                "options": [
+                  "with",
+                  "from",
+                  "as",
+                  "chain"
+                ],
+                "correctAnswer": 1,
+                "explanation": "Usamos raise NovaExcecao() from excecao_original para encadear exceções explicitamente."
+              },
+              {
+                "id": "q2",
+                "type": "multiple_choice",
+                "question": "Qual atributo armazena a exceção original em um encadeamento explícito?",
+                "options": [
+                  "__cause__",
+                  "__context__",
+                  "__original__",
+                  "__parent__"
+                ],
+                "correctAnswer": 0,
+                "explanation": "__cause__ armazena a exceção original em encadeamentos explícitos (com from). __context__ é usado em encadeamentos implícitos."
+              },
+              {
+                "id": "q3",
+                "type": "multiple_choice",
+                "question": "Como suprimir o encadeamento de exceções?",
+                "options": [
+                  "raise Exception() from False",
+                  "raise Exception() from None",
+                  "raise Exception(suppress=True)",
+                  "Não é possível suprimir"
+                ],
+                "correctAnswer": 1,
+                "explanation": "Usando from None, você suprime o encadeamento e oculta a exceção original do traceback."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "title": "Exceções em Módulos e Pacotes",
+      "slug": "excecoes-em-modulos-pacotes",
+      "description": "Aprenda a tratar exceções relacionadas à importação e uso de módulos e pacotes.",
+      "duration": 900,
+      "type": "interactive",
+      "order": 6,
+      "sections": [
+        {
+          "title": "Tratando Exceções de Importação",
+          "description": "Como lidar com erros ao importar módulos",
+          "contentType": "text",
+          "order": 1,
+          "content": {
+            "body": "## Tratando Exceções de Importação\n\nEm Python, é possível tratar exceções em módulos e pacotes utilizando a palavra-chave `try/except` em conjunto com as instruções `import` e `from`. Essa técnica é útil para lidar com exceções específicas na importação de módulos.\n\n### Exemplo básico com import\n\n```python\ntry:\n    import meu_modulo\nexcept ModuleNotFoundError:\n    print(\"Erro: módulo não encontrado\")\n```\n\nNeste exemplo, o bloco `try` tenta importar o módulo `meu_modulo`. Se o módulo não existir, o bloco `except` captura a exceção `ModuleNotFoundError`.\n\n### Exemplo com from ... import\n\n```python\ntry:\n    from meu_pacote import minha_funcao\nexcept ImportError:\n    print(\"Erro: função não encontrada\")\n```\n\n### Importação condicional\n\nUm uso comum é tentar importar um módulo e usar uma alternativa se não estiver disponível:\n\n```python\ntry:\n    import ujson as json  # Versão mais rápida\nexcept ImportError:\n    import json  # Fallback para a biblioteca padrão\n\n# Agora 'json' funciona independente de qual foi importado\ndados = json.dumps({\"nome\": \"Python\"})\n```\n\nIsso é muito usado para compatibilidade entre versões do Python ou para usar bibliotecas opcionais.",
+            "estimatedMinutes": 4
+          }
+        },
+        {
+          "title": "Funções Empacotadoras (Wrappers)",
+          "description": "Como criar wrappers para tratar exceções de módulos",
+          "contentType": "text",
+          "order": 2,
+          "content": {
+            "body": "## Funções Empacotadoras (Wrappers)\n\nOutra técnica para lidar com exceções em módulos é criar uma função empacotadora (wrapper), que envolve a chamada de uma função do módulo em um bloco `try/except`.\n\n### Exemplo básico\n\n```python\nimport json\n\ndef carregar_json_seguro(texto):\n    try:\n        return json.loads(texto)\n    except json.JSONDecodeError as e:\n        print(f\"Erro ao decodificar JSON: {e}\")\n        return None\n\n# Uso\ndados = carregar_json_seguro('{\"nome\": \"Python\"}')\nif dados:\n    print(dados[\"nome\"])\n\ndados_invalidos = carregar_json_seguro('isso não é json')\n# Exibe: Erro ao decodificar JSON: ...\n```\n\n### Wrapper mais elaborado\n\n```python\nimport requests\n\ndef fazer_requisicao(url, timeout=5):\n    try:\n        resposta = requests.get(url, timeout=timeout)\n        resposta.raise_for_status()  # Lança exceção para erros HTTP\n        return resposta.json()\n    except requests.ConnectionError:\n        return {\"erro\": \"Falha na conexão\"}\n    except requests.Timeout:\n        return {\"erro\": \"Tempo limite excedido\"}\n    except requests.HTTPError as e:\n        return {\"erro\": f\"Erro HTTP: {e.response.status_code}\"}\n    except requests.JSONDecodeError:\n        return {\"erro\": \"Resposta não é JSON válido\"}\n```\n\nEssa abordagem encapsula toda a complexidade do tratamento de erros, oferecendo uma interface simples para o resto do código.",
+            "estimatedMinutes": 4
+          }
+        },
+        {
+          "title": "Verificando Disponibilidade de Módulos",
+          "description": "Técnicas para verificar se um módulo está disponível",
+          "contentType": "text",
+          "order": 3,
+          "content": {
+            "body": "## Verificando Disponibilidade de Módulos\n\nAlém de usar try/except para importar módulos, existem outras técnicas para verificar se um módulo está disponível antes de usá-lo.\n\n### Usando importlib.util\n\n```python\nimport importlib.util\n\ndef modulo_disponivel(nome):\n    spec = importlib.util.find_spec(nome)\n    return spec is not None\n\n# Uso\nif modulo_disponivel('numpy'):\n    import numpy as np\n    print(\"NumPy disponível!\")\nelse:\n    print(\"NumPy não está instalado\")\n```\n\n### Padrão com fallback\n\n```python\ntry:\n    from typing import Literal  # Python 3.8+\nexcept ImportError:\n    from typing_extensions import Literal  # Fallback\n```\n\n### Importação lazy (sob demanda)\n\n```python\n_modulo_pesado = None\n\ndef obter_modulo_pesado():\n    global _modulo_pesado\n    if _modulo_pesado is None:\n        try:\n            import modulo_pesado\n            _modulo_pesado = modulo_pesado\n        except ImportError:\n            raise RuntimeError(\"modulo_pesado não instalado\")\n    return _modulo_pesado\n\n# O módulo só é importado quando necessário\ndef funcao_que_usa_modulo():\n    modulo = obter_modulo_pesado()\n    return modulo.fazer_algo()\n```\n\nEssas técnicas ajudam a criar código mais robusto e flexível, que funciona mesmo quando dependências opcionais não estão disponíveis.",
+            "estimatedMinutes": 4
+          }
+        },
+        {
+          "title": "Exercício: Importador Seguro",
+          "description": "Crie um sistema de importação com fallback",
+          "contentType": "exercise",
+          "order": 4,
+          "content": {
+            "problem": "Crie uma função `importar_json()` que:\n\n1. Tenta importar `orjson` (biblioteca JSON mais rápida) primeiro\n2. Se `orjson` não estiver disponível, importa `json` (biblioteca padrão)\n3. Retorna um dicionário com duas chaves:\n   - `modulo`: o módulo importado\n   - `nome`: string com o nome do módulo ('orjson' ou 'json')\n\nCrie também uma função `serializar(dados)` que:\n1. Usa `importar_json()` para obter o módulo\n2. Serializa os dados usando o método `dumps` do módulo\n3. Para `orjson`, o resultado deve ser decodificado para string (orjson retorna bytes)\n4. Retorna a string JSON",
+            "starterCode": "def importar_json():\n    # Implemente a importação com fallback\n    pass\n\ndef serializar(dados):\n    # Implemente a serialização\n    pass\n\n# Testes\nresultado = importar_json()\nprint(f\"Módulo importado: {resultado['nome']}\")\n\ndados = {\"nome\": \"Python\", \"versao\": 3.11}\njson_str = serializar(dados)\nprint(f\"JSON: {json_str}\")",
+            "testCases": [
+              {
+                "input": "importar_json()['nome'] in ['json', 'orjson']",
+                "expectedOutput": "True",
+                "description": "Deve retornar json ou orjson"
+              },
+              {
+                "input": "type(serializar({'a': 1}))",
+                "expectedOutput": "<class 'str'>",
+                "description": "Deve retornar uma string"
+              }
+            ],
+            "hints": [
+              "Use try/except para tentar importar orjson primeiro",
+              "orjson.dumps() retorna bytes, use .decode('utf-8')",
+              "json.dumps() retorna string diretamente"
+            ],
+            "solution": "def importar_json():\n    try:\n        import orjson\n        return {'modulo': orjson, 'nome': 'orjson'}\n    except ImportError:\n        import json\n        return {'modulo': json, 'nome': 'json'}\n\ndef serializar(dados):\n    info = importar_json()\n    modulo = info['modulo']\n    resultado = modulo.dumps(dados)\n    # orjson retorna bytes, json retorna str\n    if isinstance(resultado, bytes):\n        return resultado.decode('utf-8')\n    return resultado"
+          }
+        },
+        {
+          "title": "Quiz: Exceções em Módulos",
+          "description": "Teste seus conhecimentos sobre exceções em módulos",
+          "contentType": "quiz",
+          "order": 5,
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "type": "multiple_choice",
+                "question": "Qual exceção é lançada quando um módulo não é encontrado?",
+                "options": [
+                  "ImportError",
+                  "ModuleNotFoundError",
+                  "FileNotFoundError",
+                  "NameError"
+                ],
+                "correctAnswer": 1,
+                "explanation": "ModuleNotFoundError é lançada quando um módulo não é encontrado. É uma subclasse de ImportError."
+              },
+              {
+                "id": "q2",
+                "type": "multiple_choice",
+                "question": "Qual é a vantagem de usar try/except em importações?",
+                "options": [
+                  "Torna o código mais rápido",
+                  "Permite usar fallbacks quando um módulo não está disponível",
+                  "É obrigatório em Python",
+                  "Evita a necessidade de instalar módulos"
+                ],
+                "correctAnswer": 1,
+                "explanation": "Usar try/except permite que o código continue funcionando mesmo quando um módulo opcional não está instalado, usando uma alternativa."
+              },
+              {
+                "id": "q3",
+                "type": "multiple_choice",
+                "question": "O que é uma função wrapper no contexto de tratamento de exceções?",
+                "options": [
+                  "Uma função que envolve outra em try/except para tratar erros",
+                  "Uma função que importa módulos",
+                  "Uma função decoradora",
+                  "Uma função anônima"
+                ],
+                "correctAnswer": 0,
+                "explanation": "Uma função wrapper encapsula chamadas a funções de módulos externos em blocos try/except, oferecendo uma interface mais segura."
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
