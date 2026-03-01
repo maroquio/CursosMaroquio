@@ -1,12 +1,12 @@
 /**
- * Script para importar conteúdo do curso Python a partir dos JSONs
+ * Script para importar conteúdo dos cursos a partir dos JSONs
  *
  * Uso: bun scripts/import-course-content.ts
  *
  * Este script:
- * 1. Cria a categoria "Programação" (se não existir)
- * 2. Cria o curso "Python Completo"
- * 3. Importa todos os módulos de content/*.json
+ * 1. Cria as categorias necessárias (se não existirem)
+ * 2. Cria os cursos "Python Essencial" e "CSS Essencial"
+ * 3. Importa todos os módulos de content/python/ e content/css/
  * 4. Cria lições e seções com conteúdo
  */
 
@@ -65,40 +65,61 @@ interface SectionJson {
 }
 
 // Configuração
-const CONTENT_DIR = join(import.meta.dir, '../../content');
+const BASE_CONTENT_DIR = join(import.meta.dir, '../../content');
+const PYTHON_CONTENT_DIR = join(BASE_CONTENT_DIR, 'python');
+const CSS_CONTENT_DIR = join(BASE_CONTENT_DIR, 'css');
 const INSTRUCTOR_EMAIL = process.env.INSTRUCTOR_EMAIL || 'ricardo@maroquio.com'; // Email do instrutor padrão
 
 async function main() {
   console.log('='.repeat(60));
-  console.log('Importação de Conteúdo do Curso Python');
+  console.log('Importação de Conteúdo dos Cursos');
   console.log('='.repeat(60));
 
   try {
     // Inicializar Container
     Container.initialize();
 
-    // 1. Verificar/Criar usuário instrutor
+    // Verificar/Criar usuário instrutor comum
     const instructorId = await getOrCreateInstructor();
     console.log(`\n✓ Instrutor: ${instructorId}`);
 
-    // 2. Criar categoria
-    const categoryId = await createCategory();
-    console.log(`✓ Categoria criada: ${categoryId}`);
+    // --- Python Essencial ---
+    console.log('\n' + '-'.repeat(40));
+    console.log('Curso: Python Essencial');
+    console.log('-'.repeat(40));
 
-    // 3. Criar curso
-    const courseId = await createCourse(instructorId, categoryId);
-    console.log(`✓ Curso criado: ${courseId}`);
+    const programmingCategoryId = await createCategory();
+    console.log(`✓ Categoria: ${programmingCategoryId}`);
 
-    // 4. Ler e importar módulos
-    const jsonFiles = await getContentFiles();
-    console.log(`\n📁 Encontrados ${jsonFiles.length} arquivos de módulo\n`);
+    const pythonCourseId = await createCourse(instructorId, programmingCategoryId);
+    console.log(`✓ Curso: ${pythonCourseId}`);
 
-    for (const file of jsonFiles) {
-      await importModule(courseId, file);
-    }
+    const pythonFiles = await getModuleFiles(PYTHON_CONTENT_DIR).catch(() => {
+      console.warn('  ⚠ Diretório python/ não encontrado, pulando...');
+      return [] as string[];
+    });
+    console.log(`\n📁 Encontrados ${pythonFiles.length} arquivos de módulo\n`);
+    for (const file of pythonFiles) await importModule(pythonCourseId, file);
+    await publishCourse(pythonCourseId);
 
-    // 5. Publicar o curso
-    await publishCourse(courseId);
+    // --- CSS Essencial ---
+    console.log('\n' + '-'.repeat(40));
+    console.log('Curso: CSS Essencial');
+    console.log('-'.repeat(40));
+
+    const webDesignCategoryId = await createOrGetWebDesignCategory();
+    console.log(`✓ Categoria: ${webDesignCategoryId}`);
+
+    const cssCourseId = await createCssCourse(instructorId, webDesignCategoryId);
+    console.log(`✓ Curso: ${cssCourseId}`);
+
+    const cssFiles = await getModuleFiles(CSS_CONTENT_DIR).catch(() => {
+      console.warn('  ⚠ Diretório css/ não encontrado, pulando...');
+      return [] as string[];
+    });
+    console.log(`\n📁 Encontrados ${cssFiles.length} arquivos de módulo\n`);
+    for (const file of cssFiles) await importModule(cssCourseId, file);
+    await publishCourse(cssCourseId);
 
     console.log('\n' + '='.repeat(60));
     console.log('✅ Importação concluída com sucesso!');
@@ -218,6 +239,59 @@ async function createCourse(instructorId: string, categoryId: string): Promise<s
   return result.getValue().id;
 }
 
+async function createOrGetWebDesignCategory(): Promise<string> {
+  const categoryRepository = Container.createCategoryRepository();
+
+  const slugResult = Slug.create('web-design');
+  if (slugResult.isFailure) throw new Error('Slug inválido');
+  const existing = await categoryRepository.findBySlug(slugResult.getValue());
+  if (existing) {
+    console.log('  (categoria já existe)');
+    return existing.getId().toValue();
+  }
+
+  const handler = Container.createCreateCategoryHandler();
+  const result = await handler.execute(
+    new CreateCategoryCommand('Web Design', 'Cursos de design e estilização web com CSS e ferramentas visuais')
+  );
+
+  if (result.isFailure) throw new Error(`Falha ao criar categoria: ${result.getError()}`);
+  return result.getValue().id;
+}
+
+async function createCssCourse(instructorId: string, categoryId: string): Promise<string> {
+  const courseRepository = Container.createCourseRepository();
+
+  const courseTitle = 'CSS Essencial';
+  const slugResult = Slug.fromTitle(courseTitle);
+  if (slugResult.isFailure) throw new Error('Slug inválido');
+  const existing = await courseRepository.findBySlug(slugResult.getValue());
+  if (existing) {
+    console.log('  (curso já existe)');
+    return existing.getId().toValue();
+  }
+
+  const handler = Container.createCreateCourseHandler();
+  const result = await handler.execute(
+    new CreateCourseCommand(
+      courseTitle,
+      instructorId,
+      'Domine os recursos essenciais do CSS moderno, incluindo box model, tipografia, cores, Flexbox, Grid e responsividade com media queries.',
+      undefined,
+      undefined,
+      'Aprenda CSS do zero ao avançado com exemplos práticos e editor ao vivo.',
+      0,
+      'BRL',
+      'beginner',
+      categoryId,
+      ['css', 'web design', 'frontend', 'flexbox', 'grid', 'responsividade']
+    )
+  );
+
+  if (result.isFailure) throw new Error(`Falha ao criar curso CSS: ${result.getError()}`);
+  return result.getValue().id;
+}
+
 async function publishCourse(courseId: string): Promise<void> {
   const handler = Container.createPublishCourseHandler();
   const result = await handler.execute(new PublishCourseCommand(courseId));
@@ -230,17 +304,12 @@ async function publishCourse(courseId: string): Promise<void> {
   console.log(`\n✓ Curso publicado com sucesso!`);
 }
 
-async function getContentFiles(): Promise<string[]> {
-  const files = await readdir(CONTENT_DIR);
+async function getModuleFiles(dir: string): Promise<string[]> {
+  const files = await readdir(dir);
   return files
-    .filter(f => f.startsWith('modulo-') && f.endsWith('.json'))
-    .sort((a, b) => {
-      // Extrair número do módulo para ordenar corretamente
-      const numA = parseInt(a.match(/modulo-(\d+)/)?.[1] || '0');
-      const numB = parseInt(b.match(/modulo-(\d+)/)?.[1] || '0');
-      return numA - numB;
-    })
-    .map(f => join(CONTENT_DIR, f));
+    .filter(f => f.endsWith('.json'))
+    .sort()
+    .map(f => join(dir, f));
 }
 
 async function importModule(courseId: string, filePath: string): Promise<void> {
@@ -505,12 +574,14 @@ function prepareContent(section: SectionJson | any, contentType: string): Sectio
   const estimatedMinutes = section.estimatedMinutes || section.durationMinutes || section.estimated_minutes || 5;
 
   if (contentType === 'text') {
-    // Seção de texto - content é uma string markdown
-    const body = typeof section.content === 'string' ? section.content : '';
-    const textContent: TextSectionContent = {
-      body,
-      estimatedMinutes,
-    };
+    // Seção de texto - content pode ser uma string markdown ou um objeto { body: "..." }
+    let body = '';
+    if (typeof section.content === 'string') {
+      body = section.content;
+    } else if (typeof section.content === 'object' && section.content !== null) {
+      body = (section.content as any).body || '';
+    }
+    const textContent: TextSectionContent = { body, estimatedMinutes };
     return textContent;
   }
 
